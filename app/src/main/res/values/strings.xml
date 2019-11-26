@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">SubHub</string>
+    <string name="app_name">Subhub</string>
+    <string name="no_folders_expl">You haven\'t selected any folders to easily access a video name when searching for subtitles, try adding video folders by clicking +</string>
+    <string name="movie_video_name">Movie/video name</string>
+    <string name="cancel">Cancel</string>
+    <string name="submit">Submit</string>
+    <string name="empty_field">Field cannot be empty !</string>
+    <string name="the_movie_name_title">The movie name/title</string>
+    <string name="subtitles_language">Subs language</string>
+    <string name="click_here">Click here to choose language</string>
 </resources>

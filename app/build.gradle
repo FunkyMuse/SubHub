@@ -22,7 +22,9 @@ android {
             ext.alwaysUpdateBuildId = false*/
             crunchPngs false
             shrinkResources false
+/*
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+*/
         }
 
         release {
@@ -71,7 +73,7 @@ dependencies {
     //util
     implementation 'com.github.albfernandez:juniversalchardet:2.3.0'
     implementation 'com.github.CraZyLegenD:open-subtitles-android:0.0.11'
-    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.88.17'
+    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.88.19'
 
     //core
     implementation 'androidx.preference:preference:1.1.0'

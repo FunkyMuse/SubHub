@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog_mss_movie_name_input_layout"
+        style="@style/TextInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_24"
+        app:helperText="@string/movie_video_name"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/colorPrimaryDark"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog_mss_movie_name_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/the_movie_name_title"
+            android:inputType="textAutoComplete"
+            android:textColor="@color/helperColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog_mss_language_input_layout"
+        style="@style/TextInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_mss_movie_name_input_layout"
+        android:layout_margin="@dimen/margin_24"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        app:helperText="@string/click_here"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/colorPrimaryDark"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog_mss_language_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/subtitles_language"
+            android:inputType="none"
+            android:longClickable="false"
+            android:textColor="@color/helperColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_mss_language_input_layout"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_mss_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_24"
+            android:layout_weight="0.5"
+            android:text="@string/cancel"
+            app:cornerRadius="@dimen/margin_8" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_mss_submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/margin_24"
+            android:layout_weight="0.5"
+            android:text="@string/submit"
+            app:cornerRadius="@dimen/margin_8" />
+
+    </LinearLayout>
+
+</RelativeLayout>

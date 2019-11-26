@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.crazylegend.kotlinextensions.context.getCompatDrawable
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.di.CoreComponentImpl
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -23,11 +23,15 @@ abstract class AbstractBottomSheetDialogFragment : BottomSheetDialogFragment(){
 
     abstract val theView: Int
 
+    lateinit var linearLayoutManager: LinearLayoutManager
+        private set
+
     override fun getTheme(): Int = R.style.BSDTtheme
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog = BottomSheetDialog(requireContext(), theme)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(theView, container, false)
+        linearLayoutManager = LinearLayoutManager(requireContext())
         dialog?.window?.setDimAmount(0.7f)
         return view
     }

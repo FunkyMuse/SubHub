@@ -1,11 +1,8 @@
 package com.crazylegend.subhub.dialogs
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.core.os.bundleOf
-import androidx.documentfile.provider.DocumentFile
 import com.crazylegend.kotlinextensions.activity.remove
 import com.crazylegend.kotlinextensions.animations.attentionShake
 import com.crazylegend.kotlinextensions.animations.playAnimation
@@ -17,10 +14,12 @@ import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.kotlinextensions.views.setTheText
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.activities.LoadSubtitlesActivity
+import com.crazylegend.subhub.activities.MainActivity
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.listeners.languageDSL
+import com.crazylegend.subhub.listeners.onDirChosenDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import kotlinx.android.synthetic.main.dialog_manual_sub_search.view.*
 
@@ -101,30 +100,16 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
             }
             dismissAllowingStateLoss()
         }
+
+        MainActivity.onDirChosen = onDirChosenDSL {
+            pickedDirModel = it
+            view.dialog_mss_download_location_input?.setTheText(it.name)
+        }
     }
 
     private fun pickDownloadDirectory() {
         requireActivity().openDirectory(PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE)
     }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE -> {
-                    val uri = data?.data ?: return
-
-                    val downloadLocation = DocumentFile.fromTreeUri(requireContext(), uri)
-                    downloadLocation ?: return
-
-                    pickedDirModel = PickedDirModel(downloadLocation.name.toString(), downloadLocation.uri.toString())
-                }
-            }
-        } else {
-            component.subToast.jobToast(getString(R.string.operation_cancelled))
-        }
-    }
-
 
     private fun showDialogChooseLanguage() {
         childFragmentManager.findFragmentByTag(DIALOG_CHOOSE_LANGUAGE_TAG)?.remove()

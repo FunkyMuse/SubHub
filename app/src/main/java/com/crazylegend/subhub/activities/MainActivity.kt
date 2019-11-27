@@ -5,13 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import androidx.appcompat.widget.SearchView
-import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.activity.remove
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.database.handle
 import com.crazylegend.kotlinextensions.delegates.activityVM
 import com.crazylegend.kotlinextensions.isNotNullOrEmpty
+import com.crazylegend.kotlinextensions.log.debug
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.views.gone
@@ -23,7 +23,9 @@ import com.crazylegend.subhub.adapters.localVideos.LocalVideoItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.dialogs.DialogManualSubtitleSearch
+import com.crazylegend.subhub.listeners.onDirChosen
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import com.crazylegend.subhub.utils.toPickedDirModel
 import com.crazylegend.subhub.vms.PickedDirVM
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import io.reactivex.rxkotlin.addTo
@@ -34,6 +36,10 @@ import java.util.*
  * Created by crazy on 11/26/19 to long live and prosper !
  */
 class MainActivity : AbstractActivity(R.layout.activity_main) {
+
+    companion object {
+        var onDirChosen: onDirChosen? = null
+    }
 
     private lateinit var dialogManualSubtitleSearch: DialogManualSubtitleSearch
 
@@ -112,6 +118,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
                 val pickedDir = it.pickedDir(this) ?: return
 
                 val filesList = pickedDir.listFiles().map { documentFile ->
+                    debug("FILE NAME ${documentFile.name} ${documentFile.type}")
                     LocalVideoItem(documentFile.uri, documentFile.name, documentFile.type, documentFile.length())
                 }.filter {
                     it.videoType.toString().toLowerCase(Locale.ROOT).containsAny(*SUPPORTED_FILE_FORMATS)
@@ -158,12 +165,15 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 PICK_DIRECTORY_REQUEST_CODE -> {
-                    val uri = data?.data ?: return
+                    val dirModel = data?.toPickedDirModel(this)
+                    dirModel ?: return
+                    pickedDirVM.insertDir(dirModel)
+                }
 
-                    val pickedDir = DocumentFile.fromTreeUri(this, uri)
-                    pickedDir ?: return
-
-                    pickedDirVM.insertDir(PickedDirModel(pickedDir.name.toString(), pickedDir.uri.toString()))
+                PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE -> {
+                    val dirModel = data?.toPickedDirModel(this)
+                    dirModel ?: return
+                    onDirChosen?.forDirectory(dirModel)
                 }
             }
         } else {
@@ -173,4 +183,5 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
 
 }
+
 

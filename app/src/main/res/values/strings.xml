@@ -23,4 +23,8 @@
     <string name="sub_language">Subtitle language: %1$s</string>
     <string name="movie_name">Movie name: %1$s</string>
     <string name="obtaining_subtitle_file">Obtaining subtitle file</string>
+    <string name="subtitles">Subtitles</string>
+    <string name="succ_dl_sub">Download success !</string>
+    <string name="failed_to_get_sub">Failed to download subtitle !</string>
+    <string name="obtaining_sub_file">Obtaining subtitle file</string>
 </resources>

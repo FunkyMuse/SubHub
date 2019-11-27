@@ -1,6 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</LinearLayout>
+    <com.crazylegend.kotlinextensions.ui.ColorProgressBar
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:progressColor="@color/colorPrimaryDark"
+        android:visibility="gone"
+        android:elevation="5dp"
+        android:id="@+id/act_loaded_subs_progress"
+        android:indeterminate="true"
+        android:layout_height="wrap_content" />
+
+    <include
+        layout="@layout/no_subs_found_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:id="@+id/act_loaded_subs_no_subs"
+        android:layout_centerInParent="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="true"
+        android:id="@+id/act_loaded_subs_recycler"
+        android:layout_height="match_parent" />
+
+</RelativeLayout>

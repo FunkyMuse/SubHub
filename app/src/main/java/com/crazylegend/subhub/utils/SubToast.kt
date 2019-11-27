@@ -16,9 +16,9 @@ import com.crazylegend.subhub.R
 class SubToast(private val context: Context) {
 
     private var toast: Toast? = null
-    private val drawablePadding = 5
-    private val textPadding = 10
-    private val textViewSize = 16f
+    private val drawablePadding = 1
+    private val textPadding = 3
+    private val textViewSize = 15f
 
     fun jobToast(message: String, length: Int = Toast.LENGTH_SHORT) {
         toast?.cancel()

@@ -3,9 +3,9 @@ package com.crazylegend.subhub.vms
 import android.app.Application
 import android.net.Uri
 import android.os.Build
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.crazylegend.kotlinextensions.context.shortToast
 import com.crazylegend.kotlinextensions.gson.fromJson
 import com.crazylegend.kotlinextensions.livedata.Event
 import com.crazylegend.kotlinextensions.livedata.context
@@ -18,6 +18,7 @@ import com.crazylegend.kotlinextensions.tryOrElse
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.CHARSETS_FILE_CONST
+import com.crazylegend.subhub.consts.SRT_TYPE
 import com.crazylegend.subhub.core.AbstractAVM
 import com.masterwok.opensubs.OpenSubtitlesUrlBuilder
 import com.masterwok.opensubs.models.OpenSubtitleItem
@@ -36,9 +37,15 @@ import java.nio.charset.Charset
  * Template created by Hristijan to live long and prosper.
  */
 
-class LoadSubsVM(application: Application, private val movieName: String, private val langCode: LanguageItem, private val dir: Uri) : AbstractAVM(application) {
+class LoadSubsVM(
+        application: Application,
+        private val movieName: String,
+        private val langCode: LanguageItem,
+        private val dir: Uri
+) : AbstractAVM(application) {
 
-    private val jsonAssetString = application.resources.assets.open(CHARSETS_FILE_CONST).readTextAndClose()
+    private val jsonAssetString =
+            application.resources.assets.open(CHARSETS_FILE_CONST).readTextAndClose()
     private val charsetList = component.gson.fromJson<List<String>>(jsonAssetString).sortedBy { it }
 
     private val service = OpenSubtitlesService()
@@ -76,14 +83,14 @@ class LoadSubsVM(application: Application, private val movieName: String, privat
     }
 
 
-    fun downloadSRT(item: OpenSubtitleItem, downloadUri: Uri) {
-
-        service.downloadSubtitleCompletable(context, item, downloadUri)
+    fun downloadSRT(item: OpenSubtitleItem) {
+        val srtLocation = File(context.cacheDir, "${item.LanguageName}-${item.SubFileName}")
+        val subtitleUri = Uri.fromFile(srtLocation)
+        service.downloadSubtitleCompletable(context, item, subtitleUri)
                 .subscribeOn(ioThreadScheduler)
                 .observeOn(mainThreadScheduler)
                 .subscribe({
-                    modifyFile(downloadUri)
-                    //modifyFile(downloadUri)
+                    modifyFile(srtLocation)
                 }, {
                     it.printStackTrace()
                     successEventData.value = Event(false)
@@ -91,28 +98,10 @@ class LoadSubsVM(application: Application, private val movieName: String, privat
 
     }
 
-    private fun modifyFile(srtLocation: Uri) {
-        context.contentResolver.openInputStream(srtLocation).use { inputStream ->
-            inputStream ?: return@use
-
-            val charset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                tryOrElse(Charsets.UTF_8) {
-                    val detector = UniversalDetector.detectCharset(inputStream)
-                    Charset.forName(detector) ?: checkIfValueIsInAssetsListOrElse(langCode.name)
-                }
-            } else {
-                checkIfValueIsInAssetsListOrElse(langCode.name)
-            }
-
-            modifyFile(charset, inputStream)
-        }
-    }
-
-
     private fun modifyFile(srtLocation: File) {
         loadingEventData.value = Event(true)
-        context.shortToast(context.getString(R.string.obtaining_subtitle_file))
-        if (srtLocation.name.endsWith(".srt")) {
+        component.subToast.jobToast(context.getString(R.string.obtaining_sub_file))
+        if (srtLocation.name.endsWith(SRT_TYPE)) {
 
             val charset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tryOrElse(Charsets.UTF_8) {
@@ -131,20 +120,8 @@ class LoadSubsVM(application: Application, private val movieName: String, privat
                         successEventData.value = Event(true)
                     }, {
                         it.printStackTrace()
+                        successEventData.value = Event(false)
                     }).addTo(component.compositeDisposable)
-        }
-    }
-
-    private fun checkIfValueIsInAssetsListOrElse(languageFullName: String): Charset {
-        val languageExist = charsetList.find {
-            it.split(" ")[0].toLowerCase() == languageFullName.toLowerCase()
-        }
-
-        return if (languageExist != null) {
-            val charset = languageExist.split(" ")[1]
-            Charset.forName(charset)
-        } else {
-            Charsets.UTF_8
         }
     }
 
@@ -165,6 +142,27 @@ class LoadSubsVM(application: Application, private val movieName: String, privat
             val testText = String(it.toByteArray(), Charsets.UTF_8)
             file.appendText(testText, Charsets.UTF_8)
         }
+
+        val createFile = DocumentFile.fromTreeUri(context, dir)?.createFile(SRT_TYPE, file.name)
+        val uriTowRite = createFile?.uri ?: return
+        context.contentResolver.openOutputStream(uriTowRite).use {
+            it?.write(file.readBytes())
+        }
+        file.delete()
     }
+
+    private fun checkIfValueIsInAssetsListOrElse(languageFullName: String): Charset {
+        val languageExist = charsetList.find {
+            it.split(" ")[0].toLowerCase() == languageFullName.toLowerCase()
+        }
+
+        return if (languageExist != null) {
+            val charset = languageExist.split(" ")[1]
+            Charset.forName(charset)
+        } else {
+            Charsets.UTF_8
+        }
+    }
+
 
 }

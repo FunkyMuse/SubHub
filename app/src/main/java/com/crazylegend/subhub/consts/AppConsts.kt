@@ -19,5 +19,5 @@ const val PICK_DIRECTORY_REQUEST_CODE = 131
 const val PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE = 132
 const val PICKED_DIR_DB_NAME = "pickedDir-db"
 
-
-val SUPPORTED_FILE_FORMATS = arrayOf("mp4", "avi", "mkv", "3gp")
+const val SRT_TYPE = ".srt"
+val SUPPORTED_FILE_FORMATS = arrayOf("mp4", "avi", "mkv", "3gp", "video")

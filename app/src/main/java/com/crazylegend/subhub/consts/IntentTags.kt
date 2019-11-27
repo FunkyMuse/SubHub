@@ -7,3 +7,4 @@ package com.crazylegend.subhub.consts
 
 const val INTENT_MOVIE_NAME_TAG = "movieNameTag"
 const val INTENT_MOVIE_LANG_TAG = "movieLangTag"
+const val INTENT_MOVIE_DOWNLOAD_LOCATION_TAG = "movieDLLocationTag"

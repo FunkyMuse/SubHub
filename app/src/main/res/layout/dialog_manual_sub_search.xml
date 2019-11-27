@@ -37,7 +37,7 @@
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:longClickable="false"
-        app:helperText="@string/click_here"
+        app:helperText="@string/click_here_to_choose_language"
         app:helperTextEnabled="true"
         app:helperTextTextColor="@color/colorPrimaryDark"
         app:hintAnimationEnabled="true"
@@ -56,11 +56,40 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dialog_mss_downloadLocation_input_layout"
+        style="@style/TextInputStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_mss_language_input_layout"
+        android:layout_margin="@dimen/margin_24"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:longClickable="false"
+        app:helperText="@string/click_here_to_choose_download_location"
+        app:helperTextEnabled="true"
+        app:helperTextTextColor="@color/colorPrimaryDark"
+        app:hintAnimationEnabled="true"
+        app:hintEnabled="true">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/dialog_mss_download_location_input"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:hint="@string/location_folder"
+            android:inputType="none"
+            android:longClickable="false"
+            android:textColor="@color/helperColor" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_mss_language_input_layout"
+        android:layout_below="@id/dialog_mss_downloadLocation_input_layout"
         android:orientation="horizontal"
         android:weightSum="1">
 

@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.di.CoreComponentImpl
+import com.crazylegend.subhub.di.core.CoreComponentImpl
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -34,6 +34,11 @@ abstract class AbstractBottomSheetDialogFragment : BottomSheetDialogFragment(){
         linearLayoutManager = LinearLayoutManager(requireContext())
         dialog?.window?.setDimAmount(0.7f)
         return view
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        component.disposeResources()
     }
 
 }

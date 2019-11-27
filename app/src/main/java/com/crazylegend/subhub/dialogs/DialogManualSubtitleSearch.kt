@@ -1,11 +1,16 @@
 package com.crazylegend.subhub.dialogs
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.os.bundleOf
+import androidx.documentfile.provider.DocumentFile
 import com.crazylegend.kotlinextensions.activity.remove
 import com.crazylegend.kotlinextensions.animations.attentionShake
 import com.crazylegend.kotlinextensions.animations.playAnimation
 import com.crazylegend.kotlinextensions.fragments.launchActivity
+import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.views.clearError
 import com.crazylegend.kotlinextensions.views.getString
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
@@ -13,12 +18,10 @@ import com.crazylegend.kotlinextensions.views.setTheText
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.activities.LoadSubtitlesActivity
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
-import com.crazylegend.subhub.consts.ANIM_TIME
-import com.crazylegend.subhub.consts.DIALOG_CHOOSE_LANGUAGE_TAG
-import com.crazylegend.subhub.consts.INTENT_MOVIE_NAME_TAG
-import com.crazylegend.subhub.consts.SAVING_STATE_MODEL
+import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.listeners.languageDSL
+import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import kotlinx.android.synthetic.main.dialog_manual_sub_search.view.*
 
 
@@ -31,20 +34,25 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
 
     private lateinit var dialogChooseLanguage: DialogChooseLanguage
     private var chosenLanguage: LanguageItem? = null
+    private var pickedDirModel: PickedDirModel? = null
+
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        view.dialog_mss_movie_name_input?.setTheText(arguments?.getString(INTENT_MOVIE_NAME_TAG)
+                ?: "")
+
         view.dialog_mss_cancel?.setOnClickListenerCooldown {
             dismissAllowingStateLoss()
         }
 
         view.dialog_mss_language_input?.setOnClickListenerCooldown {
-            childFragmentManager.findFragmentByTag(DIALOG_CHOOSE_LANGUAGE_TAG)?.remove()
-            dialogChooseLanguage = DialogChooseLanguage()
-            dialogChooseLanguage.show(childFragmentManager, DIALOG_CHOOSE_LANGUAGE_TAG)
-            dialogChooseLanguage.onLanguageChosen = languageDSL {
-                chosenLanguage = it
-                view.dialog_mss_language_input?.setTheText(it.name)
-            }
+            showDialogChooseLanguage()
+        }
+
+        view.dialog_mss_download_location_input?.setOnClickListenerCooldown {
+            pickDownloadDirectory()
         }
 
         view.dialog_mss_submit?.setOnClickListenerCooldown {
@@ -52,31 +60,96 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
             movieName ?: return@setOnClickListenerCooldown
             movieName.clearError()
 
+            val directory = view.dialog_mss_download_location_input
+            directory ?: return@setOnClickListenerCooldown
+            directory.clearError()
+
+            val language = view.dialog_mss_language_input
+            language ?: return@setOnClickListenerCooldown
+            language.clearError()
+
             if (movieName.getString.isEmpty()) {
-                movieName.let {
-                    it.attentionShake().playAnimation(ANIM_TIME)
-                    it.error = getString(R.string.empty_field)
+                movieName.apply {
+                    attentionShake().playAnimation(ANIM_TIME)
+                    error = getString(R.string.empty_field)
                 }
+                return@setOnClickListenerCooldown
+            }
+
+            if (pickedDirModel == null) {
+                directory.apply {
+                    attentionShake().playAnimation(ANIM_TIME)
+                    error = getString(R.string.empty_field)
+                }
+                return@setOnClickListenerCooldown
+            }
+
+            if (chosenLanguage == null) {
+                showDialogChooseLanguage()
+                language.apply {
+                    attentionShake().playAnimation(ANIM_TIME)
+                    error = getString(R.string.empty_field)
+                }
+                component.subToast.jobToast(getString(R.string.pick_movie_language))
                 return@setOnClickListenerCooldown
             }
 
             launchActivity<LoadSubtitlesActivity> {
                 putExtra(INTENT_MOVIE_NAME_TAG, movieName.getString)
+                putExtra(INTENT_MOVIE_LANG_TAG, chosenLanguage)
+                putExtra(INTENT_MOVIE_DOWNLOAD_LOCATION_TAG, pickedDirModel)
             }
             dismissAllowingStateLoss()
         }
     }
 
-    override fun onViewStateRestored(savedInstanceState: Bundle?) {
-        savedInstanceState?.apply {
-            chosenLanguage = getParcelable(SAVING_STATE_MODEL)
+    private fun pickDownloadDirectory() {
+        requireActivity().openDirectory(PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE -> {
+                    val uri = data?.data ?: return
+
+                    val downloadLocation = DocumentFile.fromTreeUri(requireContext(), uri)
+                    downloadLocation ?: return
+
+                    pickedDirModel = PickedDirModel(downloadLocation.name.toString(), downloadLocation.uri.toString())
+                }
+            }
+        } else {
+            component.subToast.jobToast(getString(R.string.operation_cancelled))
         }
+    }
+
+
+    private fun showDialogChooseLanguage() {
+        childFragmentManager.findFragmentByTag(DIALOG_CHOOSE_LANGUAGE_TAG)?.remove()
+        dialogChooseLanguage = DialogChooseLanguage()
+        dialogChooseLanguage.show(childFragmentManager, DIALOG_CHOOSE_LANGUAGE_TAG)
+        dialogChooseLanguage.onLanguageChosen = languageDSL {
+            chosenLanguage = it
+            view?.dialog_mss_language_input?.setTheText(it.name)
+        }
+    }
+
+    override fun onViewStateRestored(savedInstanceState: Bundle?) {
+        chosenLanguage = savedInstanceState?.getParcelable(SAVING_STATE_MODEL)
+        pickedDirModel = savedInstanceState?.getParcelable(SAVING_PICKED_ITEM_MODEL)
         super.onViewStateRestored(savedInstanceState)
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
         outState.putParcelable(SAVING_STATE_MODEL, chosenLanguage)
+        outState.putParcelable(SAVING_PICKED_ITEM_MODEL, pickedDirModel)
         super.onSaveInstanceState(outState)
+    }
+
+    fun addArguments(videoName: String?) {
+        arguments = bundleOf(Pair(INTENT_MOVIE_NAME_TAG, videoName))
     }
 }
 

@@ -7,5 +7,20 @@
     <string name="empty_field">Field cannot be empty !</string>
     <string name="the_movie_name_title">The movie name/title</string>
     <string name="subtitles_language">Subs language</string>
-    <string name="click_here">Click here to choose language</string>
+    <string name="click_here_to_choose_language">Click here to choose language</string>
+    <string name="pick_movie_language">Choose a language !</string>
+    <string name="language_placeholder">Language: %1$s</string>
+    <string name="language_code_placeholder">Language code: %1$s</string>
+    <string name="language_name">Language name</string>
+    <string name="search_language_by_name">Search language by name</string>
+    <string name="operation_cancelled">Operation cancelled</string>
+    <string name="search_by_name">Search by name…</string>
+    <string name="location_folder">Download location folder</string>
+    <string name="click_here_to_choose_download_location">Click here to choose download location</string>
+    <string name="an_error_has_occurred">An error has occurred, try again later !</string>
+    <string name="downloads">Downloads</string>
+    <string name="sub_rating">Sub rating</string>
+    <string name="sub_language">Subtitle language: %1$s</string>
+    <string name="movie_name">Movie name: %1$s</string>
+    <string name="obtaining_subtitle_file">Obtaining subtitle file</string>
 </resources>

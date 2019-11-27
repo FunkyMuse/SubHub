@@ -7,3 +7,4 @@ package com.crazylegend.subhub.consts
 
 
 const val SAVING_STATE_MODEL = "modelToBeSaved"
+const val SAVING_PICKED_ITEM_MODEL = "savingPickedItem"

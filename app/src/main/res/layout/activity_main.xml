@@ -4,6 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <com.crazylegend.kotlinextensions.ui.ColorProgressBar
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        app:progressColor="@color/colorPrimaryDark"
+        android:visibility="gone"
+        android:id="@+id/act_main_progress"
+        android:indeterminate="true"
+        android:layout_height="wrap_content" />
 
     <include
         layout="@layout/no_folders_selected_layout"
@@ -13,6 +21,14 @@
         android:layout_marginEnd="@dimen/margin_8"
         android:id="@+id/act_main_noFolders"
         android:layout_centerInParent="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:visibility="gone"
+        android:fadeScrollbars="true"
+        android:id="@+id/act_main_videos"
+        android:layout_height="match_parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="wrap_content"

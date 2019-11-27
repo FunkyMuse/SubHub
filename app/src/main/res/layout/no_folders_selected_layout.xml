@@ -7,4 +7,5 @@
     android:text="@string/no_folders_expl"
     android:textSize="15sp"
     android:drawablePadding="10dp"
+    android:id="@+id/no_data_text"
     app:drawableEndCompat="@drawable/ic_add_folders" />

@@ -1,0 +1,170 @@
+package com.crazylegend.subhub.vms
+
+import android.app.Application
+import android.net.Uri
+import android.os.Build
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import com.crazylegend.kotlinextensions.context.shortToast
+import com.crazylegend.kotlinextensions.gson.fromJson
+import com.crazylegend.kotlinextensions.livedata.Event
+import com.crazylegend.kotlinextensions.livedata.context
+import com.crazylegend.kotlinextensions.readTextAndClose
+import com.crazylegend.kotlinextensions.rx.ioThreadScheduler
+import com.crazylegend.kotlinextensions.rx.mainThreadScheduler
+import com.crazylegend.kotlinextensions.rx.newThreadScheduler
+import com.crazylegend.kotlinextensions.rx.singleFrom
+import com.crazylegend.kotlinextensions.tryOrElse
+import com.crazylegend.subhub.R
+import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
+import com.crazylegend.subhub.consts.CHARSETS_FILE_CONST
+import com.crazylegend.subhub.core.AbstractAVM
+import com.masterwok.opensubs.OpenSubtitlesUrlBuilder
+import com.masterwok.opensubs.models.OpenSubtitleItem
+import com.masterwok.opensubs.services.OpenSubtitlesService
+import io.reactivex.rxkotlin.addTo
+import org.mozilla.universalchardet.UniversalDetector
+import java.io.File
+import java.nio.charset.Charset
+
+
+/**
+ * Created by crazy on 11/27/19 to long live and prosper !
+ */
+
+/**
+ * Template created by Hristijan to live long and prosper.
+ */
+
+class LoadSubsVM(application: Application, private val movieName: String, private val langCode: LanguageItem, private val dir: Uri) : AbstractAVM(application) {
+
+    private val jsonAssetString = application.resources.assets.open(CHARSETS_FILE_CONST).readTextAndClose()
+    private val charsetList = component.gson.fromJson<List<String>>(jsonAssetString).sortedBy { it }
+
+    private val service = OpenSubtitlesService()
+
+    private val subtitleData: MutableLiveData<Array<OpenSubtitleItem>> = MutableLiveData()
+    val subtitles: LiveData<Array<OpenSubtitleItem>> = subtitleData
+
+    private val successEventData: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val successEvent: LiveData<Event<Boolean>> get() = successEventData
+
+
+    private val loadingEventData: MutableLiveData<Event<Boolean>> = MutableLiveData()
+    val loadingEvent: LiveData<Event<Boolean>> get() = loadingEventData
+
+    init {
+        loadSubtitles()
+    }
+
+    private fun loadSubtitles() {
+
+        val url = OpenSubtitlesUrlBuilder()
+                .query(movieName)
+                .subLanguageId(langCode.code)
+                .build()
+
+        service.searchSingle(OpenSubtitlesService.TemporaryUserAgent, url)
+                .subscribeOn(ioThreadScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribe({
+                    subtitleData.value = it
+                }, {
+                    it.printStackTrace()
+                }).addTo(component.compositeDisposable)
+
+    }
+
+
+    fun downloadSRT(item: OpenSubtitleItem, downloadUri: Uri) {
+
+        service.downloadSubtitleCompletable(context, item, downloadUri)
+                .subscribeOn(ioThreadScheduler)
+                .observeOn(mainThreadScheduler)
+                .subscribe({
+                    modifyFile(downloadUri)
+                    //modifyFile(downloadUri)
+                }, {
+                    it.printStackTrace()
+                    successEventData.value = Event(false)
+                }).addTo(component.compositeDisposable)
+
+    }
+
+    private fun modifyFile(srtLocation: Uri) {
+        context.contentResolver.openInputStream(srtLocation).use { inputStream ->
+            inputStream ?: return@use
+
+            val charset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                tryOrElse(Charsets.UTF_8) {
+                    val detector = UniversalDetector.detectCharset(inputStream)
+                    Charset.forName(detector) ?: checkIfValueIsInAssetsListOrElse(langCode.name)
+                }
+            } else {
+                checkIfValueIsInAssetsListOrElse(langCode.name)
+            }
+
+            modifyFile(charset, inputStream)
+        }
+    }
+
+
+    private fun modifyFile(srtLocation: File) {
+        loadingEventData.value = Event(true)
+        context.shortToast(context.getString(R.string.obtaining_subtitle_file))
+        if (srtLocation.name.endsWith(".srt")) {
+
+            val charset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                tryOrElse(Charsets.UTF_8) {
+                    val detector = UniversalDetector.detectCharset(srtLocation)
+                    Charset.forName(detector) ?: checkIfValueIsInAssetsListOrElse(langCode.name)
+                }
+            } else {
+                checkIfValueIsInAssetsListOrElse(langCode.name)
+            }
+
+            singleFrom {
+                modifyFile(charset, srtLocation)
+            }.subscribeOn(newThreadScheduler)
+                    .observeOn(mainThreadScheduler)
+                    .subscribe({
+                        successEventData.value = Event(true)
+                    }, {
+                        it.printStackTrace()
+                    }).addTo(component.compositeDisposable)
+        }
+    }
+
+    private fun checkIfValueIsInAssetsListOrElse(languageFullName: String): Charset {
+        val languageExist = charsetList.find {
+            it.split(" ")[0].toLowerCase() == languageFullName.toLowerCase()
+        }
+
+        return if (languageExist != null) {
+            val charset = languageExist.split(" ")[1]
+            Charset.forName(charset)
+        } else {
+            Charsets.UTF_8
+        }
+    }
+
+    private fun modifyFile(charset: Charset, file: File) {
+
+        val text = file.readLines(charset)
+        file.outputStream().use {
+            it.write(ByteArray(0))
+        }
+        text.map {
+            String(it.toByteArray(), Charsets.UTF_8)
+        }.forEach {
+            file.appendText(it, Charsets.UTF_8)
+            file.appendText("\n")
+
+        }
+        text.forEach {
+            val testText = String(it.toByteArray(), Charsets.UTF_8)
+            file.appendText(testText, Charsets.UTF_8)
+        }
+    }
+
+}

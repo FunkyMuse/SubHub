@@ -4,13 +4,12 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.crazylegend.kotlinextensions.NEW_LINE
+import com.crazylegend.kotlinextensions.context.rateUs
+import com.crazylegend.kotlinextensions.intent.openWebPage
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.activities.SettingsActivity
-import com.crazylegend.subhub.consts.DELETE_CACHE_PREF
-import com.crazylegend.subhub.consts.PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE
-import com.crazylegend.subhub.consts.PREFERRED_DOWNLOAD_LOCATION_PREF
-import com.crazylegend.subhub.consts.PREFERRED_LANGUAGE_PREF
+import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.di.core.CoreComponentImpl
 import com.crazylegend.subhub.di.fragment.FragmentComponentImpl
 import com.crazylegend.subhub.listeners.onDirChosenDSL
@@ -28,12 +27,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private var languagePref: Preference? = null
     private var deleteCache: Preference? = null
+    private var rateUs: Preference? = null
+    private var movieDLApp: Preference? = null
     private var downloadLocationPref: Preference? = null
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
         languagePref = findPreference(PREFERRED_LANGUAGE_PREF)
         downloadLocationPref = findPreference(PREFERRED_DOWNLOAD_LOCATION_PREF)
         deleteCache = findPreference(DELETE_CACHE_PREF)
+        rateUs = findPreference(RATE_US_PREF_KEY)
+        movieDLApp = findPreference(CHECKOUT_MOVIE_APP_KEY)
 
         val lang = fragmentComponent.getLanguagePref
         val dlLocation = fragmentComponent.getDownloadLocationPref
@@ -112,6 +115,10 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
 
+        rateUs?.setOnPreferenceClickListener {
+            requireContext().rateUs()
+            true
+        }
 
         SettingsActivity.onDirChosen = onDirChosenDSL {
             it.apply {
@@ -120,6 +127,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_dl_location, name)
                 downloadLocationPref?.summary = modifiedSummary
             }
+        }
+
+        movieDLApp?.setOnPreferenceClickListener {
+            requireContext().openWebPage(MOVIE_APP_LINK)
+            true
         }
     }
 

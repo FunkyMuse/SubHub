@@ -57,4 +57,9 @@
     <string name="search">Search</string>
     <string name="subtitles_search">Subtitles search…</string>
     <string name="video_source_folders">Folder sources</string>
+    <string name="movie_dl_app">Movie downloader app</string>
+    <string name="checkout_app">Use this app to download movies</string>
+    <string name="customizations">Customizations</string>
+    <string name="rate_us">Rate us</string>
+    <string name="content">Content</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.crazylegend.subhub
 
 import android.app.Application
+import io.reactivex.plugins.RxJavaPlugins
 
 
 /**
@@ -11,5 +12,13 @@ class AppLevel : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        RxJavaPlugins.setErrorHandler { }
+
+        /*Crashlytics.Builder()
+                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
+                .build()
+                .also { crashlyticsKit ->
+                    Fabric.with(this, crashlyticsKit)
+                }*/
     }
 }

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "596186002048",
+    "firebase_url": "https://subhub-a1f8b.firebaseio.com",
+    "project_id": "subhub-a1f8b",
+    "storage_bucket": "subhub-a1f8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:596186002048:android:267e26b1f26a6f729cec65",
+        "android_client_info": {
+          "package_name": "com.crazylegend.subhub"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "596186002048-ead6b26pdutjst63t7h7vadods2k3jq1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAo753oznFuHG6Q6RiEsM_G4n58kgMtE5M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "596186002048-ead6b26pdutjst63t7h7vadods2k3jq1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

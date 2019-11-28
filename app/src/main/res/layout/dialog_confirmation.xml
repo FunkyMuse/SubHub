@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginTop="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        app:cardCornerRadius="@dimen/margin_8"
+        android:layout_marginBottom="3dp"
+        app:cardBackgroundColor="@color/helperColor"
+        android:id="@+id/dialog_confirmation_cancel_button"
+        android:layout_height="40dp">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="match_parent"
+            app:srcCompat="@drawable/ic_close"
+            android:padding="4dp"
+            app:tint="@color/backgroundColor"
+            android:layout_height="match_parent" />
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_confirmation_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_8"
+        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_below="@+id/dialog_confirmation_cancel_button"
+        android:padding="10dp"
+        android:textSize="16sp" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/dialog_confirmation_subtitle_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_confirmation_title_text"
+        android:layout_marginStart="@dimen/margin_24"
+        android:layout_marginEnd="@dimen/margin_24"
+        android:padding="10dp"
+        android:textColor="@color/disabledColor"
+        android:textSize="14sp"
+        android:visibility="gone" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_confirmation_subtitle_text"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_confirmation_left_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_24"
+            android:layout_weight="0.5" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/dialog_confirmation_right_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_24"
+            android:layout_weight="0.5" />
+
+    </LinearLayout>
+
+</RelativeLayout>

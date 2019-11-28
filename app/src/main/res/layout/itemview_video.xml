@@ -6,43 +6,22 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_video_img"
         android:layout_width="85dp"
-        android:layout_centerVertical="true"
         android:layout_height="85dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/iv_video_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
         android:layout_margin="@dimen/margin_16"
         android:layout_toEndOf="@id/iv_video_img" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/iv_video_size"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_video_name"
+        android:layout_below="@id/iv_video_img"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginEnd="@dimen/margin_16"
-        android:layout_toEndOf="@id/iv_video_img"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/iv_video_type"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_8"
-            android:layout_weight="0.5"
-            android:padding="5dp" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/iv_video_size"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_8"
-            android:layout_weight="0.5"
-            android:padding="5dp" />
-
-    </LinearLayout>
-
-
+        android:padding="@dimen/margin_8" />
 </RelativeLayout>

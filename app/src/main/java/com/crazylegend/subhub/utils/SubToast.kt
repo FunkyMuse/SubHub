@@ -17,7 +17,7 @@ class SubToast(private val context: Context) {
 
     private var toast: Toast? = null
     private val drawablePadding = 1
-    private val textPadding = 3
+    private val textPadding = 5
     private val textViewSize = 15f
 
     fun jobToast(message: String, length: Int = Toast.LENGTH_SHORT) {

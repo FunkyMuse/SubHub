@@ -3,7 +3,7 @@ package com.crazylegend.subhub.pickedDirs
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
-import androidx.room.OnConflictStrategy.REPLACE
+import androidx.room.OnConflictStrategy.IGNORE
 import androidx.room.Query
 import kotlinx.coroutines.flow.Flow
 
@@ -18,7 +18,7 @@ interface PickedDirDAO {
     @Query("select * from pickedDirs")
     fun getAllDirs(): Flow<List<PickedDirModel>>
 
-    @Insert(onConflict = REPLACE)
+    @Insert(onConflict = IGNORE)
     suspend fun insertDir(dirModel: PickedDirModel)
 
     @Delete

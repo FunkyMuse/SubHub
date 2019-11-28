@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/iv_pd_folder_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/iv_pd_folder"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:padding="@dimen/margin_8" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_pd_folder"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_margin="@dimen/margin_8"
+        android:layout_centerVertical="true"
+        app:srcCompat="@drawable/ic_folder" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/iv_pd_video_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/iv_pd_folder_name"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_toEndOf="@id/iv_pd_folder"
+        android:padding="@dimen/margin_8" />
+
+</RelativeLayout>

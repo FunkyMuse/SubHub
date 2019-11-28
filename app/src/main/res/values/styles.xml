@@ -7,6 +7,7 @@
         <item name="android:windowBackground">@color/backgroundColor</item>
         <item name="android:textColor">@color/helperColor</item>
         <item name="android:fontFamily">@font/gilroy_medium</item>
+        <item name="android:textColorSecondary">@color/disabledColor</item>
     </style>
 
     <style name="TextInputStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">

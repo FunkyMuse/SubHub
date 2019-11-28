@@ -9,10 +9,17 @@
         android:layout_centerHorizontal="true"
         app:progressColor="@color/colorPrimaryDark"
         android:visibility="gone"
+        android:id="@+id/act_fs_progress"
         android:elevation="5dp"
-        android:id="@+id/act_loaded_subs_progress"
         android:indeterminate="true"
         android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="true"
+        android:id="@+id/act_fs_folder_sources"
+        android:layout_height="match_parent" />
 
     <include
         layout="@layout/no_data_text"
@@ -21,14 +28,18 @@
         android:layout_marginStart="@dimen/margin_8"
         android:layout_marginEnd="@dimen/margin_8"
         android:visibility="gone"
-        android:id="@+id/act_loaded_subs_no_subs"
+        android:id="@+id/act_fs_no_sources_layout"
         android:layout_centerInParent="true" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="true"
-        android:id="@+id/act_loaded_subs_recycler"
-        android:layout_height="match_parent" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="wrap_content"
+        android:src="@drawable/ic_add_folders"
+        android:backgroundTint="@color/colorAccent"
+        app:backgroundTint="@color/backgroundColor"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/act_fs_add"
+        android:layout_margin="@dimen/margin_16"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

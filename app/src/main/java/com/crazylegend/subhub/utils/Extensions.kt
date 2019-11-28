@@ -3,7 +3,10 @@ package com.crazylegend.subhub.utils
 import android.content.Context
 import android.content.Intent
 import androidx.documentfile.provider.DocumentFile
+import com.crazylegend.kotlinextensions.containsAny
+import com.crazylegend.subhub.consts.SUPPORTED_FILE_FORMATS
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import java.util.*
 
 
 /**
@@ -16,3 +19,31 @@ fun Intent?.toPickedDirModel(context: Context): PickedDirModel? {
     pickedDir ?: return null
     return PickedDirModel(pickedDir.name.toString(), pickedDir.uri.toString())
 }
+
+
+fun getSafFiles(files: Array<DocumentFile>?, onFileCallback: (documentFile: DocumentFile) -> Unit = {}) {
+    files?.apply {
+        for (file in files) {
+            if (file.isDirectory) {
+                getSafFiles(file.listFiles(), onFileCallback)
+            } else {
+                onFileCallback.invoke(file)
+            }
+        }
+    }
+}
+
+fun countSafVideoFiles(files: Array<DocumentFile>?, shouldIncrement: () -> Unit = {}) {
+    files?.apply {
+        for (file in files) {
+            if (file.isDirectory) {
+                countSafVideoFiles(file.listFiles(), shouldIncrement)
+            } else {
+                if (file.type.toString().toLowerCase(Locale.ROOT).containsAny(*SUPPORTED_FILE_FORMATS)) {
+                    shouldIncrement.invoke()
+                }
+            }
+        }
+    }
+}
+

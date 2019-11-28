@@ -1,10 +1,11 @@
 package com.crazylegend.subhub.core
 
-import android.R
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.crazylegend.kotlinextensions.context.showBackButton
+import com.crazylegend.subhub.di.activity.ActivityComponentImpl
 import com.crazylegend.subhub.di.core.CoreComponentImpl
 
 
@@ -13,8 +14,10 @@ import com.crazylegend.subhub.di.core.CoreComponentImpl
  */
 abstract class AbstractActivity(contentLayoutId: Int) : AppCompatActivity(contentLayoutId) {
 
+    abstract val showBack: Boolean
+
     val component by lazy {
-        CoreComponentImpl(application)
+        ActivityComponentImpl(this, CoreComponentImpl(application))
     }
 
     override fun onDestroy() {
@@ -27,12 +30,15 @@ abstract class AbstractActivity(contentLayoutId: Int) : AppCompatActivity(conten
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (showBack) {
+            showBackButton()
+        }
         linearLayoutManager = LinearLayoutManager(this)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
-            R.id.home -> {
+            android.R.id.home -> {
                 finish()
                 true
             }

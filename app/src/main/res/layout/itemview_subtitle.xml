@@ -68,6 +68,8 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
                     android:layout_gravity="center"
                     android:text="@string/downloads" />
 
@@ -87,6 +89,8 @@
                 <androidx.appcompat.widget.AppCompatTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorAccent"
                     android:layout_gravity="center"
                     android:text="@string/sub_rating" />
 

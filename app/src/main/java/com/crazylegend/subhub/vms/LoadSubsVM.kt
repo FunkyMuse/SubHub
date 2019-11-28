@@ -65,6 +65,7 @@ class LoadSubsVM(
     }
 
     private fun loadSubtitles() {
+        loadingEventData.value = Event(true)
 
         val url = OpenSubtitlesUrlBuilder()
                 .query(movieName)
@@ -76,8 +77,10 @@ class LoadSubsVM(
                 .observeOn(mainThreadScheduler)
                 .subscribe({
                     subtitleData.value = it
+                    loadingEventData.value = Event(false)
                 }, {
                     it.printStackTrace()
+                    loadingEventData.value = Event(false)
                 }).addTo(component.compositeDisposable)
 
     }
@@ -100,7 +103,7 @@ class LoadSubsVM(
 
     private fun modifyFile(srtLocation: File) {
         loadingEventData.value = Event(true)
-        component.subToast.jobToast(context.getString(R.string.obtaining_sub_file))
+        component.toaster.jobToast(context.getString(R.string.obtaining_sub_file))
         if (srtLocation.name.endsWith(SRT_TYPE)) {
 
             val charset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

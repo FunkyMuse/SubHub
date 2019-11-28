@@ -1,21 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:tools="http://schemas.android.com/tools"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:ignore="AlwaysShowAction">
 
     <item
         android:id="@+id/mam_search"
         android:icon="@drawable/ic_search"
-        android:title="@string/search_by_name"
+        android:title=""
         android:visible="false"
-        app:showAsAction="always|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:showAsAction="always|collapseActionView" />
 
     <item
         android:id="@+id/mam_folders"
         android:icon="@drawable/ic_folder"
         android:title=""
         android:visible="false"
-        app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
+        app:showAsAction="always" />
+
+    <item
+        android:id="@+id/mam_settings"
+        android:icon="@drawable/ic_settings"
+        android:title=""
+        app:showAsAction="always" />
+
 </menu>

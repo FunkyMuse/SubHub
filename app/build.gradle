@@ -25,19 +25,17 @@ android {
     buildTypes {
 
         debug {
-            minifyEnabled false
+            minifyEnabled true
            /* manifestPlaceholders = [crashlytics: "false"]
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false*/
             crunchPngs false
-            shrinkResources false
-/*
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-*/
         }
 
         release {
-         /*   manifestPlaceholders = [crashlytics: "true"]
+          /*  manifestPlaceholders = [crashlytics: "true"]
             ext.enableCrashlytics = true*/
             minifyEnabled true
             shrinkResources true

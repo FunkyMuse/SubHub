@@ -12,9 +12,7 @@ class LocalVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     fun bind(item: LocalVideoItem) {
         itemView.iv_video_img?.loadImgNoCache(item.photoUri)
         itemView.iv_video_name?.setPrecomputedTextOrHide(item.videoName)
-        itemView.iv_video_type?.setPrecomputedTextOrHide(item.videoType)
         itemView.iv_video_size?.setPrecomputedText(item.videoSize.toFileSizeString().toString())
-
     }
 
 }

@@ -33,6 +33,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var rateUs: Preference? = null
     private var movieDLApp: Preference? = null
     private var version: Preference? = null
+    private var privacyPolicy: Preference? = null
     private var downloadLocationPref: Preference? = null
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
@@ -41,6 +42,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
         downloadLocationPref = findPreference(PREFERRED_DOWNLOAD_LOCATION_PREF)
         deleteCache = findPreference(DELETE_CACHE_PREF)
         rateUs = findPreference(RATE_US_PREF_KEY)
+        privacyPolicy = findPreference(PRIVACY_POLICY_PREF_KEY)
         movieDLApp = findPreference(CHECKOUT_MOVIE_APP_KEY)
 
         version?.summary = requireContext().packageVersionName
@@ -126,6 +128,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         movieDLApp?.setOnPreferenceClickListener {
             requireContext().openWebPage(MOVIE_APP_LINK)
+            true
+        }
+
+        privacyPolicy?.setOnPreferenceClickListener {
+            requireContext().openWebPage(PRIVACY_POLICY_LINK)
             true
         }
     }

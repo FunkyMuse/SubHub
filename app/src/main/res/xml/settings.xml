@@ -46,6 +46,11 @@
 
         <Preference
             app:iconSpaceReserved="false"
+            app:key="settings_pref_privacy_policy"
+            app:title="@string/privacy_policy" />
+
+        <Preference
+            app:iconSpaceReserved="false"
             app:key="settings_pref_version_code"
             app:title="@string/version" />
 

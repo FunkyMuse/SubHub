@@ -10,7 +10,6 @@ import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
 import com.crazylegend.kotlinextensions.database.handle
-import com.crazylegend.kotlinextensions.intent.playMedia
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.views.gone
@@ -50,7 +49,6 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         component.setupRecycler(act_main_videos, linearLayoutManager, localVideoAdapter, true)
 
         act_main_manual_search?.setOnClickListenerCooldown {
@@ -100,10 +98,6 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         localVideoAdapter.forItemClickListener = forItemClickListenerDSL { _, item, _ ->
             component.showDialogManualSubtitleSearch(supportFragmentManager, item.videoName)
         }
-
-        localVideoAdapter.onLongClickListener = forItemClickListenerDSL { _, item, _ ->
-            playMedia(item.photoUri)
-        }
     }
 
     private fun handleSuccess(list: List<PickedDirModel>) {
@@ -122,8 +116,6 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
             component.pickedDirVM.postVideos(adapterList)
         }
     }
-
-
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_activity_menu, menu)

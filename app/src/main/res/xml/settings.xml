@@ -44,6 +44,12 @@
             app:key="settings_pref_rate_us"
             app:title="@string/rate_us" />
 
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="settings_pref_version_code"
+            app:title="@string/version" />
+
+
     </PreferenceCategory>
 
 

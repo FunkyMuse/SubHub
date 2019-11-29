@@ -4,15 +4,18 @@ import android.os.Bundle
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import com.crazylegend.kotlinextensions.NEW_LINE
+import com.crazylegend.kotlinextensions.context.packageVersionName
 import com.crazylegend.kotlinextensions.context.rateUs
 import com.crazylegend.kotlinextensions.intent.openWebPage
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.activities.SettingsActivity
+import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.di.core.CoreComponentImpl
 import com.crazylegend.subhub.di.fragment.FragmentComponentImpl
 import com.crazylegend.subhub.listeners.onDirChosenDSL
+import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 
 
@@ -29,35 +32,32 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var deleteCache: Preference? = null
     private var rateUs: Preference? = null
     private var movieDLApp: Preference? = null
+    private var version: Preference? = null
     private var downloadLocationPref: Preference? = null
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
+        version = findPreference(VERSION_PREF_KEY)
         languagePref = findPreference(PREFERRED_LANGUAGE_PREF)
         downloadLocationPref = findPreference(PREFERRED_DOWNLOAD_LOCATION_PREF)
         deleteCache = findPreference(DELETE_CACHE_PREF)
         rateUs = findPreference(RATE_US_PREF_KEY)
         movieDLApp = findPreference(CHECKOUT_MOVIE_APP_KEY)
 
+        version?.summary = requireContext().packageVersionName
+
         val lang = fragmentComponent.getLanguagePref
         val dlLocation = fragmentComponent.getDownloadLocationPref
 
         lang?.apply {
-            val summary = languagePref?.summary?.toString()
-            summary ?: return@apply
-            val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_language, name)
-            languagePref?.summary = modifiedSummary
+            updateLanguageSummary(this)
         }
 
         dlLocation?.apply {
-            val summary = downloadLocationPref?.summary?.toString()
-            summary ?: return@apply
-            val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_dl_location, name)
-            downloadLocationPref?.summary = modifiedSummary
+            updateDirSummary(this)
         }
 
         deleteCache?.setOnPreferenceClickListener {
-            val deletionStatus = requireContext().cacheDir.deleteRecursively()
-            if (deletionStatus) {
+            if (requireContext().cacheDir.deleteRecursively()) {
                 fragmentComponent.toaster.jobToast(getString(R.string.deletion_success))
             } else {
                 fragmentComponent.toaster.jobToast(getString(R.string.deletion_failed))
@@ -78,8 +78,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )) {
                     when (it) {
                         ButtonClicked.LEFT -> {
-                            fragmentComponent.removeLanguagePref()
-                            languagePref?.summary = getString(R.string.preferred_language_expl)
+                            resetLangSummary()
                         }
                         ButtonClicked.RIGHT -> {
                             pickLanguage()
@@ -103,8 +102,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 )) {
                     when (it) {
                         ButtonClicked.LEFT -> {
-                            fragmentComponent.removeDownloadLocationPref()
-                            downloadLocationPref?.summary = getString(R.string.selected_dl_folder_expl)
+                            resetDirSummary()
                         }
                         ButtonClicked.RIGHT -> {
                             pickNewDownloadLocation()
@@ -122,10 +120,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         SettingsActivity.onDirChosen = onDirChosenDSL {
             it.apply {
-                val summary = downloadLocationPref?.summary?.toString()
-                summary ?: return@apply
-                val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_dl_location, name)
-                downloadLocationPref?.summary = modifiedSummary
+                updateDirSummary(this)
             }
         }
 
@@ -139,14 +134,38 @@ class SettingsFragment : PreferenceFragmentCompat() {
         fragmentComponent.showDialogChooseLanguage(childFragmentManager) {
             fragmentComponent.addLanguageToPrefs(it)
             it.apply {
-                val summary = languagePref?.summary?.toString()
-                summary ?: return@apply
-                val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_language, name)
-                languagePref?.summary = modifiedSummary
+                updateLanguageSummary(this)
             }
         }
     }
 
+    private fun resetDirSummary() {
+        fragmentComponent.removeDownloadLocationPref()
+        downloadLocationPref?.summary = getString(R.string.selected_dl_folder_expl)
+    }
+
+    private fun updateDirSummary(dirModel: PickedDirModel) {
+        dirModel.apply {
+            val summary = downloadLocationPref?.summary?.toString()
+            summary ?: return@apply
+            val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_dl_location, name)
+            downloadLocationPref?.summary = modifiedSummary
+        }
+    }
+
+    private fun resetLangSummary() {
+        fragmentComponent.removeLanguagePref()
+        languagePref?.summary = getString(R.string.preferred_language_expl)
+    }
+
+    private fun updateLanguageSummary(languageItem: LanguageItem) {
+        languageItem.apply {
+            val summary = languagePref?.summary?.toString()
+            summary ?: return@apply
+            val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_language, name)
+            languagePref?.summary = modifiedSummary
+        }
+    }
 
     private fun pickNewDownloadLocation() {
         requireActivity().openDirectory(PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE)

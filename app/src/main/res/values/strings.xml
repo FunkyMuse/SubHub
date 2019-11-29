@@ -46,7 +46,7 @@
     <string name="currently_selected_dl_location">Download folder: %1$s</string>
     <string name="no_subs_loaded_expl">There weren\'t any subtitles found by the search criteria you\'ve submitted !</string>
     <string name="folder_sources_no_data_expl">You can start adding folder destinations by clicking on the button in your bottom right corner.</string>
-    <string name="folder_source_hold_expl">Long click to remove a folder</string>
+    <string name="folder_source_hold_expl">Long press on a folder to remove it</string>
     <string name="okay">Okay</string>
     <string name="confirm_deletion">You\'re about to remove a folder source for your video files, are you sure ?</string>
     <string name="yes">Yes</string>
@@ -62,4 +62,5 @@
     <string name="customizations">Customizations</string>
     <string name="rate_us">Rate us</string>
     <string name="content">Content</string>
+    <string name="version">Version</string>
 </resources>

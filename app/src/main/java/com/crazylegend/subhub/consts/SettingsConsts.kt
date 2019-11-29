@@ -14,6 +14,6 @@ const val RATE_US_PREF_KEY = "settings_pref_rate_us"
 const val CHECKOUT_MOVIE_APP_KEY = "settings_pref_dl_movie_app"
 const val DL_LOCATION_PREF_KEY = "downloadLocationPrefModel"
 const val LANGUAGE_PREF_KEY = "languagePrefModelKey"
-
+const val VERSION_PREF_KEY = "settings_pref_version_code"
 
 const val MOVIE_APP_LINK = "https://play.google.com/store/apps/details?id=com.crazylegend.berg&hl=en"

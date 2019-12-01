@@ -9,9 +9,12 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
+import com.crazylegend.kotlinextensions.coroutines.defaultCoroutine
+import com.crazylegend.kotlinextensions.coroutines.withMainContext
 import com.crazylegend.kotlinextensions.database.handle
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
+import com.crazylegend.kotlinextensions.tryOrPrint
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.kotlinextensions.views.visible
@@ -85,8 +88,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
                 act_main_videos?.gone()
                 act_main_noFolders?.visible()
             } else {
-                act_main_noFolders?.gone()
-                act_main_videos?.visible()
+
                 localVideoAdapter.submitList(it)
             }
         }
@@ -104,16 +106,30 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         if (list.isEmpty()) {
             component.pickedDirVM.postVideos(mutableListOf())
         } else {
-            val adapterList = mutableListOf<LocalVideoItem>()
-            list.forEach {
-                val pickedDir = it.pickedDir(this) ?: return
-                getSafFiles(arrayOf(pickedDir)) { documentFile ->
-                    if (documentFile.type.toString().toLowerCase(Locale.ROOT).containsAny(*SUPPORTED_FILE_FORMATS)) {
-                        adapterList.add(LocalVideoItem(documentFile.uri, documentFile.name, documentFile.length()))
+            updateFoldersInTheBackground(list)
+
+        }
+    }
+
+    private fun updateFoldersInTheBackground(list: List<PickedDirModel>) {
+        defaultCoroutine {
+            tryOrPrint {
+                val adapterList = mutableListOf<LocalVideoItem>()
+                list.forEach {
+                    val pickedDir = it.pickedDir(this) ?: return@tryOrPrint
+                    getSafFiles(arrayOf(pickedDir)) { documentFile ->
+                        if (documentFile.type.toString().toLowerCase(Locale.ROOT).containsAny(*SUPPORTED_FILE_FORMATS)) {
+                            adapterList.add(LocalVideoItem(documentFile.uri, documentFile.name, documentFile.length()))
+                        }
                     }
                 }
+                component.pickedDirVM.postVideos(adapterList)
             }
-            component.pickedDirVM.postVideos(adapterList)
+
+            withMainContext {
+                act_main_noFolders?.gone()
+                act_main_videos?.visible()
+            }
         }
     }
 

@@ -63,5 +63,7 @@
     <string name="rate_us">Rate us</string>
     <string name="content">Content</string>
     <string name="version">Version</string>
+    <string name="main_banner">ca-app-pub-3874068061332875/7265345768</string>
     <string name="privacy_policy">Privacy policy</string>
+    <string name="my_other_apps">My other apps</string>
 </resources>

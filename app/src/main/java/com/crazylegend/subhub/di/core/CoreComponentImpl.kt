@@ -28,6 +28,10 @@ import com.crazylegend.subhub.listeners.onConfirmationCallbackDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 
@@ -39,6 +43,39 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
 
     override val defaultPrefs: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(application)
+    }
+
+    override val interstitialAd by lazy {
+        InterstitialAd(application)
+    }
+
+    override val adRequest: AdRequest by lazy { AdRequest.Builder().build() }
+
+
+    override fun loadInterstitialAd(adUnit: String) {
+        with(interstitialAd) {
+            adUnitId = adUnit
+            if (!isLoading) {
+                loadAd(adRequest)
+            }
+            adListener = object : AdListener() {
+                override fun onAdLoaded() {
+                    show()
+                }
+            }
+        }
+    }
+
+    override fun loadAdBanner(adView: AdView) {
+        if (!adView.isLoading)
+            adView.loadAd(adRequest)
+        /*if (premiumFeatures.areAdsDisabled) {
+            adView.gone()
+        } else {
+            adView.visible()
+            if (!adView.isLoading)
+                adView.loadAd(adRequest)
+        }*/
     }
 
 

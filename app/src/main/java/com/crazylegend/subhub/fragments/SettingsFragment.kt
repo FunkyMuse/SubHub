@@ -35,9 +35,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var version: Preference? = null
     private var privacyPolicy: Preference? = null
     private var downloadLocationPref: Preference? = null
+    private var myOtherApps: Preference? = null
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
         version = findPreference(VERSION_PREF_KEY)
+        myOtherApps = findPreference(MY_OTHER_APPS_PREF_KEY)
         languagePref = findPreference(PREFERRED_LANGUAGE_PREF)
         downloadLocationPref = findPreference(PREFERRED_DOWNLOAD_LOCATION_PREF)
         deleteCache = findPreference(DELETE_CACHE_PREF)
@@ -56,6 +58,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         dlLocation?.apply {
             updateDirSummary(this)
+        }
+
+        myOtherApps?.setOnPreferenceClickListener {
+            requireContext().openWebPage(DEV_LINK)
+            true
         }
 
         deleteCache?.setOnPreferenceClickListener {

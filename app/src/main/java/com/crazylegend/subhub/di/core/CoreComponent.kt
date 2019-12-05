@@ -13,6 +13,9 @@ import com.crazylegend.subhub.di.pickedDirDB.PickedDirComponentImpl
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 
@@ -40,4 +43,8 @@ interface CoreComponent {
     fun confirmationArguments(title: String, subtitle: String? = null, leftButtonText: String = application.getString(R.string.cancel), rightButtonText: String = application.getString(R.string.submit)): Bundle
     fun removeDownloadLocationPref()
     fun disposeResources()
+    val adRequest: AdRequest
+    fun loadAdBanner(adView: AdView)
+    val interstitialAd: InterstitialAd
+    fun loadInterstitialAd(adUnit: String)
 }

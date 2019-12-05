@@ -51,6 +51,11 @@
 
         <Preference
             app:iconSpaceReserved="false"
+            app:key="settings_pref_other_apps"
+            app:title="@string/my_other_apps" />
+
+        <Preference
+            app:iconSpaceReserved="false"
             app:key="settings_pref_version_code"
             app:title="@string/version" />
 

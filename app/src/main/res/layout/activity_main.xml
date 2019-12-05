@@ -36,10 +36,18 @@
         android:src="@drawable/ic_search"
         android:backgroundTint="@color/colorAccent"
         app:backgroundTint="@color/backgroundColor"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
+        android:layout_above="@id/act_main_adView"
         android:id="@+id/act_main_manual_search"
         android:layout_margin="@dimen/margin_16"
         android:layout_height="wrap_content"/>
+
+    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/act_main_adView"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        ads:adSize="BANNER"
+        ads:adUnitId="@string/main_banner" />
 
 </RelativeLayout>

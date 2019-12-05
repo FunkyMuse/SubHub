@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.doOnLayout
 import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
@@ -53,7 +54,9 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.setupRecycler(act_main_videos, linearLayoutManager, localVideoAdapter, true)
-
+        act_main_adView?.doOnLayout {
+            component.loadAdBanner(act_main_adView)
+        }
         act_main_manual_search?.setOnClickListenerCooldown {
             component.showDialogManualSubtitleSearch(supportFragmentManager)
         }

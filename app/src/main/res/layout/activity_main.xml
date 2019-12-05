@@ -27,6 +27,8 @@
         android:layout_width="match_parent"
         android:scrollbars="vertical"
         android:visibility="gone"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"
         android:fadeScrollbars="true"
         android:id="@+id/act_main_videos"
         android:layout_height="match_parent" />

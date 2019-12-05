@@ -11,7 +11,6 @@ import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
 import com.crazylegend.kotlinextensions.coroutines.defaultCoroutine
-import com.crazylegend.kotlinextensions.coroutines.withMainContext
 import com.crazylegend.kotlinextensions.database.handle
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
@@ -90,9 +89,12 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
             if (it.isEmpty()) {
                 act_main_videos?.gone()
                 act_main_noFolders?.visible()
+                component.dbResponse.hideLoadingOnly(act_main_progress)
             } else {
-
+                act_main_videos?.visible()
+                act_main_noFolders?.gone()
                 localVideoAdapter.submitList(it)
+                component.dbResponse.hideLoadingOnly(act_main_progress)
             }
         }
 
@@ -110,11 +112,12 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
             component.pickedDirVM.postVideos(mutableListOf())
         } else {
             updateFoldersInTheBackground(list)
-
         }
     }
 
     private fun updateFoldersInTheBackground(list: List<PickedDirModel>) {
+        component.dbResponse.handleLoading(act_main_progress, act_main_noFolders)
+
         defaultCoroutine {
             tryOrPrint {
                 val adapterList = mutableListOf<LocalVideoItem>()
@@ -127,11 +130,6 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
                     }
                 }
                 component.pickedDirVM.postVideos(adapterList)
-            }
-
-            withMainContext {
-                act_main_noFolders?.gone()
-                act_main_videos?.visible()
             }
         }
     }

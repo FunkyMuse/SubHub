@@ -12,6 +12,7 @@ import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
 import com.crazylegend.kotlinextensions.coroutines.defaultCoroutine
 import com.crazylegend.kotlinextensions.database.handle
+import com.crazylegend.kotlinextensions.gson.fromJsonTypeToken
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.tryOrPrint
@@ -27,9 +28,11 @@ import com.crazylegend.subhub.listeners.onDirChosen
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.getSafFiles
 import com.crazylegend.subhub.utils.toPickedDirModel
+import com.google.gson.Gson
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.activity_main.*
+import java.io.File
 import java.util.*
 
 /**
@@ -41,6 +44,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         var onDirChosen: onDirChosen? = null
     }
 
+    private var cachedJson: String? = null
     override val showBack: Boolean
         get() = false
 
@@ -53,6 +57,8 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.setupRecycler(act_main_videos, linearLayoutManager, localVideoAdapter, true)
+
+
         act_main_adView?.doOnLayout {
             component.loadAdBanner(act_main_adView)
         }
@@ -85,6 +91,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         }
 
 
+
         component.pickedDirVM.videoList.observe(this) {
             if (it.isEmpty()) {
                 act_main_videos?.gone()
@@ -93,6 +100,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
             } else {
                 act_main_videos?.visible()
                 act_main_noFolders?.gone()
+                cacheVideos(it)
                 localVideoAdapter.submitList(it)
                 component.dbResponse.hideLoadingOnly(act_main_progress)
             }
@@ -105,18 +113,50 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         localVideoAdapter.forItemClickListener = forItemClickListenerDSL { _, item, _ ->
             component.showDialogManualSubtitleSearch(supportFragmentManager, item.videoName)
         }
+
     }
+
+    private fun cacheVideos(list: List<LocalVideoItem>) {
+        if (cacheFile.exists()) {
+            val listJson = Gson().toJson(list)
+            if (cachedJson != listJson) {
+                cacheFile.writeBytes(ByteArray(0))
+                cacheFile.appendText(Gson().toJson(list))
+            }
+        } else {
+            cacheFile.writeBytes(ByteArray(0))
+            cacheFile.appendText(Gson().toJson(list))
+        }
+    }
+
+    private val cacheFile get() = File(cacheDir, "cachedVideos.json")
 
     private fun handleSuccess(list: List<PickedDirModel>) {
         if (list.isEmpty()) {
+            with(cacheFile) {
+                if (exists()) delete()
+            }
             component.pickedDirVM.postVideos(mutableListOf())
         } else {
+            component.dbResponse.handleLoading(act_main_progress, act_main_noFolders)
+
+            if (cacheFile.exists()) {
+                cachedJson = cacheFile.readText()
+                val cachedAdapterList = Gson().fromJsonTypeToken<List<LocalVideoItem>>(cachedJson
+                        ?: "")
+                if (!cachedAdapterList.isNullOrEmpty()) {
+                    act_main_videos?.visible()
+                    act_main_noFolders?.gone()
+                    component.dbResponse.hideLoadingOnly(act_main_progress)
+                    localVideoAdapter.submitList(cachedAdapterList)
+                }
+            }
+
             updateFoldersInTheBackground(list)
         }
     }
 
     private fun updateFoldersInTheBackground(list: List<PickedDirModel>) {
-        component.dbResponse.handleLoading(act_main_progress, act_main_noFolders)
 
         defaultCoroutine {
             tryOrPrint {
@@ -125,7 +165,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
                     val pickedDir = it.pickedDir(this) ?: return@tryOrPrint
                     getSafFiles(arrayOf(pickedDir)) { documentFile ->
                         if (documentFile.type.toString().toLowerCase(Locale.ROOT).containsAny(*SUPPORTED_FILE_FORMATS)) {
-                            adapterList.add(LocalVideoItem(documentFile.uri, documentFile.name, documentFile.length()))
+                            adapterList.add(LocalVideoItem(documentFile.uri.toString(), documentFile.name, documentFile.length()))
                         }
                     }
                 }
@@ -139,9 +179,24 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
         val searchItem = menu?.findItem(R.id.mam_search)
         val folders = menu?.findItem(R.id.mam_folders)
-        component.pickedDirVM.videoList.observe(this) {
-            searchItem?.isVisible = !it.isNullOrEmpty()
-            folders?.isVisible = !it.isNullOrEmpty()
+        component.pickedDirVM.pickedDirs.observe(this) {
+            it.handle({
+                //querying DB
+
+            }, {
+                //empty DB
+                searchItem?.isVisible = false
+                folders?.isVisible = false
+            }, { // db error
+                throwable ->
+                throwable.printStackTrace()
+                searchItem?.isVisible = false
+                folders?.isVisible = false
+            }, {
+                //Success
+                searchItem?.isVisible = !isNullOrEmpty()
+                folders?.isVisible = !isNullOrEmpty()
+            })
         }
 
         searchView = searchItem?.actionView as? SearchView

@@ -33,9 +33,10 @@ fun getSafFiles(files: Array<DocumentFile>?, onFileCallback: (documentFile: Docu
     }
 }
 
-fun countSafVideoFiles(files: Array<DocumentFile>?, shouldIncrement: () -> Unit = {}) {
-    files?.apply {
+fun countSafVideoFiles(files: Array<DocumentFile?>, shouldIncrement: () -> Unit = {}) {
+    files.apply {
         for (file in files) {
+            file ?: return
             if (file.isDirectory) {
                 countSafVideoFiles(file.listFiles(), shouldIncrement)
             } else {

@@ -3,6 +3,7 @@ package com.crazylegend.subhub.activities
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.context.isIntentResolvable
 import com.crazylegend.kotlinextensions.context.snackBar
@@ -32,11 +33,13 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
         get() = true
 
     private val adapter by lazy {
-        PickedDirsAdapter()
+        PickedDirsAdapter(lifecycleScope)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        act_fs_no_sources_layout.no_data_text?.setPrecomputedText(getString(R.string.folder_sources_no_data_expl))
 
         if (!isSnackbarFolderSourcesShown) {
             snackBar(getString(R.string.folder_source_hold_expl), getString(R.string.okay), Snackbar.LENGTH_INDEFINITE) {
@@ -45,7 +48,6 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
         }
 
         component.setupRecycler(act_fs_folder_sources, linearLayoutManager, adapter, true)
-        act_fs_no_sources_layout.no_data_text?.setPrecomputedText(getString(R.string.folder_sources_no_data_expl))
         act_fs_add.setOnClickListenerCooldown {
             openDirectory(PICK_DIRECTORY_REQUEST_CODE)
         }

@@ -10,8 +10,8 @@ android {
         applicationId "com.crazylegend.subhub"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2
-        versionName "1.0.01"
+        versionCode 3
+        versionName "1.0.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -26,12 +26,12 @@ android {
     buildTypes {
 
         debug {
-            minifyEnabled true
+            minifyEnabled false
             manifestPlaceholders = [crashlytics: "false"]
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
             crunchPngs false
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 

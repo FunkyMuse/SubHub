@@ -41,7 +41,6 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         chosenLanguage = component.getLanguagePref
         pickedDirModel = component.getDownloadLocationPref
 
-        debug("ARE BOTH NULL ${chosenLanguage == null} ${pickedDirModel == null}")
         chosenLanguage?.apply {
             view.dialog_mss_language_input?.setTheText(name)
         }

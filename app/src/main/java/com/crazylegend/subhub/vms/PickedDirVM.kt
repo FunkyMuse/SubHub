@@ -27,7 +27,10 @@ class PickedDirVM(application: Application) : AbstractAVM(application) {
     private val pickedDirRepo = PickedDirRepo(viewModelScope, component.pickedDirComponent.database?.dao())
 
     init {
+        initDirs()
+    }
 
+    private fun initDirs() {
         pickedDirRepo.getAllDirs(pickedDirData)
     }
 

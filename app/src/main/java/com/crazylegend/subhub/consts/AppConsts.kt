@@ -23,3 +23,5 @@ const val SRT_TYPE = ".srt"
 val SUPPORTED_FILE_FORMATS = arrayOf("mp4", "avi", "mkv", "3gp", "video")
 const val DEV_LINK = "https://play.google.com/store/apps/dev?id=8431819697024852656"
 const val CA_ID = "ca-app-pub-3874068061332875~1330492809"
+
+const val CACHE_JSON = "cachedVideos.json"

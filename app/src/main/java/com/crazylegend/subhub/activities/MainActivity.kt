@@ -8,11 +8,13 @@ import android.view.MenuItem
 import androidx.appcompat.widget.SearchView
 import androidx.core.view.doOnLayout
 import androidx.lifecycle.observe
+import com.crazylegend.kotlinextensions.collections.addIfNotExist
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
 import com.crazylegend.kotlinextensions.coroutines.defaultCoroutine
 import com.crazylegend.kotlinextensions.database.handle
 import com.crazylegend.kotlinextensions.gson.fromJsonTypeToken
+import com.crazylegend.kotlinextensions.md5
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.tryOrPrint
@@ -129,7 +131,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         }
     }
 
-    private val cacheFile get() = File(cacheDir, "cachedVideos.json")
+    private val cacheFile get() = File(cacheDir, CACHE_JSON)
 
     private fun handleSuccess(list: List<PickedDirModel>) {
         if (list.isEmpty()) {
@@ -165,7 +167,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
                     val pickedDir = it.pickedDir(this) ?: return@tryOrPrint
                     getSafFiles(arrayOf(pickedDir)) { documentFile ->
                         if (documentFile.type.toString().toLowerCase(Locale.ROOT).containsAny(*SUPPORTED_FILE_FORMATS)) {
-                            adapterList.add(LocalVideoItem(documentFile.uri.toString(), documentFile.name, documentFile.length()))
+                            adapterList.addIfNotExist(LocalVideoItem(documentFile.uri.toString(), documentFile.name, documentFile.length(), "${documentFile.name.toString()}${documentFile.length()}".md5))
                         }
                     }
                 }

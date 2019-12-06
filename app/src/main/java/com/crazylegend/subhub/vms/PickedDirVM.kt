@@ -42,7 +42,9 @@ class PickedDirVM(application: Application) : AbstractAVM(application) {
     val videoList: MutableLiveData<List<LocalVideoItem>> = videoListData
 
     fun postVideos(adapterList: MutableList<LocalVideoItem>) {
-        videoListData.postValue(adapterList)
+        videoListData.postValue(adapterList.distinctBy {
+            it.md5
+        })
     }
 
     private val videoListDataFiltered: MutableLiveData<List<LocalVideoItem>> = MutableLiveData()

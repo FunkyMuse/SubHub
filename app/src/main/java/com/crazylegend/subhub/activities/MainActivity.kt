@@ -20,6 +20,7 @@ import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.tryOrPrint
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
+import com.crazylegend.kotlinextensions.views.setPrecomputedText
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.localVideos.LocalVideoAdapter
@@ -34,6 +35,7 @@ import com.google.gson.Gson
 import com.jakewharton.rxbinding3.appcompat.queryTextChanges
 import io.reactivex.rxkotlin.addTo
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.no_folders_selected_layout.view.*
 import java.io.File
 import java.util.*
 
@@ -98,6 +100,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
             if (it.isEmpty()) {
                 act_main_videos?.gone()
                 act_main_noFolders?.visible()
+                act_main_noFolders?.no_data_text?.setPrecomputedText(getString(R.string.no_videos_available))
                 component.dbResponse.hideLoadingOnly(act_main_progress)
             } else {
                 act_main_videos?.visible()
@@ -138,6 +141,7 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
             with(cacheFile) {
                 if (exists()) delete()
             }
+            act_main_noFolders?.no_data_text?.setPrecomputedText(getString(R.string.no_folders_expl))
             component.pickedDirVM.postVideos(mutableListOf())
         } else {
             component.dbResponse.handleLoading(act_main_progress, act_main_noFolders)

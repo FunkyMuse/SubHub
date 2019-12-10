@@ -66,4 +66,5 @@
     <string name="main_banner">ca-app-pub-3874068061332875/7265345768</string>
     <string name="privacy_policy">Privacy policy</string>
     <string name="my_other_apps">My other apps</string>
+    <string name="no_videos_available">No movies available with the supported subtitles format.</string>
 </resources>

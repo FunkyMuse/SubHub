@@ -81,7 +81,7 @@ dependencies {
     //util
     implementation 'com.github.albfernandez:juniversalchardet:2.3.0'
     implementation 'com.github.CraZyLegenD:open-subtitles-android:0.0.11'
-    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.88.22'
+    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.88.23'
 
     //core
     implementation 'androidx.preference:preference:1.1.0'
@@ -92,7 +92,7 @@ dependencies {
 
     //rxjava
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.14'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.15'
     implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding-core:3.1.0'
     implementation 'com.jakewharton.rxbinding3:rxbinding-appcompat:3.1.0'

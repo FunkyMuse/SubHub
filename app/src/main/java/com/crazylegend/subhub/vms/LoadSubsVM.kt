@@ -7,9 +7,9 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.crazylegend.kotlinextensions.gson.fromJson
+import com.crazylegend.kotlinextensions.inputstream.readTextAndClose
 import com.crazylegend.kotlinextensions.livedata.Event
 import com.crazylegend.kotlinextensions.livedata.context
-import com.crazylegend.kotlinextensions.readTextAndClose
 import com.crazylegend.kotlinextensions.rx.ioThreadScheduler
 import com.crazylegend.kotlinextensions.rx.mainThreadScheduler
 import com.crazylegend.kotlinextensions.rx.newThreadScheduler

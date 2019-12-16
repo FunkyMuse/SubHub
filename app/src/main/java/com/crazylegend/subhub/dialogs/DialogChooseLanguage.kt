@@ -3,7 +3,7 @@ package com.crazylegend.subhub.dialogs
 import android.os.Bundle
 import android.view.View
 import com.crazylegend.kotlinextensions.gson.fromJson
-import com.crazylegend.kotlinextensions.readTextAndClose
+import com.crazylegend.kotlinextensions.inputstream.readTextAndClose
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.subhub.R

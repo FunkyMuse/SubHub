@@ -12,4 +12,5 @@ import com.crazylegend.subhub.vms.PickedDirVM
 class ActivityComponentImpl(override val instance: AppCompatActivity, coreComponent: CoreComponent) : ActivityComponent, CoreComponent by coreComponent {
 
     override val pickedDirVM by instance.activityVM<PickedDirVM>()
+
 }

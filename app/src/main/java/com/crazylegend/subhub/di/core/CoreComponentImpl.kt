@@ -28,11 +28,11 @@ import com.crazylegend.subhub.listeners.onConfirmationCallbackDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.Gson
+import com.mopub.common.MoPub
+import com.mopub.common.SdkConfiguration
+import com.mopub.common.logging.MoPubLog
+import com.mopub.mobileads.MoPubView
 import io.reactivex.disposables.CompositeDisposable
 
 
@@ -45,39 +45,25 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
         PreferenceManager.getDefaultSharedPreferences(application)
     }
 
-    override val interstitialAd by lazy {
-        InterstitialAd(application)
+    override fun loadBanner(view: MoPubView, adUNit: String) {
+        view.adUnitId = adUNit
+        view.loadAd()
     }
 
-    override val adRequest: AdRequest by lazy { AdRequest.Builder().build() }
+    override fun destroyBanner(view: MoPubView) {
+        view.destroy()
+    }
 
 
-    override fun loadInterstitialAd(adUnit: String) {
-        with(interstitialAd) {
-            adUnitId = adUnit
-            if (!isLoading) {
-                loadAd(adRequest)
-            }
-            adListener = object : AdListener() {
-                override fun onAdLoaded() {
-                    show()
-                }
-            }
+    override fun initializeMoPub(adUNit: String, loadAd: () -> Unit) {
+        val sdkConfiguration = SdkConfiguration.Builder(adUNit)
+                .withLogLevel(MoPubLog.LogLevel.DEBUG)
+                .withLegitimateInterestAllowed(false)
+                .build()
+        MoPub.initializeSdk(application, sdkConfiguration) {
+            loadAd()
         }
     }
-
-    override fun loadAdBanner(adView: AdView) {
-        if (!adView.isLoading)
-            adView.loadAd(adRequest)
-        /*if (premiumFeatures.areAdsDisabled) {
-            adView.gone()
-        } else {
-            adView.visible()
-            if (!adView.isLoading)
-                adView.loadAd(adRequest)
-        }*/
-    }
-
 
     override fun addDownloadLocationToPrefs(downloadPrefModel: PickedDirModel) = defaultPrefs.putObject(DL_LOCATION_PREF_KEY, downloadPrefModel)
     override val getDownloadLocationPref get() = defaultPrefs.getObject<PickedDirModel>(DL_LOCATION_PREF_KEY)
@@ -103,9 +89,9 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
         PickedDirComponentImpl(application)
     }
 
-    override fun setupRecycler(recyclerView: RecyclerView, layoutmanager: RecyclerView.LayoutManager, listAdapter: ListAdapter<*, *>, addDivider: Boolean) {
+    override fun setupRecycler(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager, listAdapter: ListAdapter<*, *>, addDivider: Boolean) {
         recyclerView.setHasFixedSize(false)
-        recyclerView.layoutManager = layoutmanager
+        recyclerView.layoutManager = layoutManager
         recyclerView.adapter = listAdapter
         if (addDivider) {
             recyclerView.divider(recyclerView.context.getCompatColor(R.color.helperColor))

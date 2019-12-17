@@ -3,8 +3,6 @@ package com.crazylegend.subhub
 import android.app.Application
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.core.CrashlyticsCore
-import com.crazylegend.subhub.consts.CA_ID
-import com.google.android.gms.ads.MobileAds
 import io.fabric.sdk.android.Fabric
 import io.reactivex.plugins.RxJavaPlugins
 
@@ -26,6 +24,5 @@ class AppLevel : Application() {
                     Fabric.with(this, crashlyticsKit)
                 }
 
-        MobileAds.initialize(this, CA_ID)
     }
 }

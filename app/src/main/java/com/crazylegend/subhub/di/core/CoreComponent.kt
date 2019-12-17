@@ -13,10 +13,8 @@ import com.crazylegend.subhub.di.pickedDirDB.PickedDirComponentImpl
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
 import com.google.gson.Gson
+import com.mopub.mobileads.MoPubView
 import io.reactivex.disposables.CompositeDisposable
 
 
@@ -29,7 +27,7 @@ interface CoreComponent {
     val toaster: SubToast
     val gson: Gson
     val compositeDisposable: CompositeDisposable
-    fun setupRecycler(recyclerView: RecyclerView, layoutmanager: RecyclerView.LayoutManager, listAdapter: ListAdapter<*, *>, addDivider: Boolean = false)
+    fun setupRecycler(recyclerView: RecyclerView, layoutManager: RecyclerView.LayoutManager, listAdapter: ListAdapter<*, *>, addDivider: Boolean = false)
     val pickedDirComponent: PickedDirComponentImpl
     val dbResponse: DbResponseComponentImpl
     fun showDialogManualSubtitleSearch(fragmentManager: FragmentManager, videoName: String? = null)
@@ -43,8 +41,7 @@ interface CoreComponent {
     fun confirmationArguments(title: String, subtitle: String? = null, leftButtonText: String = application.getString(R.string.cancel), rightButtonText: String = application.getString(R.string.submit)): Bundle
     fun removeDownloadLocationPref()
     fun disposeResources()
-    val adRequest: AdRequest
-    fun loadAdBanner(adView: AdView)
-    val interstitialAd: InterstitialAd
-    fun loadInterstitialAd(adUnit: String)
+    fun destroyBanner(view: MoPubView)
+    fun loadBanner(view: MoPubView, adUNit: String)
+    fun initializeMoPub(adUNit: String, loadAd: () -> Unit = {})
 }

@@ -58,14 +58,23 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
     private var searchView: SearchView? = null
 
+    override fun onDestroy() {
+        super.onDestroy()
+        act_main_adView?.apply {
+            component.destroyBanner(this)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         component.setupRecycler(act_main_videos, linearLayoutManager, localVideoAdapter, true)
 
-
-        act_main_adView?.doOnLayout {
-            component.loadAdBanner(act_main_adView)
+        component.initializeMoPub(getString(R.string.main_banner)) {
+            act_main_adView?.doOnLayout {
+                component.loadBanner(act_main_adView, getString(R.string.main_banner))
+            }
         }
+
         act_main_manual_search?.setOnClickListenerCooldown {
             component.showDialogManualSubtitleSearch(supportFragmentManager)
         }

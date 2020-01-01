@@ -67,4 +67,5 @@
     <string name="main_banner">8fed68467ac448c68fdcb8519d02acb2</string>
     <string name="my_other_apps">My other apps</string>
     <string name="no_videos_available">No movies available with the supported subtitles format.</string>
+    <string name="file_manager_missing_expl">Make sure to install a document manager app !</string>
 </resources>

@@ -11,6 +11,7 @@ import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.collections.addIfNotExist
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
+import com.crazylegend.kotlinextensions.context.shortToast
 import com.crazylegend.kotlinextensions.coroutines.defaultCoroutine
 import com.crazylegend.kotlinextensions.database.handle
 import com.crazylegend.kotlinextensions.gson.fromJsonTypeToken
@@ -80,7 +81,9 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         }
 
         act_main_noFolders?.setOnClickListenerCooldown {
-            openDirectory(PICK_DIRECTORY_REQUEST_CODE)
+            openDirectory(PICK_DIRECTORY_REQUEST_CODE) {
+                shortToast(R.string.file_manager_missing_expl)
+            }
         }
 
         component.pickedDirVM.pickedDirs.observe(this) {

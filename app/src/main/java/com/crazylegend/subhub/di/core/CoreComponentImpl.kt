@@ -57,7 +57,7 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
 
     override fun initializeMoPub(adUNit: String, loadAd: () -> Unit) {
         val sdkConfiguration = SdkConfiguration.Builder(adUNit)
-                .withLogLevel(MoPubLog.LogLevel.DEBUG)
+                .withLogLevel(MoPubLog.LogLevel.NONE)
                 .withLegitimateInterestAllowed(false)
                 .build()
         MoPub.initializeSdk(application, sdkConfiguration) {

@@ -13,6 +13,7 @@ import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.kotlinextensions.context.launch
 import com.crazylegend.kotlinextensions.context.shortToast
 import com.crazylegend.kotlinextensions.coroutines.defaultCoroutine
+import com.crazylegend.kotlinextensions.database.getSuccess
 import com.crazylegend.kotlinextensions.database.handle
 import com.crazylegend.kotlinextensions.gson.fromJsonTypeToken
 import com.crazylegend.kotlinextensions.md5
@@ -143,6 +144,13 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
         } else {
             cacheFile.writeBytes(ByteArray(0))
             cacheFile.appendText(Gson().toJson(list))
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        component.pickedDirVM.pickedDirs.getSuccess?.apply {
+            handleSuccess(this)
         }
     }
 

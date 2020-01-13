@@ -10,8 +10,8 @@ android {
         applicationId "com.crazylegend.subhub"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 5
-        versionName "1.0.3"
+        versionCode 6
+        versionName "1.0.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -81,11 +81,11 @@ dependencies {
     //util
     implementation 'com.github.albfernandez:juniversalchardet:2.3.0'
     implementation 'com.github.CraZyLegenD:open-subtitles-android:0.0.11'
-    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.89.1'
+    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.89.4'
 
     //core
     implementation 'androidx.preference:preference:1.1.0'
-    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc04'
+    implementation 'androidx.fragment:fragment-ktx:1.2.0-rc05'
     implementation 'androidx.activity:activity-ktx:1.1.0-rc03'
     implementation 'androidx.core:core-ktx:1.2.0-rc01'
     implementation 'androidx.appcompat:appcompat:1.1.0'

@@ -32,6 +32,8 @@ import com.google.gson.Gson
 import com.mopub.common.MoPub
 import com.mopub.common.SdkConfiguration
 import com.mopub.common.logging.MoPubLog
+import com.mopub.common.privacy.ConsentDialogListener
+import com.mopub.mobileads.MoPubErrorCode
 import com.mopub.mobileads.MoPubView
 import io.reactivex.disposables.CompositeDisposable
 
@@ -58,10 +60,25 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
     override fun initializeMoPub(adUNit: String, loadAd: () -> Unit) {
         val sdkConfiguration = SdkConfiguration.Builder(adUNit)
                 .withLogLevel(MoPubLog.LogLevel.NONE)
-                .withLegitimateInterestAllowed(false)
+                .withLegitimateInterestAllowed(MoPub.canCollectPersonalInformation())
                 .build()
         MoPub.initializeSdk(application, sdkConfiguration) {
             loadAd()
+            val manager = MoPub.getPersonalInformationManager()
+            val gdprApplies = MoPub.getPersonalInformationManager()?.gdprApplies() ?: false
+            if (gdprApplies && !MoPub.canCollectPersonalInformation()) {
+                val shouldShow = manager?.shouldShowConsentDialog() ?: false
+                if (shouldShow) {
+                    manager?.loadConsentDialog(object : ConsentDialogListener {
+                        override fun onConsentDialogLoaded() {
+                            manager.showConsentDialog()
+                        }
+
+                        override fun onConsentDialogLoadFailed(moPubErrorCode: MoPubErrorCode) {
+                        }
+                    })
+                }
+            }
         }
     }
 

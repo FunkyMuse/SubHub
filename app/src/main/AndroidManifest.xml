@@ -64,6 +64,10 @@
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlytics}" />
 
+        <activity
+            android:name="com.mopub.common.privacy.ConsentDialogActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />

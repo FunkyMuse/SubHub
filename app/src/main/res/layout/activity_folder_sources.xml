@@ -1,18 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.crazylegend.kotlinextensions.ui.ColorProgressBar
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        app:progressColor="@color/colorPrimaryDark"
-        android:visibility="gone"
         android:id="@+id/act_fs_progress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="411dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="411dp"
         android:elevation="5dp"
         android:indeterminate="true"
-        android:layout_height="wrap_content" />
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:progressColor="@color/colorPrimaryDark" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -22,24 +28,40 @@
         android:layout_height="match_parent" />
 
     <include
+        android:id="@+id/act_fs_no_sources_layout"
         layout="@layout/no_data_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_8"
-        android:layout_marginEnd="@dimen/margin_8"
+        android:layout_centerInParent="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:visibility="gone"
-        android:id="@+id/act_fs_no_sources_layout"
-        android:layout_centerInParent="true" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/act_fs_adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:moPubAdSize="match_view" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:layout_width="wrap_content"
-        android:src="@drawable/ic_add_folders"
-        android:backgroundTint="@color/colorAccent"
-        app:backgroundTint="@color/backgroundColor"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
         android:id="@+id/act_fs_add"
-        android:layout_margin="@dimen/margin_16"
-        android:layout_height="wrap_content" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/colorAccent"
+        android:src="@drawable/ic_add_folders"
+        app:backgroundTint="@color/backgroundColor"
+        app:layout_constraintBottom_toTopOf="@+id/act_fs_adView"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

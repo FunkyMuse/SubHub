@@ -3,6 +3,7 @@ package com.crazylegend.subhub.di.core
 import android.app.Application
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,9 @@ import com.crazylegend.subhub.di.pickedDirDB.PickedDirComponentImpl
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
+import com.crazylegend.subhub.utils.interstitialListener
 import com.google.gson.Gson
+import com.mopub.mobileads.MoPubInterstitial
 import com.mopub.mobileads.MoPubView
 import io.reactivex.disposables.CompositeDisposable
 
@@ -42,6 +45,8 @@ interface CoreComponent {
     fun removeDownloadLocationPref()
     fun disposeResources()
     fun destroyBanner(view: MoPubView)
-    fun loadBanner(view: MoPubView, adUNit: String)
+    fun loadAdBanner(adView: MoPubView, unitID: String, onBannerLoadFailed: () -> Unit = {})
     fun initializeMoPub(adUNit: String, loadAd: () -> Unit = {})
+    fun loadInterstitialAD(activity: AppCompatActivity, adUnit: String, listener: MoPubInterstitial.InterstitialAdListener = interstitialListener())
+
 }

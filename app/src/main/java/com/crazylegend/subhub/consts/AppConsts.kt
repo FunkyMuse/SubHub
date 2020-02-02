@@ -24,3 +24,12 @@ val SUPPORTED_FILE_FORMATS = arrayOf("mp4", "avi", "mkv", "3gp", "video")
 const val DEV_LINK = "https://play.google.com/store/apps/dev?id=8431819697024852656"
 
 const val CACHE_JSON = "cachedVideos.json"
+
+
+const val main_banner = "8fed68467ac448c68fdcb8519d02acb2"
+const val full_screen = "18da5b220728468cbd02736504fa471f"
+
+/*
+//test
+const val main_banner = "b195f8dd8ded45fe847ad89ed1d016da"
+const val full_screen = "24534e1901884e398f1253216226017e"*/

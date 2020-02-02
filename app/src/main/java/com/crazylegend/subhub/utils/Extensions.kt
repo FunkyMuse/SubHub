@@ -6,6 +6,8 @@ import androidx.documentfile.provider.DocumentFile
 import com.crazylegend.kotlinextensions.containsAny
 import com.crazylegend.subhub.consts.SUPPORTED_FILE_FORMATS
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import com.mopub.mobileads.MoPubErrorCode
+import com.mopub.mobileads.MoPubInterstitial
 import java.util.*
 
 
@@ -48,3 +50,25 @@ fun countSafVideoFiles(files: Array<DocumentFile?>, shouldIncrement: () -> Unit 
     }
 }
 
+fun interstitialListener() = object : MoPubInterstitial.InterstitialAdListener {
+    override fun onInterstitialLoaded(interstitial: MoPubInterstitial?) {
+        interstitial?.show()
+        //Log.i("interstitialListener", "onInterstitialLoaded")
+    }
+
+    override fun onInterstitialShown(interstitial: MoPubInterstitial?) {
+        // Log.i("interstitialListener", "onInterstitialShown")
+    }
+
+    override fun onInterstitialFailed(interstitial: MoPubInterstitial?, errorCode: MoPubErrorCode?) {
+        // Log.i("interstitialListener", "onInterstitialFailed")
+    }
+
+    override fun onInterstitialDismissed(interstitial: MoPubInterstitial?) {
+        // Log.i("interstitialListener", "onInterstitialDismissed")
+    }
+
+    override fun onInterstitialClicked(interstitial: MoPubInterstitial?) {
+        // Log.i("interstitialListener", "onInterstitialClicked")
+    }
+}

@@ -3,6 +3,7 @@ package com.crazylegend.subhub.di.core
 import android.app.Application
 import android.content.SharedPreferences
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
@@ -12,9 +13,11 @@ import com.crazylegend.kotlinextensions.activity.remove
 import com.crazylegend.kotlinextensions.context.getCompatColor
 import com.crazylegend.kotlinextensions.isNotNullOrEmpty
 import com.crazylegend.kotlinextensions.recyclerview.divider
+import com.crazylegend.kotlinextensions.rx.clearAndDispose
 import com.crazylegend.kotlinextensions.sharedprefs.getObject
 import com.crazylegend.kotlinextensions.sharedprefs.putObject
 import com.crazylegend.kotlinextensions.sharedprefs.remove
+import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
@@ -34,6 +37,7 @@ import com.mopub.common.SdkConfiguration
 import com.mopub.common.logging.MoPubLog
 import com.mopub.common.privacy.ConsentDialogListener
 import com.mopub.mobileads.MoPubErrorCode
+import com.mopub.mobileads.MoPubInterstitial
 import com.mopub.mobileads.MoPubView
 import io.reactivex.disposables.CompositeDisposable
 
@@ -47,15 +51,45 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
         PreferenceManager.getDefaultSharedPreferences(application)
     }
 
-    override fun loadBanner(view: MoPubView, adUNit: String) {
-        view.adUnitId = adUNit
-        view.loadAd()
+    override fun loadAdBanner(adView: MoPubView, unitID: String, onBannerLoadFailed: () -> Unit) {
+        adView.adUnitId = unitID
+        adView.loadAd()
+        adView.bannerAdListener = object : MoPubView.BannerAdListener {
+            override fun onBannerExpanded(banner: MoPubView?) {
+            }
+
+            override fun onBannerLoaded(banner: MoPubView?) {
+            }
+
+            override fun onBannerCollapsed(banner: MoPubView?) {
+            }
+
+            override fun onBannerFailed(banner: MoPubView?, errorCode: MoPubErrorCode?) {
+                adView.gone()
+                onBannerLoadFailed()
+            }
+
+            override fun onBannerClicked(banner: MoPubView?) {
+            }
+        }
     }
 
     override fun destroyBanner(view: MoPubView) {
         view.destroy()
+        moPubInterstitial?.destroy()
+        view.bannerAdListener = null
+        moPubInterstitial?.interstitialAdListener = null
     }
 
+    private var moPubInterstitial: MoPubInterstitial? = null
+
+    override fun loadInterstitialAD(activity: AppCompatActivity, adUnit: String, listener: MoPubInterstitial.InterstitialAdListener) {
+        with(MoPubInterstitial(activity, adUnit)) {
+            moPubInterstitial = this
+            interstitialAdListener = listener
+            load()
+        }
+    }
 
     override fun initializeMoPub(adUNit: String, loadAd: () -> Unit) {
         val sdkConfiguration = SdkConfiguration.Builder(adUNit)
@@ -118,8 +152,7 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
     override val dbResponse by lazy { DbResponseComponentImpl() }
 
     override fun disposeResources() {
-        compositeDisposable.clear()
-        compositeDisposable.dispose()
+        compositeDisposable.clearAndDispose()
     }
 
     override fun showDialogManualSubtitleSearch(fragmentManager: FragmentManager, videoName: String?) {

@@ -20,10 +20,7 @@ import com.crazylegend.kotlinextensions.md5
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.tryOrPrint
-import com.crazylegend.kotlinextensions.views.gone
-import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
-import com.crazylegend.kotlinextensions.views.setPrecomputedText
-import com.crazylegend.kotlinextensions.views.visible
+import com.crazylegend.kotlinextensions.views.*
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.localVideos.LocalVideoAdapter
 import com.crazylegend.subhub.adapters.localVideos.LocalVideoItem
@@ -69,11 +66,16 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppRater.appLaunched(this, supportFragmentManager, 3, 0) {
+            appTitle = getString(R.string.app_name)
+        }
+
         component.setupRecycler(act_main_videos, linearLayoutManager, localVideoAdapter, true)
 
-        component.initializeMoPub(getString(R.string.main_banner)) {
+        component.initializeMoPub(main_banner) {
             act_main_adView?.doOnLayout {
-                component.loadBanner(act_main_adView, getString(R.string.main_banner))
+                component.loadAdBanner(act_main_adView, main_banner)
             }
         }
 

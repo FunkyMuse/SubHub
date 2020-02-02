@@ -28,7 +28,16 @@
         android:layout_width="match_parent"
         android:scrollbars="vertical"
         android:fadeScrollbars="true"
+        android:clipToPadding="false"
+        android:paddingBottom="50dp"
         android:id="@+id/act_loaded_subs_recycler"
         android:layout_height="match_parent" />
+
+    <com.mopub.mobileads.MoPubView
+        android:id="@+id/act_loaded_subs_adView"
+        android:layout_width="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_height="wrap_content"
+        app:moPubAdSize="match_view" />
 
 </RelativeLayout>

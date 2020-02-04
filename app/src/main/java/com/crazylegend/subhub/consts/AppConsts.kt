@@ -29,6 +29,16 @@ const val CACHE_JSON = "cachedVideos.json"
 const val main_banner = "8fed68467ac448c68fdcb8519d02acb2"
 const val full_screen = "18da5b220728468cbd02736504fa471f"
 
+const val AD_COLONY_ID = "app8e3702bca8344aac92"
+
+private const val AD_COLONY_BANNER = "vz23fca026f77b4bae8f"
+private const val AD_COLONY_INTERSTITIAL = "vz7845c123e0274fb28b"
+
+val AD_COLONY_IDS = arrayOf(AD_COLONY_BANNER, AD_COLONY_INTERSTITIAL)
+
+const val VUNGLE_ID = "5e39c4340591d60012bfc32b"
+const val UNITY_GAME_ID = "3456955"
+const val IRON_SOURCE_ID = "b27979dd"
 /*
 //test
 const val main_banner = "b195f8dd8ded45fe847ad89ed1d016da"

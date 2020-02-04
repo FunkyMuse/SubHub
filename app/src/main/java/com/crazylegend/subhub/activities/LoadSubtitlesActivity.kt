@@ -38,9 +38,7 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
         super.onCreate(savedInstanceState)
 
         component.initializeMoPub(full_screen) {
-            component.loadAdBanner(act_loaded_subs_adView, main_banner) {
-                act_loaded_subs_adView.gone()
-            }
+            component.loadAdBanner(act_loaded_subs_adView, main_banner)
             component.loadInterstitialAD(this, full_screen)
         }
 

@@ -9,7 +9,6 @@ import com.crazylegend.kotlinextensions.context.isIntentResolvable
 import com.crazylegend.kotlinextensions.context.snackBar
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
-import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
 import com.crazylegend.subhub.R
@@ -42,9 +41,7 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
         super.onCreate(savedInstanceState)
 
         component.initializeMoPub(main_banner) {
-            component.loadAdBanner(act_fs_adView, main_banner) {
-                act_fs_adView.gone()
-            }
+            component.loadAdBanner(act_fs_adView, main_banner)
         }
 
         act_fs_no_sources_layout.no_data_text?.setPrecomputedText(getString(R.string.folder_sources_no_data_expl))

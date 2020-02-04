@@ -5,8 +5,14 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.crazylegend.kotlinextensions.context.showBackButton
+import com.crazylegend.subhub.BuildConfig
+import com.crazylegend.subhub.consts.IRON_SOURCE_ID
+import com.crazylegend.subhub.consts.UNITY_GAME_ID
 import com.crazylegend.subhub.di.activity.ActivityComponentImpl
 import com.crazylegend.subhub.di.core.CoreComponentImpl
+import com.ironsource.mediationsdk.IronSource
+import com.mopub.common.MoPub
+import com.unity3d.ads.UnityAds
 
 
 /**
@@ -25,11 +31,35 @@ abstract class AbstractActivity(contentLayoutId: Int) : AppCompatActivity(conten
         component.disposeResources()
     }
 
+    override fun onPause() {
+        super.onPause()
+        MoPub.onPause(this)
+        IronSource.onPause(this)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MoPub.onResume(this)
+        IronSource.onResume(this)
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        MoPub.onStop(this)
+    }
+
     lateinit var linearLayoutManager: LinearLayoutManager
         private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        IronSource.init(this, IRON_SOURCE_ID, IronSource.AD_UNIT.BANNER, IronSource.AD_UNIT.INTERSTITIAL)
+        IronSource.setConsent(MoPub.canCollectPersonalInformation())
+        UnityAds.initialize(this, UNITY_GAME_ID, BuildConfig.DEBUG)
+        MoPub.onCreate(this)
+
         if (showBack) {
             showBackButton()
         }

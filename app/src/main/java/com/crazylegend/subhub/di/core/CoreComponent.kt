@@ -45,7 +45,7 @@ interface CoreComponent {
     fun removeDownloadLocationPref()
     fun disposeResources()
     fun destroyBanner(view: MoPubView)
-    fun loadAdBanner(adView: MoPubView, unitID: String, onBannerLoadFailed: () -> Unit = {})
+    fun loadAdBanner(adView: MoPubView, unitID: String)
     fun initializeMoPub(adUNit: String, loadAd: () -> Unit = {})
     fun loadInterstitialAD(activity: AppCompatActivity, adUnit: String, listener: MoPubInterstitial.InterstitialAdListener = interstitialListener())
 

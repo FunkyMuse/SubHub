@@ -17,7 +17,7 @@ import com.crazylegend.kotlinextensions.rx.clearAndDispose
 import com.crazylegend.kotlinextensions.sharedprefs.getObject
 import com.crazylegend.kotlinextensions.sharedprefs.putObject
 import com.crazylegend.kotlinextensions.sharedprefs.remove
-import com.crazylegend.kotlinextensions.views.gone
+import com.crazylegend.subhub.BuildConfig
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
@@ -51,27 +51,10 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
         PreferenceManager.getDefaultSharedPreferences(application)
     }
 
-    override fun loadAdBanner(adView: MoPubView, unitID: String, onBannerLoadFailed: () -> Unit) {
+    override fun loadAdBanner(adView: MoPubView, unitID: String) {
         adView.adUnitId = unitID
         adView.loadAd()
-        adView.bannerAdListener = object : MoPubView.BannerAdListener {
-            override fun onBannerExpanded(banner: MoPubView?) {
-            }
 
-            override fun onBannerLoaded(banner: MoPubView?) {
-            }
-
-            override fun onBannerCollapsed(banner: MoPubView?) {
-            }
-
-            override fun onBannerFailed(banner: MoPubView?, errorCode: MoPubErrorCode?) {
-                adView.gone()
-                onBannerLoadFailed()
-            }
-
-            override fun onBannerClicked(banner: MoPubView?) {
-            }
-        }
     }
 
     override fun destroyBanner(view: MoPubView) {
@@ -92,8 +75,9 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
     }
 
     override fun initializeMoPub(adUNit: String, loadAd: () -> Unit) {
+        val level = if (BuildConfig.DEBUG) MoPubLog.LogLevel.DEBUG else MoPubLog.LogLevel.NONE
         val sdkConfiguration = SdkConfiguration.Builder(adUNit)
-                .withLogLevel(MoPubLog.LogLevel.NONE)
+                .withLogLevel(level)
                 .withLegitimateInterestAllowed(MoPub.canCollectPersonalInformation())
                 .build()
         MoPub.initializeSdk(application, sdkConfiguration) {
@@ -108,8 +92,7 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
                             manager.showConsentDialog()
                         }
 
-                        override fun onConsentDialogLoadFailed(moPubErrorCode: MoPubErrorCode) {
-                        }
+                        override fun onConsentDialogLoadFailed(moPubErrorCode: MoPubErrorCode) {}
                     })
                 }
             }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <com.crazylegend.kotlinextensions.ui.ColorProgressBar
         android:id="@+id/act_fs_progress"
@@ -21,11 +21,11 @@
         app:progressColor="@color/colorPrimaryDark" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:scrollbars="vertical"
-        android:fadeScrollbars="true"
         android:id="@+id/act_fs_folder_sources"
-        android:layout_height="match_parent" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fadeScrollbars="true"
+        android:scrollbars="vertical" />
 
     <include
         android:id="@+id/act_fs_no_sources_layout"
@@ -44,12 +44,11 @@
     <com.mopub.mobileads.MoPubView
         android:id="@+id/act_fs_adView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:moPubAdSize="match_view" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/act_fs_add"

@@ -3,6 +3,7 @@ package com.crazylegend.subhub.pickedDirs
 import android.content.Context
 import android.net.Uri
 import android.os.Parcelable
+import androidx.annotation.Keep
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.room.ColumnInfo
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
  * Created by crazy on 11/27/19 to long live and prosper !
  */
 @Parcelize
+@Keep
 @Entity(tableName = "pickedDirs")
 data class PickedDirModel(
         @ColumnInfo(name = "dirName")

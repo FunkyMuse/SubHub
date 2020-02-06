@@ -49,16 +49,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         version?.summary = requireContext().packageVersionName
 
-        val lang = fragmentComponent.getLanguagePref
-        val dlLocation = fragmentComponent.getDownloadLocationPref
 
-        lang?.apply {
-            updateLanguageSummary(this)
-        }
-
-        dlLocation?.apply {
-            updateDirSummary(this)
-        }
 
         myOtherApps?.setOnPreferenceClickListener {
             requireContext().openWebPage(DEV_LINK)
@@ -153,13 +144,32 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        val lang = fragmentComponent.getLanguagePref
+        val dlLocation = fragmentComponent.getDownloadLocationPref
+
+
+        lang?.apply {
+            updateLanguageSummary(this)
+        }
+
+        dlLocation?.apply {
+            updateDirSummary(this)
+        }
+    }
+
     private fun resetDirSummary() {
         fragmentComponent.removeDownloadLocationPref()
+        downloadLocationPref?.summary = ""
         downloadLocationPref?.summary = getString(R.string.selected_dl_folder_expl)
     }
 
     private fun updateDirSummary(dirModel: PickedDirModel) {
         dirModel.apply {
+            resetDirSummary()
+            fragmentComponent.addDownloadLocationToPrefs(dirModel)
             val summary = downloadLocationPref?.summary?.toString()
             summary ?: return@apply
             val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_dl_location, name)
@@ -169,11 +179,14 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun resetLangSummary() {
         fragmentComponent.removeLanguagePref()
+        languagePref?.summary = ""
         languagePref?.summary = getString(R.string.preferred_language_expl)
     }
 
     private fun updateLanguageSummary(languageItem: LanguageItem) {
         languageItem.apply {
+            resetLangSummary()
+            fragmentComponent.addLanguageToPrefs(languageItem)
             val summary = languagePref?.summary?.toString()
             summary ?: return@apply
             val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_language, name)

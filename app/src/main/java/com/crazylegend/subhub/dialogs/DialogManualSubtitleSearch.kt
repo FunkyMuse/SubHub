@@ -8,6 +8,7 @@ import com.crazylegend.kotlinextensions.animations.playAnimation
 import com.crazylegend.kotlinextensions.context.isOnline
 import com.crazylegend.kotlinextensions.fragments.launchActivity
 import com.crazylegend.kotlinextensions.storage.openDirectory
+import com.crazylegend.kotlinextensions.tryOrIgnore
 import com.crazylegend.kotlinextensions.views.clearError
 import com.crazylegend.kotlinextensions.views.getString
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
@@ -41,14 +42,18 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         pickedDirModel = component.getDownloadLocationPref
 
         chosenLanguage?.apply {
-            name?.apply {
-                view.dialog_mss_language_input?.setTheText(this)
+            tryOrIgnore {
+                name?.apply {
+                    view.dialog_mss_language_input?.setTheText(this)
+                }
             }
         }
 
         pickedDirModel?.apply {
-            view.dialog_mss_download_location_input?.setTheText(name)
-            view.dialog_mss_download_location_input?.clearError()
+            tryOrIgnore {
+                view.dialog_mss_download_location_input?.setTheText(name)
+                view.dialog_mss_download_location_input?.clearError()
+            }
         }
 
 
@@ -63,7 +68,9 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
             component.showDialogChooseLanguage(childFragmentManager) {
                 chosenLanguage = it
                 it.name?.apply {
-                    view.dialog_mss_language_input?.setTheText(this)
+                    tryOrIgnore {
+                        view.dialog_mss_language_input?.setTheText(this)
+                    }
                 }
             }
         }
@@ -132,8 +139,10 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
 
         MainActivity.onDirChosen = onDirChosenDSL {
             pickedDirModel = it
-            view.dialog_mss_download_location_input?.setTheText(it.name)
-            view.dialog_mss_download_location_input?.clearError()
+            tryOrIgnore {
+                view.dialog_mss_download_location_input?.setTheText(it.name)
+                view.dialog_mss_download_location_input?.clearError()
+            }
         }
     }
 

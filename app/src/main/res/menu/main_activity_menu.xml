@@ -21,7 +21,7 @@
 
     <item
         android:id="@+id/mam_settings"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/settings"
         android:title=""
         app:showAsAction="always" />
 

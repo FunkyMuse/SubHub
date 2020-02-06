@@ -18,6 +18,7 @@ import com.crazylegend.kotlinextensions.tryOrElse
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.CHARSETS_FILE_CONST
+import com.crazylegend.subhub.consts.DEFAULT_LANGUAGE
 import com.crazylegend.subhub.consts.SRT_TYPE
 import com.crazylegend.subhub.core.AbstractAVM
 import com.masterwok.opensubs.OpenSubtitlesUrlBuilder

@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
+
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.pickedDirs.PickedDirModel

@@ -3,6 +3,7 @@ package com.crazylegend.subhub.adapters.subtitles
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
+
 import com.crazylegend.subhub.R
 import com.masterwok.opensubs.models.OpenSubtitleItem
 import kotlinx.android.synthetic.main.itemview_subtitle.view.*

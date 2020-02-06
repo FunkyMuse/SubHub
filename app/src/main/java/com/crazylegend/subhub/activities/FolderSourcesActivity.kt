@@ -10,7 +10,7 @@ import com.crazylegend.kotlinextensions.context.snackBar
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
-import com.crazylegend.kotlinextensions.views.setPrecomputedText
+
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.folderSources.PickedDirsAdapter
 import com.crazylegend.subhub.consts.PICK_DIRECTORY_REQUEST_CODE
@@ -44,7 +44,7 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
             component.loadAdBanner(act_fs_adView, main_banner)
         }
 
-        act_fs_no_sources_layout.no_data_text?.setPrecomputedText(getString(R.string.folder_sources_no_data_expl))
+        act_fs_no_sources_layout.no_data_text?.text = (getString(R.string.folder_sources_no_data_expl))
 
         if (!isSnackbarFolderSourcesShown) {
             snackBar(getString(R.string.folder_source_hold_expl), getString(R.string.okay), Snackbar.LENGTH_INDEFINITE) {

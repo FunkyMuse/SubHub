@@ -6,6 +6,7 @@ import com.crazylegend.kotlinextensions.glide.loadImgNoCache
 import com.crazylegend.kotlinextensions.memory.toFileSizeString
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
 import com.crazylegend.kotlinextensions.views.setPrecomputedTextOrHide
+
 import kotlinx.android.synthetic.main.itemview_video.view.*
 
 class LocalVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

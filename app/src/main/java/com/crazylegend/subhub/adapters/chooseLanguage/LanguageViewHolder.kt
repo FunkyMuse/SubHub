@@ -3,6 +3,7 @@ package com.crazylegend.subhub.adapters.chooseLanguage
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
+
 import com.crazylegend.subhub.R
 import kotlinx.android.synthetic.main.itemview_language.view.*
 

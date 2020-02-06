@@ -5,7 +5,7 @@ import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.livedata.compatProvider
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.views.gone
-import com.crazylegend.kotlinextensions.views.setPrecomputedText
+
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
@@ -61,7 +61,7 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
             loadSubsVM?.subtitles?.observe(this) {
                 if (it.isNullOrEmpty()) {
                     act_loaded_subs_no_subs.visible()
-                    act_loaded_subs_no_subs.ndt_text?.setPrecomputedText(getString(R.string.no_subs_loaded_expl))
+                    act_loaded_subs_no_subs.ndt_text?.text = (getString(R.string.no_subs_loaded_expl))
                 } else {
                     act_loaded_subs_no_subs.gone()
                     subtitlesAdapter.submitList(it.toList())

@@ -69,7 +69,7 @@ class LoadSubsVM(
 
         val url = OpenSubtitlesUrlBuilder()
                 .query(movieName)
-                .subLanguageId(langCode.code)
+                .subLanguageId(langCode.code ?: "eng")
                 .build()
 
         service.searchSingle(OpenSubtitlesService.TemporaryUserAgent, url)
@@ -109,10 +109,11 @@ class LoadSubsVM(
             val charset = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 tryOrElse(Charsets.UTF_8) {
                     val detector = UniversalDetector.detectCharset(srtLocation)
-                    Charset.forName(detector) ?: checkIfValueIsInAssetsListOrElse(langCode.name)
+                    Charset.forName(detector) ?: checkIfValueIsInAssetsListOrElse(langCode.name
+                            ?: "English")
                 }
             } else {
-                checkIfValueIsInAssetsListOrElse(langCode.name)
+                checkIfValueIsInAssetsListOrElse(langCode.name ?: "English")
             }
 
             singleFrom {

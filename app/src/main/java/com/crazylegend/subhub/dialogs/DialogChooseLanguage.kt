@@ -56,7 +56,7 @@ class DialogChooseLanguage : AbstractDialogFragment() {
             it.toString()
         }?.subscribe { query ->
             languageAdapter.submitList(adapterList.filter {
-                it.name.contains(query, true)
+                it.name.toString().contains(query, true)
             })
         }?.addTo(component.compositeDisposable)
 

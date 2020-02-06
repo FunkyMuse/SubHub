@@ -7,7 +7,6 @@ import com.crazylegend.kotlinextensions.animations.attentionShake
 import com.crazylegend.kotlinextensions.animations.playAnimation
 import com.crazylegend.kotlinextensions.context.isOnline
 import com.crazylegend.kotlinextensions.fragments.launchActivity
-import com.crazylegend.kotlinextensions.log.debug
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.views.clearError
 import com.crazylegend.kotlinextensions.views.getString
@@ -42,7 +41,9 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         pickedDirModel = component.getDownloadLocationPref
 
         chosenLanguage?.apply {
-            view.dialog_mss_language_input?.setTheText(name)
+            name?.apply {
+                view.dialog_mss_language_input?.setTheText(this)
+            }
         }
 
         pickedDirModel?.apply {
@@ -61,7 +62,9 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         view.dialog_mss_language_input?.setOnClickListenerCooldown {
             component.showDialogChooseLanguage(childFragmentManager) {
                 chosenLanguage = it
-                view.dialog_mss_language_input?.setTheText(it.name)
+                it.name?.apply {
+                    view.dialog_mss_language_input?.setTheText(this)
+                }
             }
         }
 
@@ -81,8 +84,6 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
             val language = view.dialog_mss_language_input
             language ?: return@setOnClickListenerCooldown
             language.clearError()
-
-            debug("ARE BOTH NULL CLICK ${chosenLanguage == null} ${pickedDirModel == null}")
 
             if (!requireContext().isOnline) {
                 component.toaster.jobToast(getString(R.string.no_internet_connection))
@@ -106,7 +107,9 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
                 component.showDialogChooseLanguage(childFragmentManager) {
                     language.clearError()
                     chosenLanguage = it
-                    view.dialog_mss_language_input?.setTheText(it.name)
+                    it.name?.apply {
+                        view.dialog_mss_language_input?.setTheText(this)
+                    }
                 }
                 return@setOnClickListenerCooldown
             }

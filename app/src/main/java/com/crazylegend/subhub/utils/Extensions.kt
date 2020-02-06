@@ -23,6 +23,16 @@ fun Intent?.toPickedDirModel(context: Context): PickedDirModel? {
 }
 
 
+fun String?.isNullStringOrEmpty(): Boolean {
+    return this.isNullOrEmpty() || this == "null"
+}
+
+
+fun String?.isNotNullStringOrEmpty(): Boolean {
+    return !isNullStringOrEmpty()
+}
+
+
 fun getSafFiles(files: Array<DocumentFile>?, onFileCallback: (documentFile: DocumentFile) -> Unit = {}) {
     files?.apply {
         for (file in files) {

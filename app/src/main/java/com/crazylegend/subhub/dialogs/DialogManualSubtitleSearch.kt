@@ -8,7 +8,6 @@ import com.crazylegend.kotlinextensions.animations.playAnimation
 import com.crazylegend.kotlinextensions.context.isOnline
 import com.crazylegend.kotlinextensions.fragments.launchActivity
 import com.crazylegend.kotlinextensions.storage.openDirectory
-import com.crazylegend.kotlinextensions.tryOrIgnore
 import com.crazylegend.kotlinextensions.views.clearError
 import com.crazylegend.kotlinextensions.views.getString
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
@@ -21,6 +20,7 @@ import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.listeners.onDirChosenDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import com.crazylegend.subhub.utils.isNullStringOrEmpty
 import kotlinx.android.synthetic.main.dialog_manual_sub_search.view.*
 
 
@@ -42,16 +42,14 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         pickedDirModel = component.getDownloadLocationPref
 
         chosenLanguage?.apply {
-            tryOrIgnore {
-                name?.apply {
-                    view.dialog_mss_language_input?.setTheText(this)
-                }
+            if (!name.isNullStringOrEmpty()) {
+                view.dialog_mss_language_input?.setTheText(this.name.toString())
             }
         }
 
         pickedDirModel?.apply {
-            tryOrIgnore {
-                view.dialog_mss_download_location_input?.setTheText(name)
+            if (!name.isNullStringOrEmpty()) {
+                view.dialog_mss_download_location_input?.setTheText(this.name)
                 view.dialog_mss_download_location_input?.clearError()
             }
         }
@@ -68,7 +66,7 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
             component.showDialogChooseLanguage(childFragmentManager) {
                 chosenLanguage = it
                 it.name?.apply {
-                    tryOrIgnore {
+                    if (!this.isNullStringOrEmpty()) {
                         view.dialog_mss_language_input?.setTheText(this)
                     }
                 }
@@ -139,7 +137,7 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
 
         MainActivity.onDirChosen = onDirChosenDSL {
             pickedDirModel = it
-            tryOrIgnore {
+            if (!it.name.isNullStringOrEmpty()) {
                 view.dialog_mss_download_location_input?.setTheText(it.name)
                 view.dialog_mss_download_location_input?.clearError()
             }
@@ -171,4 +169,3 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         arguments = bundleOf(Pair(INTENT_MOVIE_NAME_TAG, videoName))
     }
 }
-

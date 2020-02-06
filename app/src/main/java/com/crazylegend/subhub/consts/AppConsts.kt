@@ -25,7 +25,7 @@ const val DEV_LINK = "https://play.google.com/store/apps/dev?id=8431819697024852
 
 const val CACHE_JSON = "cachedVideos.json"
 
-
+const val DEFAULT_LANGUAGE = "eng"
 const val main_banner = "8fed68467ac448c68fdcb8519d02acb2"
 const val full_screen = "18da5b220728468cbd02736504fa471f"
 

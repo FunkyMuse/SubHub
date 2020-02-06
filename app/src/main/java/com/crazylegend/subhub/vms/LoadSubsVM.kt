@@ -69,7 +69,7 @@ class LoadSubsVM(
 
         val url = OpenSubtitlesUrlBuilder()
                 .query(movieName)
-                .subLanguageId(langCode.code ?: "eng")
+                .subLanguageId(langCode.code ?: DEFAULT_LANGUAGE)
                 .build()
 
         service.searchSingle(OpenSubtitlesService.TemporaryUserAgent, url)

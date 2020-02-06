@@ -5,7 +5,6 @@ import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.livedata.compatProvider
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.views.gone
-
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
@@ -26,7 +25,6 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
 
     private var pickedDirModel: PickedDirModel? = null
     private var loadSubsVM: LoadSubsVM? = null
-    private var chosenLanguage: LanguageItem? = null
     private val subtitlesAdapter by lazy {
         SubtitlesAdapter()
     }
@@ -45,7 +43,7 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
 
         component.setupRecycler(act_loaded_subs_recycler, linearLayoutManager, subtitlesAdapter)
         val movieName = intent.getStringExtra(INTENT_MOVIE_NAME_TAG)
-        chosenLanguage = intent.getParcelableExtra(INTENT_MOVIE_LANG_TAG)
+        val chosenLanguage = intent.getParcelableExtra<LanguageItem>(INTENT_MOVIE_LANG_TAG)
         pickedDirModel = intent.getParcelableExtra(INTENT_MOVIE_DOWNLOAD_LOCATION_TAG)
 
         if (pickedDirModel == null) {
@@ -56,7 +54,7 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
             dir ?: return
             movieName ?: return
             chosenLanguage ?: return
-            loadSubsVM = compatProvider(LoadSubsVMF(application, movieName.toString(), chosenLanguage!!, dir))
+            loadSubsVM = compatProvider(LoadSubsVMF(application, movieName.toString(), chosenLanguage, dir))
 
             loadSubsVM?.subtitles?.observe(this) {
                 if (it.isNullOrEmpty()) {

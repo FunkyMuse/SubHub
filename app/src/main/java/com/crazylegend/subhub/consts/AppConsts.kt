@@ -38,7 +38,6 @@ val AD_COLONY_IDS = arrayOf(AD_COLONY_BANNER, AD_COLONY_INTERSTITIAL)
 
 const val VUNGLE_ID = "5e39c4340591d60012bfc32b"
 const val UNITY_GAME_ID = "3456955"
-const val IRON_SOURCE_ID = "b27979dd"
 /*
 //test
 const val main_banner = "b195f8dd8ded45fe847ad89ed1d016da"

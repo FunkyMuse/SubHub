@@ -143,10 +143,6 @@ dependencies {
     implementation 'com.vungle:publisher-sdk-android:6.4.11'
     implementation 'com.mopub.mediation:vungle:6.4.11.5'
 
-    //ironSource
-    implementation 'com.ironsource.sdk:mediationsdk:6.13.0.1@jar'
-    implementation 'com.mopub.mediation:ironsource:6.13.0.1.0'
-
     //Unity Ads
     implementation 'com.unity3d.ads:unity-ads:3.4.2'
     implementation 'com.mopub.mediation:unityads:3.4.2.0'

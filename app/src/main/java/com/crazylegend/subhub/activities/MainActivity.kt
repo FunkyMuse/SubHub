@@ -60,13 +60,6 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
     private var searchView: SearchView? = null
 
-    override fun onDestroy() {
-        super.onDestroy()
-        act_main_adView?.apply {
-            component.destroyBanner(this)
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -76,10 +69,8 @@ class MainActivity : AbstractActivity(R.layout.activity_main) {
 
         component.setupRecycler(act_main_videos, linearLayoutManager, localVideoAdapter, true)
 
-        component.initializeMoPub(main_banner) {
-            act_main_adView?.doOnLayout {
-                component.loadAdBanner(act_main_adView, main_banner)
-            }
+        act_main_adView?.doOnLayout {
+            component.loadBanner(act_main_adView)
         }
 
         act_main_manual_search?.setOnClickListenerCooldown {

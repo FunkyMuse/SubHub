@@ -53,7 +53,7 @@ class DbResponseComponentImpl : DbResponseComponent {
             handleNoData(colorProgressBar, noDataView, listAdapter)
         }, { // db error
             throwable ->
-            handleDBError(throwable, colorProgressBar)
+            handleDBError(throwable, colorProgressBar, noDataView)
         }, {
             //Success
             handleSuccessList(this, noDataView, colorProgressBar, listAdapter)

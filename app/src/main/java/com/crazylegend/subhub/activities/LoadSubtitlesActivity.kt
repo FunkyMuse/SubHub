@@ -10,7 +10,10 @@ import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.adapters.subtitles.SubtitlesAdapter
-import com.crazylegend.subhub.consts.*
+import com.crazylegend.subhub.consts.INTENT_MOVIE_DOWNLOAD_LOCATION_TAG
+import com.crazylegend.subhub.consts.INTENT_MOVIE_LANG_TAG
+import com.crazylegend.subhub.consts.INTENT_MOVIE_NAME_TAG
+import com.crazylegend.subhub.consts.INTERSTITIAL
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.isNullStringOrEmpty
@@ -36,10 +39,8 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        component.initializeMoPub(full_screen) {
-            component.loadAdBanner(act_loaded_subs_adView, main_banner)
-            component.loadInterstitialAD(this, full_screen)
-        }
+        component.loadBanner(act_loaded_subs_adView)
+        component.loadInterstitialAD(this, INTERSTITIAL)
 
 
         component.setupRecycler(act_loaded_subs_recycler, linearLayoutManager, subtitlesAdapter)

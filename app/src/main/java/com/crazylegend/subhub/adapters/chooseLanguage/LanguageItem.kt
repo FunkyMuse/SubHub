@@ -6,4 +6,4 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Keep
-data class LanguageItem(val name: String?, val code: String?) : Parcelable
+data class LanguageItem(val name: String? = "", val code: String? = "") : Parcelable

@@ -14,7 +14,6 @@ import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.folderSources.PickedDirsAdapter
 import com.crazylegend.subhub.consts.PICK_DIRECTORY_REQUEST_CODE
-import com.crazylegend.subhub.consts.main_banner
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.isSnackbarFolderSourcesShown
@@ -22,7 +21,6 @@ import com.crazylegend.subhub.utils.setSnackShown
 import com.crazylegend.subhub.utils.toPickedDirModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_folder_sources.*
-import kotlinx.android.synthetic.main.no_folders_selected_layout.view.*
 
 
 /**
@@ -40,11 +38,7 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        component.initializeMoPub(main_banner) {
-            component.loadAdBanner(act_fs_adView, main_banner)
-        }
-
-        act_fs_no_sources_layout.no_data_text?.text = (getString(R.string.folder_sources_no_data_expl))
+        component.loadBanner(act_fs_adView)
 
         if (!isSnackbarFolderSourcesShown) {
             snackBar(getString(R.string.folder_source_hold_expl), getString(R.string.okay), Snackbar.LENGTH_INDEFINITE) {
@@ -58,11 +52,12 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
         }
 
         component.pickedDirVM.pickedDirs.observe(this) {
-            component.dbResponse.handleDBCall(it, act_fs_progress, act_fs_no_sources_layout, adapter)
+            component.dbResponse.handleDBCall(it, act_fs_progress, act_fs_no_sources_layout,
+                    adapter)
         }
 
         adapter.forItemClickListener = forItemClickListenerDSL { _, item, _ ->
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
+            val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(item.dir, "*/*")
             if (isIntentResolvable(intent))
                 startActivity(intent)

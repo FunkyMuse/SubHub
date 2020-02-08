@@ -1,9 +1,9 @@
 package com.crazylegend.subhub.di.core
 
 import android.app.Application
+import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
@@ -17,7 +17,6 @@ import com.crazylegend.kotlinextensions.rx.clearAndDispose
 import com.crazylegend.kotlinextensions.sharedprefs.getObject
 import com.crazylegend.kotlinextensions.sharedprefs.putObject
 import com.crazylegend.kotlinextensions.sharedprefs.remove
-import com.crazylegend.subhub.BuildConfig
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
@@ -31,14 +30,8 @@ import com.crazylegend.subhub.listeners.onConfirmationCallbackDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
+import com.google.android.gms.ads.*
 import com.google.gson.Gson
-import com.mopub.common.MoPub
-import com.mopub.common.SdkConfiguration
-import com.mopub.common.logging.MoPubLog
-import com.mopub.common.privacy.ConsentDialogListener
-import com.mopub.mobileads.MoPubErrorCode
-import com.mopub.mobileads.MoPubInterstitial
-import com.mopub.mobileads.MoPubView
 import io.reactivex.disposables.CompositeDisposable
 
 
@@ -51,51 +44,30 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
         PreferenceManager.getDefaultSharedPreferences(application)
     }
 
-    override fun loadAdBanner(adView: MoPubView, unitID: String) {
-        adView.adUnitId = unitID
-        adView.loadAd()
-
+    override val adRequest by lazy {
+        AdRequest.Builder().build()
     }
 
-    override fun destroyBanner(view: MoPubView) {
-        view.destroy()
-        moPubInterstitial?.destroy()
-        view.bannerAdListener = null
-        moPubInterstitial?.interstitialAdListener = null
+    override fun initializeGoogleSDK() {
+        MobileAds.initialize(application)
     }
 
-    private var moPubInterstitial: MoPubInterstitial? = null
-
-    override fun loadInterstitialAD(activity: AppCompatActivity, adUnit: String, listener: MoPubInterstitial.InterstitialAdListener) {
-        with(MoPubInterstitial(activity, adUnit)) {
-            moPubInterstitial = this
-            interstitialAdListener = listener
-            load()
+    override fun loadInterstitialAD(context: Context, interstitial: String) {
+        val interstitialAd = InterstitialAd(context)
+        interstitialAd.adUnitId = interstitial
+        interstitialAd.loadAd(adRequest)
+        interstitialAd.adListener = object : AdListener() {
+            override fun onAdLoaded() {
+                if (interstitialAd.isLoaded) {
+                    interstitialAd.show()
+                }
+            }
         }
     }
 
-    override fun initializeMoPub(adUNit: String, loadAd: () -> Unit) {
-        val level = if (BuildConfig.DEBUG) MoPubLog.LogLevel.DEBUG else MoPubLog.LogLevel.NONE
-        val sdkConfiguration = SdkConfiguration.Builder(adUNit)
-                .withLogLevel(level)
-                .withLegitimateInterestAllowed(MoPub.canCollectPersonalInformation())
-                .build()
-        MoPub.initializeSdk(application, sdkConfiguration) {
-            loadAd()
-            val manager = MoPub.getPersonalInformationManager()
-            val gdprApplies = MoPub.getPersonalInformationManager()?.gdprApplies() ?: false
-            if (gdprApplies && !MoPub.canCollectPersonalInformation()) {
-                val shouldShow = manager?.shouldShowConsentDialog() ?: false
-                if (shouldShow) {
-                    manager?.loadConsentDialog(object : ConsentDialogListener {
-                        override fun onConsentDialogLoaded() {
-                            manager.showConsentDialog()
-                        }
-
-                        override fun onConsentDialogLoadFailed(moPubErrorCode: MoPubErrorCode) {}
-                    })
-                }
-            }
+    override fun loadBanner(amBanner: AdView?) {
+        amBanner?.apply {
+            loadAd(adRequest)
         }
     }
 

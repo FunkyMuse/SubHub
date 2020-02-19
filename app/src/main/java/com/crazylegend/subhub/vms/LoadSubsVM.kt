@@ -8,7 +8,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.crazylegend.kotlinextensions.gson.fromJson
 import com.crazylegend.kotlinextensions.inputstream.readTextAndClose
-import com.crazylegend.kotlinextensions.livedata.Event
+import com.crazylegend.kotlinextensions.livedata.SingleEvent
 import com.crazylegend.kotlinextensions.livedata.context
 import com.crazylegend.kotlinextensions.rx.ioThreadScheduler
 import com.crazylegend.kotlinextensions.rx.mainThreadScheduler
@@ -54,19 +54,19 @@ class LoadSubsVM(
     private val subtitleData: MutableLiveData<Array<OpenSubtitleItem>> = MutableLiveData()
     val subtitles: LiveData<Array<OpenSubtitleItem>> = subtitleData
 
-    private val successEventData: MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val successEvent: LiveData<Event<Boolean>> get() = successEventData
+    private val successEventData: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+    val successEvent: LiveData<SingleEvent<Boolean>> get() = successEventData
 
 
-    private val loadingEventData: MutableLiveData<Event<Boolean>> = MutableLiveData()
-    val loadingEvent: LiveData<Event<Boolean>> get() = loadingEventData
+    private val loadingEventData: MutableLiveData<SingleEvent<Boolean>> = MutableLiveData()
+    val loadingEvent: LiveData<SingleEvent<Boolean>> get() = loadingEventData
 
     init {
         loadSubtitles()
     }
 
     private fun loadSubtitles() {
-        loadingEventData.value = Event(true)
+        loadingEventData.value = SingleEvent(true)
 
         val url = OpenSubtitlesUrlBuilder()
                 .query(movieName)
@@ -78,10 +78,10 @@ class LoadSubsVM(
                 .observeOn(mainThreadScheduler)
                 .subscribe({
                     subtitleData.value = it
-                    loadingEventData.value = Event(false)
+                    loadingEventData.value = SingleEvent(false)
                 }, {
                     it.printStackTrace()
-                    loadingEventData.value = Event(false)
+                    loadingEventData.value = SingleEvent(false)
                 }).addTo(component.compositeDisposable)
 
     }
@@ -97,13 +97,13 @@ class LoadSubsVM(
                     modifyFile(srtLocation)
                 }, {
                     it.printStackTrace()
-                    successEventData.value = Event(false)
+                    successEventData.value = SingleEvent(false)
                 }).addTo(component.compositeDisposable)
 
     }
 
     private fun modifyFile(srtLocation: File) {
-        loadingEventData.value = Event(true)
+        loadingEventData.value = SingleEvent(true)
         component.toaster.jobToast(context.getString(R.string.obtaining_sub_file))
         if (srtLocation.name.endsWith(SRT_TYPE)) {
 
@@ -122,10 +122,10 @@ class LoadSubsVM(
             }.subscribeOn(newThreadScheduler)
                     .observeOn(mainThreadScheduler)
                     .subscribe({
-                        successEventData.value = Event(true)
+                        successEventData.value = SingleEvent(true)
                     }, {
                         it.printStackTrace()
-                        successEventData.value = Event(false)
+                        successEventData.value = SingleEvent(false)
                     }).addTo(component.compositeDisposable)
         }
     }

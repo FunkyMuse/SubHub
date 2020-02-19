@@ -40,7 +40,6 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
         super.onCreate(savedInstanceState)
 
         component.loadBanner(act_loaded_subs_adView)
-        component.loadInterstitialAD(this, INTERSTITIAL)
 
 
         component.setupRecycler(act_loaded_subs_recycler, linearLayoutManager, subtitlesAdapter)
@@ -85,6 +84,7 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
 
             loadSubsVM?.successEvent?.observe(this) {
                 it.getContentIfNotHandled()?.apply {
+                    component.loadInterstitialAD(this@LoadSubtitlesActivity, INTERSTITIAL)
                     act_loaded_subs_progress?.gone()
                     if (this) {
                         component.toaster.jobToast(getString(R.string.succ_dl_sub))

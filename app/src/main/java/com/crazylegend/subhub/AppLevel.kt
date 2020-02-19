@@ -1,10 +1,8 @@
 package com.crazylegend.subhub
 
 import android.app.Application
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.core.CrashlyticsCore
 import com.crazylegend.subhub.di.core.CoreComponentImpl
-import io.fabric.sdk.android.Fabric
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import io.reactivex.plugins.RxJavaPlugins
 
 
@@ -23,13 +21,8 @@ class AppLevel : Application() {
         component.initializeGoogleSDK()
 
         RxJavaPlugins.setErrorHandler { }
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
 
-        Crashlytics.Builder()
-                .core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build())
-                .build()
-                .also { crashlyticsKit ->
-                    Fabric.with(this, crashlyticsKit)
-                }
 
     }
 }

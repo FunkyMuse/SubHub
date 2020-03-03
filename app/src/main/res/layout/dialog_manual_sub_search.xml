@@ -11,15 +11,15 @@
         android:text="@string/subtitles_search"
         android:textSize="16sp"
         android:layout_margin="4dp"
-        android:id="@+id/dialog_mss_sub_search"
+        android:id="@+id/subSearch"
         android:layout_height="wrap_content" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialog_mss_movie_name_input_layout"
+        android:id="@+id/movieNameInputLayout"
         style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/dialog_mss_sub_search"
+        android:layout_below="@+id/subSearch"
         android:layout_marginStart="@dimen/margin_24"
         android:layout_marginEnd="@dimen/margin_24"
         app:helperText="@string/movie_video_name"
@@ -29,7 +29,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialog_mss_movie_name_input"
+            android:id="@+id/movieNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/the_movie_name_title"
@@ -40,11 +40,11 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialog_mss_language_input_layout"
+        android:id="@+id/languageInputLayout"
         style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_mss_movie_name_input_layout"
+        android:layout_below="@id/movieNameInputLayout"
         android:layout_margin="@dimen/margin_24"
         android:focusable="false"
         android:focusableInTouchMode="false"
@@ -56,7 +56,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialog_mss_language_input"
+            android:id="@+id/languageInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
@@ -69,11 +69,11 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialog_mss_downloadLocation_input_layout"
+        android:id="@+id/downloadLocationInputLayout"
         style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_mss_language_input_layout"
+        android:layout_below="@id/languageInputLayout"
         android:layout_marginStart="@dimen/margin_24"
         android:layout_marginEnd="@dimen/margin_24"
         android:focusable="false"
@@ -86,7 +86,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialog_mss_download_location_input"
+            android:id="@+id/downloadLocationInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:focusable="false"
@@ -102,12 +102,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_mss_downloadLocation_input_layout"
+        android:layout_below="@id/downloadLocationInputLayout"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/dialog_mss_cancel"
+            android:id="@+id/cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -117,7 +117,7 @@
             app:cornerRadius="@dimen/margin_8" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/dialog_mss_submit"
+            android:id="@+id/submit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"

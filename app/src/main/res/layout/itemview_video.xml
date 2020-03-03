@@ -4,23 +4,23 @@
     android:layout_height="wrap_content">
 
     <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_video_img"
+        android:id="@+id/videoImage"
         android:layout_width="85dp"
         android:layout_height="85dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/iv_video_name"
+        android:id="@+id/videoName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_margin="@dimen/margin_16"
-        android:layout_toEndOf="@id/iv_video_img" />
+        android:layout_toEndOf="@id/videoImage" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/iv_video_size"
+        android:id="@+id/videoSize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/iv_video_img"
+        android:layout_below="@id/videoImage"
         android:layout_marginStart="@dimen/margin_16"
         android:layout_marginEnd="@dimen/margin_16"
         android:padding="@dimen/margin_8" />

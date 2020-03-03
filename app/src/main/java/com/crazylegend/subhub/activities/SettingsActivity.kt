@@ -4,9 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import com.crazylegend.kotlinextensions.activity.replace
+import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.consts.PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE
 import com.crazylegend.subhub.core.AbstractActivity
+import com.crazylegend.subhub.databinding.ActivitySettingsBinding
 import com.crazylegend.subhub.fragments.SettingsFragment
 import com.crazylegend.subhub.listeners.onDirChosen
 import com.crazylegend.subhub.utils.toPickedDirModel
@@ -15,10 +17,12 @@ import com.crazylegend.subhub.utils.toPickedDirModel
 /**
  * Created by crazy on 11/28/19 to long live and prosper !
  */
-class SettingsActivity : AbstractActivity(R.layout.activity_settings) {
+class SettingsActivity : AbstractActivity() {
 
     override val showBack: Boolean
         get() = true
+
+    override val binding by viewBinding(ActivitySettingsBinding::inflate)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

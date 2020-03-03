@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.lifecycle.observe
 import com.crazylegend.kotlinextensions.livedata.compatProvider
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
+import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
@@ -15,34 +16,34 @@ import com.crazylegend.subhub.consts.INTENT_MOVIE_LANG_TAG
 import com.crazylegend.subhub.consts.INTENT_MOVIE_NAME_TAG
 import com.crazylegend.subhub.consts.INTERSTITIAL
 import com.crazylegend.subhub.core.AbstractActivity
+import com.crazylegend.subhub.databinding.ActivityLoadSubsBinding
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.isNullStringOrEmpty
 import com.crazylegend.subhub.vmfs.LoadSubsVMF
 import com.crazylegend.subhub.vms.LoadSubsVM
-import kotlinx.android.synthetic.main.activity_load_subs.*
-import kotlinx.android.synthetic.main.no_data_text.view.*
 
 
 /**
  * Created by crazy on 11/26/19 to long live and prosper !
  */
-class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
+class LoadSubtitlesActivity : AbstractActivity() {
 
     private var loadSubsVM: LoadSubsVM? = null
     private val subtitlesAdapter by lazy {
         SubtitlesAdapter()
     }
 
+    override val binding by viewBinding(ActivityLoadSubsBinding::inflate)
+
     override val showBack: Boolean
         get() = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        component.loadBanner(binding.adView)
 
-        component.loadBanner(act_loaded_subs_adView)
 
-
-        component.setupRecycler(act_loaded_subs_recycler, linearLayoutManager, subtitlesAdapter)
+        component.setupRecycler(binding.recycler, linearLayoutManager, subtitlesAdapter)
         val movieName = intent.getStringExtra(INTENT_MOVIE_NAME_TAG)
         val chosenLanguage = intent.getParcelableExtra<LanguageItem>(INTENT_MOVIE_LANG_TAG)
         val pickedDirModel = intent.getParcelableExtra<PickedDirModel>(INTENT_MOVIE_DOWNLOAD_LOCATION_TAG)
@@ -71,10 +72,10 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
 
             loadSubsVM?.subtitles?.observe(this) {
                 if (it.isNullOrEmpty()) {
-                    act_loaded_subs_no_subs.visible()
-                    act_loaded_subs_no_subs.ndt_text?.text = (getString(R.string.no_subs_loaded_expl))
+                    binding.noSubsLayout.root.visible()
+                    binding.noSubsLayout.noDataText.text = (getString(R.string.no_subs_loaded_expl))
                 } else {
-                    act_loaded_subs_no_subs.gone()
+                    binding.noSubsLayout.root.gone()
                     subtitlesAdapter.submitList(it.toList())
                 }
             }
@@ -85,7 +86,7 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
             loadSubsVM?.successEvent?.observe(this) {
                 it.getContentIfNotHandled()?.apply {
                     component.loadInterstitialAD(this@LoadSubtitlesActivity, INTERSTITIAL)
-                    act_loaded_subs_progress?.gone()
+                    binding.progress.gone()
                     if (this) {
                         component.toaster.jobToast(getString(R.string.succ_dl_sub))
                     } else {
@@ -96,9 +97,9 @@ class LoadSubtitlesActivity : AbstractActivity(R.layout.activity_load_subs) {
             loadSubsVM?.loadingEvent?.observe(this) {
                 it.getContentIfNotHandled()?.apply {
                     if (this)
-                        act_loaded_subs_progress?.visible()
+                        binding.progress.visible()
                     else
-                        act_loaded_subs_progress?.gone()
+                        binding.progress.gone()
 
                 }
             }

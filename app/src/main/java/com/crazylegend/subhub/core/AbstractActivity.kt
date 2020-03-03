@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewbinding.ViewBinding
 import com.crazylegend.kotlinextensions.context.showBackButton
 import com.crazylegend.subhub.di.activity.ActivityComponentImpl
 import com.crazylegend.subhub.di.core.CoreComponentImpl
@@ -12,9 +13,11 @@ import com.crazylegend.subhub.di.core.CoreComponentImpl
 /**
  * Created by crazy on 11/26/19 to long live and prosper !
  */
-abstract class AbstractActivity(contentLayoutId: Int) : AppCompatActivity(contentLayoutId) {
+abstract class AbstractActivity : AppCompatActivity() {
 
     abstract val showBack: Boolean
+
+    abstract val binding: ViewBinding
 
     val component by lazy {
         ActivityComponentImpl(this, CoreComponentImpl(application))
@@ -30,7 +33,7 @@ abstract class AbstractActivity(contentLayoutId: Int) : AppCompatActivity(conten
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        setContentView(binding.root)
         if (showBack) {
             showBackButton()
         }

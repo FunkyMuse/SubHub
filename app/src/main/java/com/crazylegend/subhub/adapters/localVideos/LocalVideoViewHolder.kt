@@ -6,14 +6,17 @@ import com.crazylegend.kotlinextensions.glide.loadImgNoCache
 import com.crazylegend.kotlinextensions.memory.toFileSizeString
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
 import com.crazylegend.kotlinextensions.views.setPrecomputedTextOrHide
+import com.crazylegend.subhub.databinding.ItemviewVideoBinding
 
-import kotlinx.android.synthetic.main.itemview_video.view.*
 
 class LocalVideoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+    private val binding = ItemviewVideoBinding.bind(itemView)
+
     fun bind(item: LocalVideoItem) {
-        itemView.iv_video_img?.loadImgNoCache(item.photoUri)
-        itemView.iv_video_name?.setPrecomputedTextOrHide(item.videoName)
-        itemView.iv_video_size?.setPrecomputedText(item.videoSize.toFileSizeString().toString())
+        binding.videoImage.loadImgNoCache(item.photoUri)
+        binding.videoName.setPrecomputedTextOrHide(item.videoName)
+        binding.videoSize.setPrecomputedText(item.videoSize.toFileSizeString().toString())
     }
 
 }

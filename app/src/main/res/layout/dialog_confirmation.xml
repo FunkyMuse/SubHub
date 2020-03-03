@@ -13,7 +13,7 @@
         app:cardCornerRadius="@dimen/margin_8"
         android:layout_marginBottom="3dp"
         app:cardBackgroundColor="@color/helperColor"
-        android:id="@+id/dialog_confirmation_cancel_button"
+        android:id="@+id/cancelButton"
         android:layout_height="40dp">
 
         <androidx.appcompat.widget.AppCompatImageView
@@ -26,20 +26,20 @@
     </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialog_confirmation_title_text"
+        android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/margin_8"
         android:layout_marginEnd="@dimen/margin_8"
-        android:layout_below="@+id/dialog_confirmation_cancel_button"
+        android:layout_below="@+id/cancelButton"
         android:padding="10dp"
         android:textSize="16sp" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/dialog_confirmation_subtitle_text"
+        android:id="@+id/subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_confirmation_title_text"
+        android:layout_below="@id/title"
         android:layout_marginStart="@dimen/margin_24"
         android:layout_marginEnd="@dimen/margin_24"
         android:padding="10dp"
@@ -51,19 +51,19 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/dialog_confirmation_subtitle_text"
+        android:layout_below="@id/subtitle"
         android:orientation="horizontal"
         android:weightSum="1">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/dialog_confirmation_left_button"
+            android:id="@+id/leftButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_24"
             android:layout_weight="0.5" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/dialog_confirmation_right_button"
+            android:id="@+id/rightButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_24"

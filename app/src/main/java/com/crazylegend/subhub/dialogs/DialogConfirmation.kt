@@ -2,6 +2,7 @@ package com.crazylegend.subhub.dialogs
 
 import android.os.Bundle
 import android.view.View
+import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 
@@ -12,9 +13,11 @@ import com.crazylegend.subhub.consts.RIGHT_BUTTON_TEXT_ARGUMENT_TAG
 import com.crazylegend.subhub.consts.SUBTITLE_ARGUMENT_TAG
 import com.crazylegend.subhub.consts.TITLE_ARGUMENT_TAG
 import com.crazylegend.subhub.core.AbstractDialogFragment
+import com.crazylegend.subhub.databinding.DialogConfirmationBinding
 import com.crazylegend.subhub.listeners.onConfirmationCallback
 import com.crazylegend.subhub.utils.ButtonClicked
-import kotlinx.android.synthetic.main.dialog_confirmation.view.*
+
+//.main.dialog_confirmation.binding.*
 
 
 /**
@@ -24,33 +27,35 @@ class DialogConfirmation : AbstractDialogFragment() {
     override val setView: Int
         get() = R.layout.dialog_confirmation
 
+    private val binding by viewBinding(DialogConfirmationBinding::bind)
+
     var onConfirmationCallback: onConfirmationCallback? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.dialog_confirmation_title_text?.text = (arguments?.getString(TITLE_ARGUMENT_TAG))
-        view.dialog_confirmation_left_button?.text = arguments?.getString(LEFT_BUTTON_TEXT_ARGUMENT_TAG)
-        view.dialog_confirmation_right_button?.text = arguments?.getString(RIGHT_BUTTON_TEXT_ARGUMENT_TAG)
+        binding.title.text = (arguments?.getString(TITLE_ARGUMENT_TAG))
+        binding.leftButton.text = arguments?.getString(LEFT_BUTTON_TEXT_ARGUMENT_TAG)
+        binding.rightButton.text = arguments?.getString(RIGHT_BUTTON_TEXT_ARGUMENT_TAG)
         val subtitle = arguments?.getString(SUBTITLE_ARGUMENT_TAG)
         if (subtitle.isNullOrEmpty()) {
-            view.dialog_confirmation_subtitle_text?.gone()
+            binding.subtitle.gone()
         } else {
-            view.dialog_confirmation_subtitle_text?.visible()
-            view.dialog_confirmation_subtitle_text?.text = (subtitle)
+            binding.subtitle.visible()
+            binding.subtitle.text = (subtitle)
         }
 
-        view.dialog_confirmation_left_button?.setOnClickListenerCooldown {
+        binding.leftButton.setOnClickListenerCooldown {
             onConfirmationCallback?.forButtonClicked(ButtonClicked.LEFT)
             dismissAllowingStateLoss()
         }
 
-        view.dialog_confirmation_right_button?.setOnClickListenerCooldown {
+        binding.rightButton.setOnClickListenerCooldown {
             onConfirmationCallback?.forButtonClicked(ButtonClicked.RIGHT)
             dismissAllowingStateLoss()
         }
 
-        view.dialog_confirmation_cancel_button?.setOnClickListenerCooldown {
+        binding.cancelButton.setOnClickListenerCooldown {
             dismissAllowingStateLoss()
         }
     }

@@ -9,27 +9,29 @@ import com.crazylegend.kotlinextensions.context.isIntentResolvable
 import com.crazylegend.kotlinextensions.context.snackBar
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
+import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
-
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.folderSources.PickedDirsAdapter
 import com.crazylegend.subhub.consts.PICK_DIRECTORY_REQUEST_CODE
 import com.crazylegend.subhub.core.AbstractActivity
+import com.crazylegend.subhub.databinding.ActivityFolderSourcesBinding
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.isSnackbarFolderSourcesShown
 import com.crazylegend.subhub.utils.setSnackShown
 import com.crazylegend.subhub.utils.toPickedDirModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_folder_sources.*
 
 
 /**
  * Created by crazy on 11/28/19 to long live and prosper !
  */
-class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources) {
+class FolderSourcesActivity : AbstractActivity() {
 
     override val showBack: Boolean
         get() = true
+
+    override val binding by viewBinding(ActivityFolderSourcesBinding::inflate)
 
     private val adapter by lazy {
         PickedDirsAdapter(lifecycleScope)
@@ -38,7 +40,7 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        component.loadBanner(act_fs_adView)
+        component.loadBanner(binding.adView)
 
         if (!isSnackbarFolderSourcesShown) {
             snackBar(getString(R.string.folder_source_hold_expl), getString(R.string.okay), Snackbar.LENGTH_INDEFINITE) {
@@ -46,13 +48,13 @@ class FolderSourcesActivity : AbstractActivity(R.layout.activity_folder_sources)
             }
         }
 
-        component.setupRecycler(act_fs_folder_sources, linearLayoutManager, adapter, true)
-        act_fs_add.setOnClickListenerCooldown {
+        component.setupRecycler(binding.folderSources, linearLayoutManager, adapter, true)
+        binding.add.setOnClickListenerCooldown {
             openDirectory(PICK_DIRECTORY_REQUEST_CODE)
         }
 
         component.pickedDirVM.pickedDirs.observe(this) {
-            component.dbResponse.handleDBCall(it, act_fs_progress, act_fs_no_sources_layout,
+            component.dbResponse.handleDBCall(it, binding.progress, binding.noSourcesLayout.root,
                     adapter)
         }
 

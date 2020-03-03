@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.crazylegend.kotlinextensions.ui.ColorProgressBar
-        android:id="@+id/act_fs_progress"
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,14 +21,14 @@
         app:progressColor="@color/colorPrimaryDark" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/act_fs_folder_sources"
+        android:id="@+id/folder_sources"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fadeScrollbars="true"
         android:scrollbars="vertical" />
 
     <include
-        android:id="@+id/act_fs_no_sources_layout"
+        android:id="@+id/no_sources_layout"
         layout="@layout/no_data_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         ads:adUnitId="@string/banner"
         ads:adSize="BANNER"
-        android:id="@+id/act_fs_adView"
+        android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -54,7 +54,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/act_fs_add"
+        android:id="@+id/add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -63,7 +63,7 @@
         android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_add_folders"
         app:backgroundTint="@color/backgroundColor"
-        app:layout_constraintBottom_toTopOf="@+id/act_fs_adView"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

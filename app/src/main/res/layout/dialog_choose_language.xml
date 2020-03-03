@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/dialog_ss_search_language_layout"
+        android:id="@+id/searchLanguageLayout"
         style="@style/TextInputStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +17,7 @@
         app:hintEnabled="true">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/dialog_mss_movie_name_input"
+            android:id="@+id/movieNameInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_search"
@@ -29,14 +29,14 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/dialog_ss_languages"
+        android:id="@+id/languages"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/dialog_ss_cancel"
-        android:layout_below="@id/dialog_ss_search_language_layout" />
+        android:layout_above="@id/cancel"
+        android:layout_below="@id/searchLanguageLayout" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/dialog_ss_cancel"
+        android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

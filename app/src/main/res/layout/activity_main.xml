@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.crazylegend.kotlinextensions.ui.ColorProgressBar
-        android:id="@+id/act_main_progress"
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,7 +21,7 @@
         app:progressColor="@color/colorPrimaryDark" />
 
     <include
-        android:id="@+id/act_main_noFolders"
+        android:id="@+id/noFolders"
         layout="@layout/no_folders_selected_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/act_main_videos"
+        android:id="@+id/videos"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
@@ -44,23 +44,23 @@
         android:visibility="gone" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/act_main_manual_search"
+        android:id="@+id/manualSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@id/act_main_adView"
+        android:layout_above="@id/adView"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="40dp"
         android:backgroundTint="@color/colorAccent"
         android:src="@drawable/ic_search"
         app:backgroundTint="@color/backgroundColor"
-        app:layout_constraintBottom_toTopOf="@+id/act_main_adView"
+        app:layout_constraintBottom_toTopOf="@+id/adView"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
         ads:adUnitId="@string/banner"
         ads:adSize="BANNER"
-        android:id="@+id/act_main_adView"
+        android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

@@ -9,6 +9,7 @@ import com.crazylegend.kotlinextensions.context.isOnline
 import com.crazylegend.kotlinextensions.fragments.launchActivity
 import com.crazylegend.kotlinextensions.storage.openDirectory
 import com.crazylegend.kotlinextensions.tryOrIgnore
+import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.clearError
 import com.crazylegend.kotlinextensions.views.getString
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
@@ -19,10 +20,10 @@ import com.crazylegend.subhub.activities.MainActivity
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractDialogFragment
+import com.crazylegend.subhub.databinding.DialogManualSubSearchBinding
 import com.crazylegend.subhub.listeners.onDirChosenDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.isNullStringOrEmpty
-import kotlinx.android.synthetic.main.dialog_manual_sub_search.view.*
 
 
 /**
@@ -35,6 +36,8 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
     private var chosenLanguage: LanguageItem? = null
     private var pickedDirModel: PickedDirModel? = null
 
+    private val binding by viewBinding(DialogManualSubSearchBinding::bind)
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +48,7 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         chosenLanguage?.apply {
             tryOrIgnore {
                 if (!name.isNullStringOrEmpty()) {
-                    view.dialog_mss_language_input?.setTheText(this.name.toString())
+                    binding.languageInput.setTheText(this.name.toString())
                 }
             }
         }
@@ -53,48 +56,45 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         pickedDirModel?.apply {
             tryOrIgnore {
                 if (!name.isNullStringOrEmpty()) {
-                    view.dialog_mss_download_location_input?.setTheText(this.name)
-                    view.dialog_mss_download_location_input?.clearError()
+                    binding.downloadLocationInput.setTheText(this.name)
+                    binding.downloadLocationInput.clearError()
                 }
             }
         }
 
 
-        view.dialog_mss_movie_name_input?.setTheText(arguments?.getString(INTENT_MOVIE_NAME_TAG)
+        binding.movieNameInput.setTheText(arguments?.getString(INTENT_MOVIE_NAME_TAG)
                 ?: "")
 
-        view.dialog_mss_cancel?.setOnClickListenerCooldown {
+        binding.cancel.setOnClickListenerCooldown {
             dismissAllowingStateLoss()
         }
 
-        view.dialog_mss_language_input?.setOnClickListenerCooldown {
+        binding.languageInput.setOnClickListenerCooldown {
             component.showDialogChooseLanguage(childFragmentManager) {
                 chosenLanguage = it
                 it.name?.apply {
                     tryOrIgnore {
                         if (!this.isNullStringOrEmpty()) {
-                            view.dialog_mss_language_input?.setTheText(this)
+                            binding.languageInput.setTheText(this)
                         }
                     }
                 }
             }
         }
 
-        view.dialog_mss_download_location_input?.setOnClickListenerCooldown {
+        binding.downloadLocationInput.setOnClickListenerCooldown {
             pickDownloadDirectory()
         }
 
-        view.dialog_mss_submit?.setOnClickListenerCooldown {
-            val movieName = view.dialog_mss_movie_name_input
-            movieName ?: return@setOnClickListenerCooldown
+        binding.submit.setOnClickListenerCooldown {
+            val movieName = binding.movieNameInput
             movieName.clearError()
 
-            val directory = view.dialog_mss_download_location_input
-            directory ?: return@setOnClickListenerCooldown
+            val directory = binding.downloadLocationInput
             directory.clearError()
 
-            val language = view.dialog_mss_language_input
-            language ?: return@setOnClickListenerCooldown
+            val language = binding.languageInput
             language.clearError()
 
             if (!requireContext().isOnline) {
@@ -120,7 +120,7 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
                     language.clearError()
                     chosenLanguage = it
                     it.name?.apply {
-                        view.dialog_mss_language_input?.setTheText(this)
+                        binding.languageInput.setTheText(this)
                     }
                 }
                 return@setOnClickListenerCooldown
@@ -146,8 +146,8 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
             pickedDirModel = it
             tryOrIgnore {
                 if (!it.name.isNullStringOrEmpty()) {
-                    view.dialog_mss_download_location_input?.setTheText(it.name)
-                    view.dialog_mss_download_location_input?.clearError()
+                    binding.downloadLocationInput.setTheText(it.name)
+                    binding.downloadLocationInput.clearError()
                 }
             }
         }

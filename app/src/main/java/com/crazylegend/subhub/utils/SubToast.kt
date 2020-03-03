@@ -6,7 +6,6 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.view.setPadding
-import com.crazylegend.kotlinextensions.views.setDrawableLeft
 import com.crazylegend.subhub.R
 
 
@@ -18,7 +17,7 @@ class SubToast(private val context: Context) {
     private var toast: Toast? = null
     private val drawablePadding = 1
     private val textPadding = 5
-    private val textViewSize = 15f
+    private val textViewSize = 18f
 
     fun jobToast(message: String, length: Int = Toast.LENGTH_SHORT) {
         toast?.cancel()
@@ -28,7 +27,6 @@ class SubToast(private val context: Context) {
         with(toastView?.findViewById<TextView>(android.R.id.message)) {
             this?.apply {
                 compoundDrawablePadding = drawablePadding
-                setDrawableLeft(R.drawable.app_logo)
                 setPadding(textPadding)
                 textSize = textViewSize
             }
@@ -44,7 +42,6 @@ class SubToast(private val context: Context) {
         with(toastView?.findViewById<TextView>(android.R.id.message)) {
             this?.apply {
                 compoundDrawablePadding = drawablePadding
-                setDrawableLeft(R.drawable.app_logo)
                 setPadding(textPadding)
                 textSize = textViewSize
             }

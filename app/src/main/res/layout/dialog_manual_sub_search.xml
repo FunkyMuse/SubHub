@@ -5,14 +5,14 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/subSearch"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
         android:padding="@dimen/margin_16"
-        android:textStyle="bold"
         android:text="@string/subtitles_search"
         android:textSize="16sp"
-        android:layout_margin="4dp"
-        android:id="@+id/subSearch"
-        android:layout_height="wrap_content" />
+        android:textStyle="bold" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/movieNameInputLayout"
@@ -100,6 +100,7 @@
 
 
     <LinearLayout
+        android:id="@+id/buttons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/downloadLocationInputLayout"
@@ -127,5 +128,12 @@
             app:cornerRadius="@dimen/margin_8" />
 
     </LinearLayout>
+
+    <com.appbrain.AppBrainBanner
+        android:id="@+id/adView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttons"
+        android:layout_marginTop="10dp" />
 
 </RelativeLayout>

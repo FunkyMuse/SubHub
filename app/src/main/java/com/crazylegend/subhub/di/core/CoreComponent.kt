@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.appbrain.AppBrainBanner
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.di.dbResponse.DbResponseComponentImpl
@@ -14,8 +15,6 @@ import com.crazylegend.subhub.di.pickedDirDB.PickedDirComponentImpl
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
 import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 
@@ -45,9 +44,8 @@ interface CoreComponent {
     fun disposeResources()
 
 
-    val adRequest: AdRequest
-    fun loadBanner(amBanner: AdView?)
-    fun loadInterstitialAD(context: Context, interstitial: String)
+    fun loadBanner(amBanner: AppBrainBanner?)
+    fun loadInterstitialAD(context: Context)
     fun initializeGoogleSDK()
 
 }

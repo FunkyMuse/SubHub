@@ -9,6 +9,10 @@ import androidx.fragment.app.FragmentManager
 import androidx.preference.PreferenceManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.appbrain.AdId
+import com.appbrain.AppBrain
+import com.appbrain.AppBrainBanner
+import com.appbrain.InterstitialBuilder
 import com.crazylegend.kotlinextensions.activity.remove
 import com.crazylegend.kotlinextensions.context.getCompatColor
 import com.crazylegend.kotlinextensions.isNotNullOrEmpty
@@ -30,7 +34,6 @@ import com.crazylegend.subhub.listeners.onConfirmationCallbackDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
-import com.google.android.gms.ads.*
 import com.google.gson.Gson
 import io.reactivex.disposables.CompositeDisposable
 
@@ -40,34 +43,27 @@ import io.reactivex.disposables.CompositeDisposable
  */
 class CoreComponentImpl(override val application: Application) : CoreComponent {
 
+    private var interstitialBuilder = InterstitialBuilder.create()
+
+    init {
+        interstitialBuilder.adId = AdId.HOME_SCREEN
+    }
+
     override val defaultPrefs: SharedPreferences by lazy {
         PreferenceManager.getDefaultSharedPreferences(application)
     }
 
-    override val adRequest by lazy {
-        AdRequest.Builder().build()
-    }
 
     override fun initializeGoogleSDK() {
-        MobileAds.initialize(application)
+        AppBrain.init(application)
     }
 
-    override fun loadInterstitialAD(context: Context, interstitial: String) {
-        val interstitialAd = InterstitialAd(context)
-        interstitialAd.adUnitId = interstitial
-        interstitialAd.loadAd(adRequest)
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                if (interstitialAd.isLoaded) {
-                    interstitialAd.show()
-                }
-            }
-        }
+    override fun loadInterstitialAD(context: Context) {
+        interstitialBuilder.maybeShow(context)
     }
 
-    override fun loadBanner(amBanner: AdView?) {
+    override fun loadBanner(amBanner: AppBrainBanner?) {
         amBanner?.apply {
-            loadAd(adRequest)
         }
     }
 

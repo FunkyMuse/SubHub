@@ -74,13 +74,8 @@
             android:value="${crashlytics}" />
 
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
-
-
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3874068061332875~1330492809" />
+            android:name="appbrain.job_id"
+            android:value="1205629301" />
 
         <meta-data
             android:name="com.google.android.gms.version"

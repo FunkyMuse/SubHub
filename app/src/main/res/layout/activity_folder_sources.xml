@@ -42,9 +42,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
 
-    <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        ads:adUnitId="@string/banner"
-        ads:adSize="BANNER"
+    <com.appbrain.AppBrainBanner
         android:id="@+id/adView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

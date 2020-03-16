@@ -14,7 +14,6 @@ import com.crazylegend.subhub.adapters.subtitles.SubtitlesAdapter
 import com.crazylegend.subhub.consts.INTENT_MOVIE_DOWNLOAD_LOCATION_TAG
 import com.crazylegend.subhub.consts.INTENT_MOVIE_LANG_TAG
 import com.crazylegend.subhub.consts.INTENT_MOVIE_NAME_TAG
-import com.crazylegend.subhub.consts.INTERSTITIAL
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.databinding.ActivityLoadSubsBinding
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
@@ -85,7 +84,7 @@ class LoadSubtitlesActivity : AbstractActivity() {
 
             loadSubsVM?.successEvent?.observe(this) {
                 it.getContentIfNotHandled()?.apply {
-                    component.loadInterstitialAD(this@LoadSubtitlesActivity, INTERSTITIAL)
+                    component.loadInterstitialAD(this@LoadSubtitlesActivity)
                     binding.progress.gone()
                     if (this) {
                         component.toaster.jobToast(getString(R.string.succ_dl_sub))

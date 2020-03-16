@@ -53,6 +53,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/subtitle"
         android:orientation="horizontal"
+        android:id="@+id/buttons"
         android:weightSum="1">
 
         <com.google.android.material.button.MaterialButton
@@ -70,5 +71,12 @@
             android:layout_weight="0.5" />
 
     </LinearLayout>
+
+    <com.appbrain.AppBrainBanner
+        android:layout_marginTop="10dp"
+        android:id="@+id/adView"
+        android:layout_below="@id/buttons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

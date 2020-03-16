@@ -20,13 +20,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <androidx.appcompat.widget.AppCompatTextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/subFileName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_toStartOf="@id/downloadButton"
-                android:padding="15dp" />
+                android:padding="5dp" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/downloadButton"
@@ -39,24 +39,24 @@
 
         </RelativeLayout>
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/subLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp" />
+            android:padding="5dp" />
 
-        <androidx.appcompat.widget.AppCompatTextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/movieName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="15dp" />
+            android:padding="5dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:baselineAligned="false"
             android:orientation="horizontal"
-            android:padding="15dp"
+            android:padding="5dp"
             android:weightSum="1">
 
             <LinearLayout
@@ -65,7 +65,7 @@
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/colorAccent"
@@ -73,7 +73,7 @@
                     android:layout_gravity="center"
                     android:text="@string/downloads" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/downloadsCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -86,7 +86,7 @@
                 android:layout_weight="0.5"
                 android:orientation="vertical">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textStyle="bold"
@@ -94,17 +94,14 @@
                     android:layout_gravity="center"
                     android:text="@string/sub_rating" />
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/rating"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center" />
             </LinearLayout>
 
-
         </LinearLayout>
-
-
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

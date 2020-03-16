@@ -42,7 +42,9 @@
         android:layout_alignParentBottom="true"
         android:layout_gravity="center_vertical"
         android:layout_alignParentEnd="true"
-        android:layout_margin="@dimen/margin_24"
+        android:layout_marginEnd="@dimen/margin_24"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="@dimen/margin_24"
         android:text="@string/cancel"
         app:cornerRadius="@dimen/margin_8" />
 

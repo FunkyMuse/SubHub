@@ -17,6 +17,7 @@ import com.crazylegend.kotlinextensions.rx.clearAndDispose
 import com.crazylegend.kotlinextensions.sharedprefs.getObject
 import com.crazylegend.kotlinextensions.sharedprefs.putObject
 import com.crazylegend.kotlinextensions.sharedprefs.remove
+import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
@@ -67,6 +68,7 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
 
     override fun loadBanner(amBanner: AdView?) {
         amBanner?.apply {
+            visible()
             if (!isLoading)
                 loadAd(adRequest)
         }

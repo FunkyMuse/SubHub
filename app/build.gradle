@@ -10,8 +10,8 @@ android {
         applicationId "com.crazylegend.subhub"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 14
-        versionName "1.0.12"
+        versionCode 15
+        versionName "1.0.13"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -89,14 +89,14 @@ dependencies {
 
 
     //util
-    implementation 'com.github.albfernandez:juniversalchardet:2.3.0'
+    implementation 'com.github.albfernandez:juniversalchardet:2.3.2'
     implementation 'com.github.CraZyLegenD:open-subtitles-android:0.0.11'
 
     //core
-    implementation 'androidx.preference:preference:1.1.0'
-    implementation 'androidx.fragment:fragment-ktx:1.2.2'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.fragment:fragment-ktx:1.2.4'
     implementation 'androidx.activity:activity-ktx:1.1.0'
-    implementation 'androidx.core:core-ktx:1.3.0-alpha01'
+    implementation 'androidx.core:core-ktx:1.3.0-rc01'
     implementation 'androidx.appcompat:appcompat:1.1.0'
 
     //rxjava
@@ -108,7 +108,7 @@ dependencies {
 
 
     //android apis
-    implementation 'com.google.android.material:material:1.2.0-alpha05'
+    implementation 'com.google.android.material:material:1.2.0-alpha06'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.documentfile:documentfile:1.0.1'
@@ -123,17 +123,17 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.6'
 
     //room
-    implementation 'androidx.room:room-ktx:2.2.4'
-    kapt 'androidx.room:room-compiler:2.2.4'
+    implementation 'androidx.room:room-ktx:2.2.5'
+    kapt 'androidx.room:room-compiler:2.2.5'
 
     //coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5'
 
     //firebase
-    implementation 'com.google.firebase:firebase-analytics:17.2.3'
-    implementation 'com.google.firebase:firebase-crashlytics:17.0.0-beta01'
-    implementation 'com.appbrain:appbrain-sdk:14.60'
+    implementation 'com.google.firebase:firebase-analytics:17.4.0'
+    implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
+    implementation 'com.google.firebase:firebase-ads:19.1.0'
 
     //my
     implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.89.31'

@@ -1,7 +1,5 @@
 package com.crazylegend.subhub.activities
 
-//.main.activity_main.*
-//.main.no_folders_selected_layout.view.*
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle

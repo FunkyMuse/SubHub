@@ -41,7 +41,7 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        component.loadBanner(binding.adView)
         chosenLanguage = component.getLanguagePref
         pickedDirModel = component.getDownloadLocationPref
 

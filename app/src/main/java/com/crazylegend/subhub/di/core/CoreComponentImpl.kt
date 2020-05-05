@@ -67,7 +67,8 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
 
     override fun loadBanner(amBanner: AdView?) {
         amBanner?.apply {
-            loadAd(adRequest)
+            if (!isLoading)
+                loadAd(adRequest)
         }
     }
 

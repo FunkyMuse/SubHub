@@ -4,7 +4,7 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.vms.LoadSubsVM
 
 
@@ -16,6 +16,7 @@ import com.crazylegend.subhub.vms.LoadSubsVM
  * Template created by Hristijan to live long and prosper.
  */
 
+@Suppress("UNCHECKED_CAST")
 class LoadSubsVMF(private val application: Application, private val movieName: String, private val langCode: LanguageItem, private val dir: Uri) : ViewModelProvider.AndroidViewModelFactory(application) {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

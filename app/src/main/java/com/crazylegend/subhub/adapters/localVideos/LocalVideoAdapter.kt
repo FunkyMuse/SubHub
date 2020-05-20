@@ -1,7 +1,8 @@
 package com.crazylegend.subhub.adapters.localVideos
 
-import com.crazylegend.subhub.R
-import com.crazylegend.subhub.core.AbstractAdapter
+import com.crazylegend.kotlinextensions.abstracts.AbstractViewBindingAdapter
+import com.crazylegend.subhub.databinding.ItemviewVideoBinding
+import com.crazylegend.subhub.dtos.LocalVideoItem
 
 
 /**
@@ -12,12 +13,10 @@ import com.crazylegend.subhub.core.AbstractAdapter
  * Template created by Hristijan to live long and prosper.
  */
 
-class LocalVideoAdapter : AbstractAdapter<LocalVideoItem, LocalVideoViewHolder>(LocalVideoDiffUtil(), LocalVideoViewHolder::class.java) {
+class LocalVideoAdapter : AbstractViewBindingAdapter<LocalVideoItem, LocalVideoViewHolder, ItemviewVideoBinding>(LocalVideoViewHolder::class.java
+        , ItemviewVideoBinding::inflate) {
 
-    override val getLayout: Int
-        get() = R.layout.itemview_video
-
-    override fun bindItems(item: LocalVideoItem, holder: LocalVideoViewHolder, position: Int) {
+    override fun bindItems(item: LocalVideoItem, holder: LocalVideoViewHolder, position: Int, itemCount: Int) {
         holder.bind(item)
     }
 

@@ -8,10 +8,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.di.dbResponse.DbResponseComponentImpl
 import com.crazylegend.subhub.di.pickedDirDB.PickedDirComponentImpl
-import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
 import com.google.android.gms.ads.AdRequest
@@ -37,11 +36,8 @@ interface CoreComponent {
     fun showDialogConfirmation(fragmentManager: FragmentManager, bundle: Bundle, positionClicked: (position: ButtonClicked) -> Unit = {})
     val getLanguagePref: LanguageItem?
     fun addLanguageToPrefs(langItem: LanguageItem)
-    val getDownloadLocationPref: PickedDirModel?
-    fun addDownloadLocationToPrefs(downloadPrefModel: PickedDirModel)
     fun removeLanguagePref()
     fun confirmationArguments(title: String, subtitle: String? = null, leftButtonText: String = application.getString(R.string.cancel), rightButtonText: String = application.getString(R.string.submit)): Bundle
-    fun removeDownloadLocationPref()
     fun disposeResources()
 
 

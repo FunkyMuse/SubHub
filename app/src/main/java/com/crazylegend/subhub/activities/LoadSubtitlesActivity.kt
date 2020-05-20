@@ -9,13 +9,13 @@ import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.adapters.subtitles.SubtitlesAdapter
 import com.crazylegend.subhub.consts.INTENT_MOVIE_DOWNLOAD_LOCATION_TAG
 import com.crazylegend.subhub.consts.INTENT_MOVIE_LANG_TAG
 import com.crazylegend.subhub.consts.INTENT_MOVIE_NAME_TAG
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.databinding.ActivityLoadSubsBinding
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.isNullStringOrEmpty
 import com.crazylegend.subhub.vmfs.LoadSubsVMF
@@ -63,7 +63,6 @@ class LoadSubtitlesActivity : AbstractActivity() {
 
             if (pickedDirModel.dir.toString().isNullStringOrEmpty()) {
                 component.toaster.jobToast(getString(R.string.pick_download_location), Toast.LENGTH_LONG)
-                component.removeDownloadLocationPref()
                 finish()
             }
 

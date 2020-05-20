@@ -1,7 +1,8 @@
 package com.crazylegend.subhub.adapters.chooseLanguage
 
-import com.crazylegend.subhub.R
-import com.crazylegend.subhub.core.AbstractAdapter
+import com.crazylegend.kotlinextensions.abstracts.AbstractViewBindingAdapter
+import com.crazylegend.subhub.databinding.ItemviewLanguageBinding
+import com.crazylegend.subhub.dtos.LanguageItem
 
 
 /**
@@ -13,13 +14,11 @@ import com.crazylegend.subhub.core.AbstractAdapter
  * Template created by Hristijan to live long and prosper.
  */
 
-class LanguageAdapter : AbstractAdapter<LanguageItem, LanguageViewHolder>(LanguageDiffUtil(), LanguageViewHolder::class.java) {
+class LanguageAdapter : AbstractViewBindingAdapter<LanguageItem, LanguageViewHolder, ItemviewLanguageBinding>(LanguageViewHolder::class.java,
+        ItemviewLanguageBinding::inflate) {
 
 
-    override val getLayout: Int
-        get() = R.layout.itemview_language
-
-    override fun bindItems(item: LanguageItem, holder: LanguageViewHolder, position: Int) {
+    override fun bindItems(item: LanguageItem, holder: LanguageViewHolder, position: Int, itemCount: Int) {
         holder.bind(item)
     }
 

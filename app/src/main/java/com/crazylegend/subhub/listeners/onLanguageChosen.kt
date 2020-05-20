@@ -1,6 +1,6 @@
 package com.crazylegend.subhub.listeners
 
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
+import com.crazylegend.subhub.dtos.LanguageItem
 
 
 /**

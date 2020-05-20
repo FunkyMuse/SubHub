@@ -17,10 +17,10 @@ import com.crazylegend.kotlinextensions.views.setTheText
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.activities.LoadSubtitlesActivity
 import com.crazylegend.subhub.activities.MainActivity
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.databinding.DialogManualSubSearchBinding
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.listeners.onDirChosenDSL
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.isNullStringOrEmpty
@@ -43,21 +43,11 @@ class DialogManualSubtitleSearch : AbstractDialogFragment() {
         super.onViewCreated(view, savedInstanceState)
         component.loadBanner(binding.adView)
         chosenLanguage = component.getLanguagePref
-        pickedDirModel = component.getDownloadLocationPref
 
         chosenLanguage?.apply {
             tryOrIgnore {
                 if (!name.isNullStringOrEmpty()) {
                     binding.languageInput.setTheText(this.name.toString())
-                }
-            }
-        }
-
-        pickedDirModel?.apply {
-            tryOrIgnore {
-                if (!name.isNullStringOrEmpty()) {
-                    binding.downloadLocationInput.setTheText(this.name)
-                    binding.downloadLocationInput.clearError()
                 }
             }
         }

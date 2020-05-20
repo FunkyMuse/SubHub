@@ -19,16 +19,15 @@ import com.crazylegend.kotlinextensions.sharedprefs.putObject
 import com.crazylegend.kotlinextensions.sharedprefs.remove
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.di.dbResponse.DbResponseComponentImpl
 import com.crazylegend.subhub.di.pickedDirDB.PickedDirComponentImpl
 import com.crazylegend.subhub.dialogs.DialogChooseLanguage
 import com.crazylegend.subhub.dialogs.DialogConfirmation
 import com.crazylegend.subhub.dialogs.DialogManualSubtitleSearch
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.listeners.languageDSL
 import com.crazylegend.subhub.listeners.onConfirmationCallbackDSL
-import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.ButtonClicked
 import com.crazylegend.subhub.utils.SubToast
 import com.google.android.gms.ads.*
@@ -74,13 +73,10 @@ class CoreComponentImpl(override val application: Application) : CoreComponent {
         }
     }
 
-    override fun addDownloadLocationToPrefs(downloadPrefModel: PickedDirModel) = defaultPrefs.putObject(DL_LOCATION_PREF_KEY, downloadPrefModel)
-    override val getDownloadLocationPref get() = defaultPrefs.getObject<PickedDirModel>(DL_LOCATION_PREF_KEY)
 
     override fun addLanguageToPrefs(langItem: LanguageItem) = defaultPrefs.putObject(LANGUAGE_PREF_KEY, langItem)
     override val getLanguagePref get() = defaultPrefs.getObject<LanguageItem>(LANGUAGE_PREF_KEY)
 
-    override fun removeDownloadLocationPref() = defaultPrefs.remove(DL_LOCATION_PREF_KEY)
 
     override fun removeLanguagePref() = defaultPrefs.remove(LANGUAGE_PREF_KEY)
 

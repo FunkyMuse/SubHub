@@ -9,12 +9,12 @@ import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.chooseLanguage.LanguageAdapter
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.DEBOUNCE_TIME
 import com.crazylegend.subhub.consts.DEBOUNCE_TIME_UNIT
 import com.crazylegend.subhub.consts.LANGUAGES_FILE_CONST
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.databinding.DialogChooseLanguageBinding
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.listeners.onLanguageChosen
 import com.jakewharton.rxbinding3.widget.textChanges
 import io.reactivex.rxkotlin.addTo

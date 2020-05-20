@@ -10,8 +10,8 @@ android {
         applicationId "com.crazylegend.subhub"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 16
-        versionName "1.0.13"
+        versionCode 17
+        versionName "1.0.14"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         javaCompileOptions {
@@ -26,12 +26,12 @@ android {
     buildTypes {
 
         debug {
-            minifyEnabled false
+            minifyEnabled true
             manifestPlaceholders = [crashlytics: "false"]
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
             crunchPngs false
-            shrinkResources false
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
 
             firebaseCrashlytics {
@@ -127,15 +127,14 @@ dependencies {
     kapt 'androidx.room:room-compiler:2.2.5'
 
     //coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.5'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.6'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.6'
 
     //firebase
-    implementation 'com.google.firebase:firebase-analytics:17.4.0'
     implementation 'com.google.firebase:firebase-crashlytics:17.0.0'
     implementation 'com.google.firebase:firebase-ads:19.1.0'
 
     //my
-    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.89.31'
+    implementation 'com.github.CraZyLegenD:Set-Of-Useful-Kotlin-Extensions-and-Helpers:1.0.89.53'
 
 }

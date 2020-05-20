@@ -5,8 +5,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.crazylegend.kotlinextensions.database.DBResult
-import com.crazylegend.subhub.adapters.localVideos.LocalVideoItem
 import com.crazylegend.subhub.core.AbstractAVM
+import com.crazylegend.subhub.dtos.LocalVideoItem
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.pickedDirs.PickedDirRepo
 

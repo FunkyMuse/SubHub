@@ -17,9 +17,6 @@ import com.crazylegend.subhub.databinding.DialogConfirmationBinding
 import com.crazylegend.subhub.listeners.onConfirmationCallback
 import com.crazylegend.subhub.utils.ButtonClicked
 
-//.main.dialog_confirmation.binding.*
-
-
 /**
  * Created by crazy on 11/28/19 to long live and prosper !
  */

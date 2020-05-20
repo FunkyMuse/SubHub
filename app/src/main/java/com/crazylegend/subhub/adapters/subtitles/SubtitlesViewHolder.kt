@@ -1,15 +1,13 @@
 package com.crazylegend.subhub.adapters.subtitles
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.databinding.ItemviewSubtitleBinding
 import com.masterwok.opensubs.models.OpenSubtitleItem
 
-class SubtitlesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class SubtitlesViewHolder(private val binding: ItemviewSubtitleBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val binding = ItemviewSubtitleBinding.bind(itemView)
 
     fun bind(subtitleItem: OpenSubtitleItem?) {
         subtitleItem?.apply {

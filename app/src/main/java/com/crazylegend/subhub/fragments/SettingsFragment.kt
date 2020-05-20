@@ -7,15 +7,12 @@ import com.crazylegend.kotlinextensions.NEW_LINE
 import com.crazylegend.kotlinextensions.context.packageVersionName
 import com.crazylegend.kotlinextensions.context.rateUs
 import com.crazylegend.kotlinextensions.intent.openWebPage
-import com.crazylegend.kotlinextensions.storage.openDirectory
+import com.crazylegend.kotlinextensions.preferences.onClick
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.activities.SettingsActivity
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.di.core.CoreComponentImpl
 import com.crazylegend.subhub.di.fragment.FragmentComponentImpl
-import com.crazylegend.subhub.listeners.onDirChosenDSL
-import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.utils.ButtonClicked
 
 
@@ -34,14 +31,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private var movieDLApp: Preference? = null
     private var version: Preference? = null
     private var privacyPolicy: Preference? = null
-    private var downloadLocationPref: Preference? = null
     private var myOtherApps: Preference? = null
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings)
         version = findPreference(VERSION_PREF_KEY)
         myOtherApps = findPreference(MY_OTHER_APPS_PREF_KEY)
         languagePref = findPreference(PREFERRED_LANGUAGE_PREF)
-        downloadLocationPref = findPreference(PREFERRED_DOWNLOAD_LOCATION_PREF)
         deleteCache = findPreference(DELETE_CACHE_PREF)
         rateUs = findPreference(RATE_US_PREF_KEY)
         privacyPolicy = findPreference(PRIVACY_POLICY_PREF_KEY)
@@ -49,24 +44,19 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         version?.summary = requireContext().packageVersionName
 
-
-
-        myOtherApps?.setOnPreferenceClickListener {
+        myOtherApps.onClick {
             requireContext().openWebPage(DEV_LINK)
-            true
         }
 
-        deleteCache?.setOnPreferenceClickListener {
+        deleteCache.onClick {
             if (requireContext().cacheDir.deleteRecursively()) {
                 fragmentComponent.toaster.jobToast(getString(R.string.deletion_success))
             } else {
                 fragmentComponent.toaster.jobToast(getString(R.string.deletion_failed))
             }
-            true
         }
 
-        languagePref?.setOnPreferenceClickListener {
-
+        languagePref.onClick {
             if (fragmentComponent.getLanguagePref == null) {
                 pickLanguage()
             } else {
@@ -86,53 +76,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     }
                 }
             }
-
-            true
         }
 
-        downloadLocationPref?.setOnPreferenceClickListener {
-            if (fragmentComponent.getDownloadLocationPref == null) {
-                pickNewDownloadLocation()
-            } else {
-                fragmentComponent.showDialogConfirmation(childFragmentManager, fragmentComponent.confirmationArguments(
-                        title = getString(R.string.remove_dl_location_or_insert_new_one),
-                        subtitle = getString(R.string.currently_selected, fragmentComponent.getDownloadLocationPref?.name),
-                        leftButtonText = getString(R.string.remove),
-                        rightButtonText = getString(R.string.new_one)
-                )) {
-                    when (it) {
-                        ButtonClicked.LEFT -> {
-                            resetDirSummary()
-                        }
-                        ButtonClicked.RIGHT -> {
-                            pickNewDownloadLocation()
-                        }
-                    }
-                }
-            }
-            true
-        }
-
-        rateUs?.setOnPreferenceClickListener {
+        rateUs.onClick {
             requireContext().rateUs()
-            true
         }
 
-        SettingsActivity.onDirChosen = onDirChosenDSL {
-            it.apply {
-                updateDirSummary(this)
-            }
-        }
-
-        movieDLApp?.setOnPreferenceClickListener {
+        movieDLApp.onClick {
             requireContext().openWebPage(MOVIE_APP_LINK)
-            true
         }
 
-        privacyPolicy?.setOnPreferenceClickListener {
+        privacyPolicy.onClick {
             requireContext().openWebPage(PRIVACY_POLICY_LINK)
-            true
         }
+
     }
 
     private fun pickLanguage() {
@@ -148,34 +105,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onResume()
 
         val lang = fragmentComponent.getLanguagePref
-        val dlLocation = fragmentComponent.getDownloadLocationPref
-
 
         lang?.apply {
             updateLanguageSummary(this)
         }
-
-        dlLocation?.apply {
-            updateDirSummary(this)
-        }
     }
 
-    private fun resetDirSummary() {
-        fragmentComponent.removeDownloadLocationPref()
-        downloadLocationPref?.summary = ""
-        downloadLocationPref?.summary = getString(R.string.selected_dl_folder_expl)
-    }
-
-    private fun updateDirSummary(dirModel: PickedDirModel) {
-        dirModel.apply {
-            resetDirSummary()
-            fragmentComponent.addDownloadLocationToPrefs(dirModel)
-            val summary = downloadLocationPref?.summary?.toString()
-            summary ?: return@apply
-            val modifiedSummary = summary + NEW_LINE + NEW_LINE + getString(R.string.currently_selected_dl_location, name)
-            downloadLocationPref?.summary = modifiedSummary
-        }
-    }
 
     private fun resetLangSummary() {
         fragmentComponent.removeLanguagePref()
@@ -194,7 +129,4 @@ class SettingsFragment : PreferenceFragmentCompat() {
         }
     }
 
-    private fun pickNewDownloadLocation() {
-        requireActivity().openDirectory(PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE)
-    }
 }

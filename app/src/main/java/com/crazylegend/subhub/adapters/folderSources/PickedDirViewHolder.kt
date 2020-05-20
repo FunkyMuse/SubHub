@@ -1,20 +1,17 @@
 package com.crazylegend.subhub.adapters.folderSources
 
-import android.view.View
 import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.kotlinextensions.recyclerview.context
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
-
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.databinding.ItemviewPickedDirBinding
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 
-class PickedDirViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class PickedDirViewHolder(private val binding: ItemviewPickedDirBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val binding = ItemviewPickedDirBinding.bind(itemView)
 
     fun bind(item: PickedDirModel, lifecycleScope: LifecycleCoroutineScope) {
         binding.folderName.setPrecomputedText(context.getString(R.string.folder_name, item.name))

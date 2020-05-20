@@ -1,8 +1,8 @@
 package com.crazylegend.subhub.adapters.folderSources
 
 import androidx.lifecycle.LifecycleCoroutineScope
-import com.crazylegend.subhub.R
-import com.crazylegend.subhub.core.AbstractAdapter
+import com.crazylegend.kotlinextensions.abstracts.AbstractViewBindingAdapter
+import com.crazylegend.subhub.databinding.ItemviewPickedDirBinding
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 
 
@@ -15,12 +15,10 @@ import com.crazylegend.subhub.pickedDirs.PickedDirModel
  * Template created by Hristijan to live long and prosper.
  */
 
-class PickedDirsAdapter(private val lifecycleScope: LifecycleCoroutineScope) : AbstractAdapter<PickedDirModel, PickedDirViewHolder>(PickedDirDiffUtil(), PickedDirViewHolder::class.java) {
+class PickedDirsAdapter(private val lifecycleScope: LifecycleCoroutineScope) :
+        AbstractViewBindingAdapter<PickedDirModel, PickedDirViewHolder, ItemviewPickedDirBinding>(PickedDirViewHolder::class.java, ItemviewPickedDirBinding::inflate) {
 
-    override val getLayout: Int
-        get() = R.layout.itemview_picked_dir
-
-    override fun bindItems(item: PickedDirModel, holder: PickedDirViewHolder, position: Int) {
+    override fun bindItems(item: PickedDirModel, holder: PickedDirViewHolder, position: Int, itemCount: Int) {
         holder.bind(item, lifecycleScope)
     }
 }

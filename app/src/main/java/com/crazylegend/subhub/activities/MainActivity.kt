@@ -27,10 +27,10 @@ import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.adapters.localVideos.LocalVideoAdapter
-import com.crazylegend.subhub.adapters.localVideos.LocalVideoItem
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.databinding.ActivityMainBinding
+import com.crazylegend.subhub.dtos.LocalVideoItem
 import com.crazylegend.subhub.listeners.onDirChosen
 import com.crazylegend.subhub.pickedDirs.PickedDirModel
 import com.crazylegend.subhub.utils.getSafFiles

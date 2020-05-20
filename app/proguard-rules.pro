@@ -1,10 +1,9 @@
--keep public class com.crazylegend.subhub.adapters.localVideos.LocalVideoViewHolder { <methods>; }
--keep public class com.crazylegend.subhub.adapters.chooseLanguage.LanguageViewHolder { <methods>; }
--keep public class com.crazylegend.subhub.adapters.subtitles.SubtitlesViewHolder { <methods>; }
--keep public class com.crazylegend.subhub.adapters.folderSources.PickedDirViewHolder { <methods>; }
--keep public class com.crazylegend.subhub.pickedDirs.PickedDirModel { <methods>; }
+-keep public class com.crazylegend.subhub.adapters.localVideos.LocalVideoViewHolder { public <init>(...); }
+-keep public class com.crazylegend.subhub.adapters.chooseLanguage.LanguageViewHolder { public <init>(...); }
+-keep public class com.crazylegend.subhub.adapters.subtitles.SubtitlesViewHolder { public <init>(...); }
+-keep public class com.crazylegend.subhub.adapters.folderSources.PickedDirViewHolder { public <init>(...); }
+-keep public class com.crazylegend.subhub.pickedDirs.PickedDirModel { public <init>(...); }
 -keep public class com.masterwok.opensubs.models.OpenSubtitleItem { *; }
-
 
 -keepattributes SourceFile,LineNumberTable
 -keep public class * extends java.lang.Exception

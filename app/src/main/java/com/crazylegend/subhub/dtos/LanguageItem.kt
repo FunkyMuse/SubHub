@@ -1,4 +1,4 @@
-package com.crazylegend.subhub.adapters.chooseLanguage
+package com.crazylegend.subhub.dtos
 
 import android.os.Parcelable
 import androidx.annotation.Keep

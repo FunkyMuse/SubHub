@@ -1,16 +1,14 @@
 package com.crazylegend.subhub.adapters.chooseLanguage
 
-import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.crazylegend.kotlinextensions.recyclerview.context
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
-
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.databinding.ItemviewLanguageBinding
+import com.crazylegend.subhub.dtos.LanguageItem
 
-class LanguageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class LanguageViewHolder(private val binding: ItemviewLanguageBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    private val binding = ItemviewLanguageBinding.bind(itemView)
 
     fun bind(item: LanguageItem) {
         binding.languageName.setPrecomputedText(context.getString(R.string.language_placeholder, item.name))

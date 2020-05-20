@@ -12,13 +12,6 @@
             app:summary="@string/preferred_language_expl"
             app:title="@string/preferred_language" />
 
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="settings_pref_dl_location"
-            app:singleLineTitle="true"
-            app:summary="@string/selected_dl_folder_expl"
-            app:title="@string/preferred_download_location" />
-
     </PreferenceCategory>
 
 

@@ -16,11 +16,11 @@ import com.crazylegend.kotlinextensions.rx.newThreadScheduler
 import com.crazylegend.kotlinextensions.rx.singleFrom
 import com.crazylegend.kotlinextensions.tryOrElse
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.adapters.chooseLanguage.LanguageItem
 import com.crazylegend.subhub.consts.CHARSETS_FILE_CONST
 import com.crazylegend.subhub.consts.DEFAULT_LANGUAGE
 import com.crazylegend.subhub.consts.SRT_TYPE
 import com.crazylegend.subhub.core.AbstractAVM
+import com.crazylegend.subhub.dtos.LanguageItem
 import com.masterwok.opensubs.OpenSubtitlesUrlBuilder
 import com.masterwok.opensubs.models.OpenSubtitleItem
 import com.masterwok.opensubs.services.OpenSubtitlesService

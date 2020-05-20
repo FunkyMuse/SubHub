@@ -33,8 +33,8 @@ data class PickedDirModel(
         @ColumnInfo(name = "destination")
         val destinationString: String
 ) : Parcelable {
-    val dir get() = Uri.parse(destinationString)
-    fun pickedDir(context: Context) = DocumentFile.fromTreeUri(context, dir)
+    val dir: Uri? get() = Uri.parse(destinationString)
+    fun pickedDir(context: Context) = dir?.let { DocumentFile.fromTreeUri(context, it) }
 
     @Ignore
     @IgnoredOnParcel

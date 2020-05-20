@@ -9,6 +9,7 @@ import com.crazylegend.kotlinextensions.context.isIntentResolvable
 import com.crazylegend.kotlinextensions.context.snackBar
 import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
 import com.crazylegend.kotlinextensions.storage.openDirectory
+import com.crazylegend.kotlinextensions.storage.setUriWritePermission
 import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
 import com.crazylegend.subhub.R
@@ -61,6 +62,7 @@ class FolderSourcesActivity : AbstractActivity() {
         adapter.forItemClickListener = forItemClickListenerDSL { _, item, _ ->
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(item.dir, "*/*")
+            intent.setUriWritePermission()
             if (isIntentResolvable(intent))
                 startActivity(intent)
             else
@@ -76,6 +78,9 @@ class FolderSourcesActivity : AbstractActivity() {
                 when (it) {
                     ButtonClicked.RIGHT -> {
                         component.pickedDirVM.deleteDir(item)
+                    }
+                    ButtonClicked.LEFT -> {
+
                     }
                 }
             }

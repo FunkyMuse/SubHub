@@ -16,7 +16,7 @@ class LocalVideoViewHolder(private val binding: ItemviewVideoBinding) : Recycler
     fun bind(item: LocalVideoItem) {
         val image = item.photoUri
         if (image == null) {
-            binding.videoImage.setImageResource(R.drawable.app_logo)
+            binding.videoImage.loadImgNoCache(R.drawable.app_logo)
         } else {
             binding.videoImage.loadImgNoCache(image)
         }

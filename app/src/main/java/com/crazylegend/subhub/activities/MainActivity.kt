@@ -181,7 +181,6 @@ class MainActivity : AbstractActivity() {
     }
 
     private fun updateFoldersInTheBackground(list: List<PickedDirModel>) {
-
         defaultCoroutine {
             tryOrPrint {
                 val adapterList = mutableListOf<LocalVideoItem>()

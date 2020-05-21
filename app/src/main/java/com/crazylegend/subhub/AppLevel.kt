@@ -22,7 +22,5 @@ class AppLevel : Application() {
 
         RxJavaPlugins.setErrorHandler { }
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
-
-
     }
 }

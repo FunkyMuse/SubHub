@@ -33,6 +33,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/cancel"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        android:fadeScrollbars="true"
+        android:scrollbarStyle="outsideOverlay"
         android:layout_below="@id/searchLanguageLayout" />
 
     <com.google.android.material.button.MaterialButton

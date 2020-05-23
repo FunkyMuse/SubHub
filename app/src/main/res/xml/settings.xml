@@ -19,12 +19,6 @@
         app:iconSpaceReserved="false"
         app:title="@string/content">
 
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="settings_pref_delete_cache"
-            app:singleLineTitle="true"
-            app:summary="@string/cache_data_del_expl"
-            app:title="@string/delete_cache" />
 
         <Preference
             app:iconSpaceReserved="false"

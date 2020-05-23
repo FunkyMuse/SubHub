@@ -19,7 +19,6 @@
         android:layout_centerVertical="true"
         android:layout_toEndOf="@id/noDataLogo"
         android:padding="15dp"
-        android:text="@string/folder_sources_no_data_expl"
         android:textSize="15sp" />
 
 </RelativeLayout>

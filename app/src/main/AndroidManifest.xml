@@ -19,9 +19,7 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:node="remove" />
 
-    <uses-permission
-        android:name="android.permission.READ_EXTERNAL_STORAGE"
-        tools:node="remove" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".AppLevel"
@@ -37,27 +35,15 @@
         android:theme="@style/AppTheme"
         tools:replace="android:fullBackupContent">
         <activity
-            android:name=".activities.MainActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:name=".MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleInstance">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity
-            android:name=".activities.LoadSubtitlesActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/subtitles" />
-        <activity
-            android:name=".activities.SettingsActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/settings" />
-        <activity
-            android:name=".activities.FolderSourcesActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="@string/video_source_folders" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -73,7 +59,6 @@
             android:name="firebase_crashlytics_collection_enabled"
             android:value="${crashlytics}" />
 
-
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-3874068061332875~1330492809" />
@@ -81,7 +66,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
 
     </application>
 

@@ -1,55 +1,49 @@
 package com.crazylegend.subhub.core
 
+import android.content.res.Configuration
 import android.os.Bundle
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewbinding.ViewBinding
-import com.crazylegend.kotlinextensions.context.showBackButton
-import com.crazylegend.subhub.di.activity.ActivityComponentImpl
-import com.crazylegend.subhub.di.core.CoreComponentImpl
+import com.crazylegend.subhub.di.contracts.InjectionContracts
+import com.crazylegend.subhub.di.extensions.injector
+import com.crazylegend.subhub.di.providers.AdaptersProvider
+import com.crazylegend.subhub.di.providers.AppProvider
+import com.crazylegend.subhub.di.providers.LifecycleProvider
+import javax.inject.Inject
 
 
 /**
  * Created by crazy on 11/26/19 to long live and prosper !
  */
-abstract class AbstractActivity : AppCompatActivity() {
+abstract class AbstractActivity : AppCompatActivity(), InjectionContracts {
 
-    abstract val showBack: Boolean
+    @Inject
+    override lateinit var appProvider: AppProvider
+
+    @Inject
+    override lateinit var lifecycleProvider: LifecycleProvider
+
+    @Inject
+    override lateinit var adaptersProvider: AdaptersProvider
+
 
     abstract val binding: ViewBinding
 
-    val component by lazy {
-        ActivityComponentImpl(this, CoreComponentImpl(application))
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        component.disposeResources()
-    }
-
-    lateinit var linearLayoutManager: LinearLayoutManager
-        private set
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        if (showBack) {
-            showBackButton()
-        }
-        linearLayoutManager = LinearLayoutManager(this)
+        injector(savedInstanceState) { inject(this@AbstractActivity) }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                finish()
-                true
-            }
-            else -> {
-                return super.onOptionsItemSelected(item)
-            }
+
+    override fun applyOverrideConfiguration(overrideConfiguration: Configuration?) {
+        if (overrideConfiguration != null) {
+            val uiMode = overrideConfiguration.uiMode
+            overrideConfiguration.setTo(baseContext.resources.configuration)
+            overrideConfiguration.uiMode = uiMode
         }
+        super.applyOverrideConfiguration(overrideConfiguration)
     }
 
 }

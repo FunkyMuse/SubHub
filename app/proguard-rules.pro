@@ -1,8 +1,4 @@
--keep public class com.crazylegend.subhub.adapters.localVideos.LocalVideoViewHolder { public <init>(...); }
--keep public class com.crazylegend.subhub.adapters.chooseLanguage.LanguageViewHolder { public <init>(...); }
--keep public class com.crazylegend.subhub.adapters.subtitles.SubtitlesViewHolder { public <init>(...); }
--keep public class com.crazylegend.subhub.adapters.folderSources.PickedDirViewHolder { public <init>(...); }
--keep public class com.crazylegend.subhub.pickedDirs.PickedDirModel { public <init>(...); }
+-keep public class com.crazylegend.subhub.adapters.* { public <init>(...); }
 -keep public class com.masterwok.opensubs.models.OpenSubtitleItem { *; }
 
 -keepattributes SourceFile,LineNumberTable

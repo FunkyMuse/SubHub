@@ -1,6 +1,6 @@
 package com.crazylegend.subhub.listeners
 
-import com.crazylegend.subhub.pickedDirs.PickedDirModel
+import com.crazylegend.subhub.dtos.PickedDirModel
 
 
 /**

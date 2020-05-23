@@ -2,10 +2,9 @@ package com.crazylegend.subhub.core
 
 import android.os.Bundle
 import android.view.View
-import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
-import com.crazylegend.kotlinextensions.context.getCompatDrawable
-import com.crazylegend.subhub.R
+import com.crazylegend.subhub.MainActivity
 import com.crazylegend.subhub.di.contracts.InjectionContracts
 import com.crazylegend.subhub.di.extensions.injector
 import com.crazylegend.subhub.di.providers.AdaptersProvider
@@ -15,9 +14,9 @@ import javax.inject.Inject
 
 
 /**
- * Created by crazy on 11/26/19 to long live and prosper !
+ * Created by crazy on 5/23/20 to long live and prosper !
  */
-abstract class AbstractDialogFragment(setView: Int) : DialogFragment(setView), InjectionContracts {
+abstract class AbstractFragment(contentLayoutId: Int) : Fragment(contentLayoutId), InjectionContracts {
 
     @Inject
     override lateinit var appProvider: AppProvider
@@ -28,20 +27,15 @@ abstract class AbstractDialogFragment(setView: Int) : DialogFragment(setView), I
     @Inject
     override lateinit var adaptersProvider: AdaptersProvider
 
+    fun changeTitle(title: String = "") {
+        (requireActivity() as MainActivity).supportActionBar?.title = title
+    }
 
     abstract val binding: ViewBinding
 
-
-    override fun onCreateDialog(savedInstanceState: Bundle?) = with(super.onCreateDialog(savedInstanceState)) {
-        setCanceledOnTouchOutside(false)
-        setCancelable(false)
-        window?.setBackgroundDrawable(requireContext().getCompatDrawable(R.drawable.dialog_bg))
-        this
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injector(savedInstanceState) { inject(this@AbstractDialogFragment) }
-
+        injector(savedInstanceState) { inject(this@AbstractFragment) }
     }
+
 }

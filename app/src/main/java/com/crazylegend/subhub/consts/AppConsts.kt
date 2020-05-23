@@ -1,7 +1,5 @@
 package com.crazylegend.subhub.consts
 
-import java.util.concurrent.TimeUnit
-
 
 /**
  * Created by crazy on 11/26/19 to long live and prosper !
@@ -13,11 +11,8 @@ const val LANGUAGES_FILE_CONST = "languages.json"
 const val CHARSETS_FILE_CONST = "charsets.json"
 const val DEBOUNCE_TIME = 300L
 
-val DEBOUNCE_TIME_UNIT = TimeUnit.MILLISECONDS
 
-const val PICK_DIRECTORY_REQUEST_CODE = 131
-const val PICK_DOWNLOAD_DIRECTORY_REQUEST_CODE = 132
-const val PICKED_DIR_DB_NAME = "pickedDir-db"
+const val SCROLL_TO_TOP_VISIBILITY_THRESHOLD = 20
 
 const val SRT_TYPE = ".srt"
 val SUPPORTED_FILE_FORMATS = arrayOf("mp4", "avi", "mkv", "3gp", "video")
@@ -28,3 +23,9 @@ const val CACHE_JSON = "cachedVideos.json"
 const val DEFAULT_LANGUAGE = "eng"
 
 const val INTERSTITIAL = "ca-app-pub-3874068061332875/2335775063"
+
+const val UPDATE_REQ_KEY = "update"
+const val ON_UPDATE_KEY = "onUpdated"
+
+const val LANGUAGE_REQ_KEY = "languageReq"
+const val ON_LANGUAGE_KEY = "onLanguageReq"

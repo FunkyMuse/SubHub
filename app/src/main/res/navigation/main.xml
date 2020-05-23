@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    app:startDestination="@id/mainFragment"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.crazylegend.subhub.ui.MainFragment"
+        android:label="">
+        <action
+            android:id="@+id/action_confirmation"
+            app:destination="@id/confirmationDialog" />
+        <action
+            android:id="@+id/action_manualSearch"
+            app:destination="@id/manualSubtitleSearchDialog" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/confirmationDialog"
+        android:name="com.crazylegend.subhub.dialogs.ConfirmationDialog"
+        android:label="">
+        <argument
+            android:name="title"
+            android:defaultValue=" "
+            app:argType="string" />
+        <argument
+            android:name="cancelText"
+            app:nullable="true"
+            android:defaultValue="@null"
+            app:argType="string" />
+        <argument
+            app:nullable="true"
+            android:defaultValue="@null"
+            android:name="confirmationText"
+            app:argType="string" />
+
+        <argument
+            android:name="subtitle"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
+    <dialog
+        android:id="@+id/manualSubtitleSearchDialog"
+        android:name="com.crazylegend.subhub.dialogs.ManualSubtitleSearchDialog"
+        android:label="">
+
+        <action
+            android:id="@+id/action_loadSubtitles"
+            app:destination="@id/loadSubtitlesFragment" />
+        <action
+            android:id="@+id/action_chooseLanguage"
+            app:destination="@id/chooseLanguageDialog" />
+        <argument
+            android:name="movieName"
+            app:argType="string"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </dialog>
+    <dialog
+        android:id="@+id/chooseLanguageDialog"
+        android:name="com.crazylegend.subhub.dialogs.ChooseLanguageDialog"
+        android:label="">
+
+    </dialog>
+
+    <fragment
+        android:id="@+id/loadSubtitlesFragment"
+        android:name="com.crazylegend.subhub.ui.LoadSubtitlesFragment"
+        android:label="@string/subtitles">
+        <argument
+            android:name="movieName"
+            app:argType="string" />
+        <argument
+            app:nullable="true"
+            android:name="pickedDir"
+            app:argType="android.net.Uri" />
+        <argument
+            app:nullable="true"
+            android:name="languageItem"
+            app:argType="com.crazylegend.subhub.dtos.LanguageItem" />
+    </fragment>
+</navigation>

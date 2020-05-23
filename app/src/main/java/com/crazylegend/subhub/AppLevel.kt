@@ -1,9 +1,10 @@
 package com.crazylegend.subhub
 
 import android.app.Application
-import com.crazylegend.subhub.di.core.CoreComponentImpl
-import com.google.firebase.crashlytics.FirebaseCrashlytics
-import io.reactivex.plugins.RxJavaPlugins
+import com.crazylegend.subhub.di.components.AppComponent
+import com.crazylegend.subhub.di.components.DaggerAppComponent
+import com.crazylegend.subhub.di.providers.AppProvider
+import javax.inject.Inject
 
 
 /**
@@ -11,16 +12,17 @@ import io.reactivex.plugins.RxJavaPlugins
  */
 class AppLevel : Application() {
 
-    private val component by lazy {
-        CoreComponentImpl(this)
-    }
+    lateinit var appComponent: AppComponent
 
+    @Inject
+    lateinit var appProvider: AppProvider
     override fun onCreate() {
         super.onCreate()
-
-        component.initializeGoogleSDK()
-
-        RxJavaPlugins.setErrorHandler { }
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
+        appComponent = DaggerAppComponent.factory().create(this).also { it.inject(this) }
+        appProvider.apply {
+            applyCrashlytics()
+            initializeADS()
+            setErrorHandler()
+        }
     }
 }

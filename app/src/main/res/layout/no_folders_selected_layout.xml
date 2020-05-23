@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="@string/no_folders_expl"
+        android:text="@string/permission_expl2"
         android:textSize="15sp"
         android:drawablePadding="10dp"
         android:id="@+id/noDataText"

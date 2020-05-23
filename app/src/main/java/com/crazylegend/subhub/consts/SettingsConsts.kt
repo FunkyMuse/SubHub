@@ -7,11 +7,9 @@ package com.crazylegend.subhub.consts
 
 
 const val PREFERRED_LANGUAGE_PREF = "settings_pref_language"
-const val DELETE_CACHE_PREF = "settings_pref_delete_cache"
 
 const val RATE_US_PREF_KEY = "settings_pref_rate_us"
 const val CHECKOUT_MOVIE_APP_KEY = "settings_pref_dl_movie_app"
-const val LANGUAGE_PREF_KEY = "languagePrefModelKey"
 const val VERSION_PREF_KEY = "settings_pref_version_code"
 const val PRIVACY_POLICY_PREF_KEY = "settings_pref_privacy_policy"
 const val MY_OTHER_APPS_PREF_KEY = "settings_pref_other_apps"

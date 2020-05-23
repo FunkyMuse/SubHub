@@ -64,12 +64,7 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
-
-    override fun onResume() {
-        super.onResume()
-
-    }
-
+    
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)

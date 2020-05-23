@@ -65,6 +65,10 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -113,7 +117,14 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         }
 
         videosVM.videos.observe(viewLifecycleOwner) {
-            adapter.submitList(it)
+            if (it.isNullOrEmpty()) {
+                showNoData()
+                showNoVideos()
+                adapter.submitList(emptyList())
+            } else {
+                adapter.submitList(it)
+                hideNoData()
+            }
         }
 
         videosVM.loadingIndicator.observe(viewLifecycleOwner) {

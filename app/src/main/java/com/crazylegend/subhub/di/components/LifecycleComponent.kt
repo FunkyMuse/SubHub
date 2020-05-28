@@ -1,9 +1,7 @@
 package com.crazylegend.subhub.di.components
 
-import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.LifecycleOwner
+import androidx.fragment.app.Fragment
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.core.AbstractFragment
@@ -30,9 +28,7 @@ interface LifecycleComponent {
 
     @Subcomponent.Factory
     interface Factory {
-        fun create(@BindsInstance context: Context,
-                   @BindsInstance bundle: Bundle?,
-                   @BindsInstance lifecycleOwner: LifecycleOwner,
-                   @BindsInstance fragmentManager: FragmentManager): LifecycleComponent
+        fun create(@BindsInstance context: Bundle?,
+                   @BindsInstance bundle: Fragment): LifecycleComponent
     }
 }

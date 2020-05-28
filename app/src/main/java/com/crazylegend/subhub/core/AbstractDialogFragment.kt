@@ -11,6 +11,7 @@ import com.crazylegend.subhub.di.extensions.injector
 import com.crazylegend.subhub.di.providers.AdaptersProvider
 import com.crazylegend.subhub.di.providers.AppProvider
 import com.crazylegend.subhub.di.providers.LifecycleProvider
+import com.crazylegend.subhub.di.providers.PermissionsProvider
 import javax.inject.Inject
 
 
@@ -28,6 +29,8 @@ abstract class AbstractDialogFragment(setView: Int) : DialogFragment(setView), I
     @Inject
     override lateinit var adaptersProvider: AdaptersProvider
 
+    @Inject
+    override lateinit var permissionsProvider: PermissionsProvider
 
     abstract val binding: ViewBinding
 
@@ -41,7 +44,7 @@ abstract class AbstractDialogFragment(setView: Int) : DialogFragment(setView), I
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injector(savedInstanceState) { inject(this@AbstractDialogFragment) }
+        injector(this, savedInstanceState) { inject(this@AbstractDialogFragment) }
 
     }
 }

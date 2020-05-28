@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.View
-import androidx.activity.invoke
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
@@ -44,13 +42,14 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         adaptersProvider.videosAdapter
     }
 
-    private val askForStoragePermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
+
+    /*private val askForStoragePermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
         if (it) {
             videosVM.loadVideos()
         } else {
             setupUIIfPermissionIsNotAllowed()
         }
-    }
+    }*/
 
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -64,7 +63,7 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         }
         super.onCreateOptionsMenu(menu, inflater)
     }
-    
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
@@ -147,7 +146,7 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getStoragePermissions() = askForStoragePermission.invoke(READ_EXTERNAL_STORAGE)
+    private fun getStoragePermissions() = permissionsProvider.askForAPermission(onDenied = { setupUIIfPermissionIsNotAllowed() }, onPermissionsGranted = { videosVM.loadVideos() }).launch(READ_EXTERNAL_STORAGE)
 
 
     private fun showNoData() {

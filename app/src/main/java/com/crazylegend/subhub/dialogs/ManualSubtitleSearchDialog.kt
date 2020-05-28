@@ -3,8 +3,6 @@ package com.crazylegend.subhub.dialogs
 import android.net.Uri
 import android.os.Bundle
 import android.view.View
-import androidx.activity.invoke
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.fragment.findNavController
@@ -120,17 +118,9 @@ class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual
         }
     }
 
-    private val pickDir = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
-        pickedDirModel = it
-        if (it != null) {
-            val name = DocumentFile.fromTreeUri(requireContext(), it)?.name ?: ""
-            binding.downloadLocationInput.setTheText(name)
-            binding.downloadLocationInput.clearError()
-        } else {
-            binding.downloadLocationInput.setTheText("")
-            binding.downloadLocationInput.clearError()
-        }
-    }
+    /*private val pickDir = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
+
+    }*/
 
     private fun pickALanguage() {
         tryOrIgnore { findNavController().navigate(ManualSubtitleSearchDialogDirections.actionChooseLanguage()) }
@@ -148,7 +138,16 @@ class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual
     }
 
     private fun pickDownloadDirectory() {
-        pickDir.invoke(null)
+        permissionsProvider.openDocumentTree(onCalled = {
+            pickedDirModel = it
+        }, onPermissionsGranted = {
+            val name = DocumentFile.fromTreeUri(requireContext(), it)?.name ?: ""
+            binding.downloadLocationInput.setTheText(name)
+            binding.downloadLocationInput.clearError()
+        }, onDenied = {
+            binding.downloadLocationInput.setTheText("")
+            binding.downloadLocationInput.clearError()
+        }).launch(null)
     }
 
 

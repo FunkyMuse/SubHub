@@ -20,6 +20,7 @@ import com.crazylegend.subhub.di.extensions.injector
 import com.crazylegend.subhub.di.providers.AdaptersProvider
 import com.crazylegend.subhub.di.providers.AppProvider
 import com.crazylegend.subhub.di.providers.LifecycleProvider
+import com.crazylegend.subhub.di.providers.PermissionsProvider
 import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.utils.addSelectedLanguage
 import com.crazylegend.subhub.utils.getSelectedLanguage
@@ -40,6 +41,9 @@ class SettingsFragment : PreferenceFragmentCompat(), InjectionContracts {
 
     @Inject
     override lateinit var adaptersProvider: AdaptersProvider
+
+    @Inject
+    override lateinit var permissionsProvider: PermissionsProvider
 
     private var languagePref: Preference? = null
     private var rateUs: Preference? = null
@@ -65,7 +69,7 @@ class SettingsFragment : PreferenceFragmentCompat(), InjectionContracts {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injector(savedInstanceState) { inject(this@SettingsFragment) }
+        injector(this, savedInstanceState) { inject(this@SettingsFragment) }
 
 
         myOtherApps.onClick {

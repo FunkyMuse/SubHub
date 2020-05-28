@@ -10,6 +10,7 @@ import com.crazylegend.subhub.di.extensions.injector
 import com.crazylegend.subhub.di.providers.AdaptersProvider
 import com.crazylegend.subhub.di.providers.AppProvider
 import com.crazylegend.subhub.di.providers.LifecycleProvider
+import com.crazylegend.subhub.di.providers.PermissionsProvider
 import javax.inject.Inject
 
 
@@ -27,6 +28,9 @@ abstract class AbstractFragment(contentLayoutId: Int) : Fragment(contentLayoutId
     @Inject
     override lateinit var adaptersProvider: AdaptersProvider
 
+    @Inject
+    override lateinit var permissionsProvider: PermissionsProvider
+
     fun changeTitle(title: String = "") {
         (requireActivity() as MainActivity).supportActionBar?.title = title
     }
@@ -35,7 +39,7 @@ abstract class AbstractFragment(contentLayoutId: Int) : Fragment(contentLayoutId
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        injector(savedInstanceState) { inject(this@AbstractFragment) }
+        injector(this, savedInstanceState) { inject(this@AbstractFragment) }
     }
 
 }

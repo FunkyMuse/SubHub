@@ -6,11 +6,8 @@ import com.crazylegend.kotlinextensions.recyclerview.getLastVisibleItemPosition
 import com.crazylegend.kotlinextensions.recyclerview.smoothScrollTo
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.visible
-import com.crazylegend.subhub.BuildConfig
 import com.crazylegend.subhub.consts.SCROLL_TO_TOP_VISIBILITY_THRESHOLD
-import com.google.android.gms.ads.MobileAds
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.gson.Gson
 import io.reactivex.rxjava3.plugins.RxJavaPlugins
 import javax.inject.Inject
@@ -30,13 +27,6 @@ class AppProvider @Inject constructor(
         Gson()
     }
 
-    fun applyCrashlytics() {
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
-    }
-
-    fun initializeADS() {
-        MobileAds.initialize(application)
-    }
 
     var isLoading = false
     inline fun recyclerScrollBackToTop(backToTop: FloatingActionButton?, recycler: RecyclerView?, adapter: RecyclerView.Adapter<*>,

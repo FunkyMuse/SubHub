@@ -68,7 +68,6 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         binding.videos.adapter = adapter
-        lifecycleProvider.loadBanner(binding.adView)
         lifecycleProvider.onDataChanged(adapter, emptyAction = {
             showNoData()
             showNoVideos()

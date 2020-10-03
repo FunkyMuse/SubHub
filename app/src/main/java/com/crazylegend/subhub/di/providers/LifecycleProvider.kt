@@ -14,13 +14,8 @@ import com.crazylegend.kotlinextensions.internetdetector.InternetDetector
 import com.crazylegend.kotlinextensions.recyclerview.isEmpty
 import com.crazylegend.kotlinextensions.recyclerview.registerDataObserver
 import com.crazylegend.kotlinextensions.rx.clearAndDispose
-import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.di.scopes.PerLifecycle
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdView
-import com.google.android.gms.ads.InterstitialAd
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import javax.inject.Inject
 
@@ -44,9 +39,6 @@ class LifecycleProvider @Inject constructor(
     private var dataObserver: RecyclerView.AdapterDataObserver? = null
     private var temporaryAdapter: RecyclerView.Adapter<*>? = null
     internal val compositeDisposable = CompositeDisposable()
-    private val adRequest by lazy {
-        AdRequest.Builder().build()
-    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun disposeResources() {
@@ -55,26 +47,7 @@ class LifecycleProvider @Inject constructor(
         dataObserver?.let { temporaryAdapter?.unregisterAdapterDataObserver(it) }
     }
 
-    fun loadInterstitialAD(INTERSTITIAL: String) {
-        val interstitialAd = InterstitialAd(context)
-        interstitialAd.adUnitId = INTERSTITIAL
-        interstitialAd.loadAd(adRequest)
-        interstitialAd.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                if (interstitialAd.isLoaded) {
-                    interstitialAd.show()
-                }
-            }
-        }
-    }
 
-    fun loadBanner(amBanner: AdView?) {
-        amBanner?.apply {
-            visible()
-            if (!isLoading)
-                loadAd(adRequest)
-        }
-    }
 
     fun openWebPage(url: String) {
         context.openWebPage(url) {

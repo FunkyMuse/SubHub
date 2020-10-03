@@ -71,14 +71,4 @@
             android:layout_weight="0.5" />
 
     </LinearLayout>
-
-   <com.google.android.gms.ads.AdView xmlns:ads="http://schemas.android.com/apk/res-auto"
-        ads:adUnitId="@string/banner"
-        ads:adSize="BANNER"
-        android:layout_marginTop="10dp"
-        android:id="@+id/adView"
-        android:layout_below="@id/buttons"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
 </RelativeLayout>

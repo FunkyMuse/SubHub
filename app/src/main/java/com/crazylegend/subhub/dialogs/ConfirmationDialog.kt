@@ -28,7 +28,6 @@ class ConfirmationDialog : AbstractDialogFragment(R.layout.dialog_confirmation) 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleProvider.loadBanner(binding.adView)
         binding.title.text = args.title
         binding.leftButton.text = args.cancelText ?: getString(R.string.cancel)
         binding.rightButton.text = args.confirmationText ?: getString(R.string.submit)

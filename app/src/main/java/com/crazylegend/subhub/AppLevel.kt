@@ -20,8 +20,6 @@ class AppLevel : Application() {
         super.onCreate()
         appComponent = DaggerAppComponent.factory().create(this).also { it.inject(this) }
         appProvider.apply {
-            applyCrashlytics()
-            initializeADS()
             setErrorHandler()
         }
     }

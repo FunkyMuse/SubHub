@@ -13,7 +13,6 @@ import com.crazylegend.kotlinextensions.tryOrIgnore
 import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.subhub.R
-import com.crazylegend.subhub.consts.INTERSTITIAL
 import com.crazylegend.subhub.core.AbstractFragment
 import com.crazylegend.subhub.databinding.FragmentLoadSubsBinding
 import com.crazylegend.subhub.vms.loadSubs.LoadSubsVM
@@ -24,6 +23,7 @@ import com.crazylegend.subhub.vms.loadSubs.LoadSubsVMF
  * Created by crazy on 5/23/20 to long live and prosper !
  */
 class LoadSubtitlesFragment : AbstractFragment(R.layout.fragment_load_subs) {
+
     override val binding by viewBinding(FragmentLoadSubsBinding::bind)
 
     private val subtitlesAdapter by lazy {
@@ -38,7 +38,6 @@ class LoadSubtitlesFragment : AbstractFragment(R.layout.fragment_load_subs) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.recycler.adapter = subtitlesAdapter
-        lifecycleProvider.loadBanner(binding.adView)
         if (languageItem == null || movieName.isEmpty() || pickedDir == null) {
             tryOrIgnore { findNavController().navigateUp() }
             return
@@ -59,7 +58,6 @@ class LoadSubtitlesFragment : AbstractFragment(R.layout.fragment_load_subs) {
 
             loadSubsVM.successEvent.observe(viewLifecycleOwner) {
                 it.getContentIfNotHandled()?.apply {
-                    lifecycleProvider.loadInterstitialAD(INTERSTITIAL)
                     binding.progress.gone()
                     if (this) {
                         shortToast(R.string.succ_dl_sub)

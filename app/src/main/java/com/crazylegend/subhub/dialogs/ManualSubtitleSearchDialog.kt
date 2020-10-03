@@ -41,7 +41,6 @@ class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        lifecycleProvider.loadBanner(binding.adView)
         chosenLanguage = requireContext().getSelectedLanguage
 
         chosenLanguage?.apply {

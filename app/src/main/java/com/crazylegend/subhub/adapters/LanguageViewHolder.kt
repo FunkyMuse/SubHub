@@ -10,7 +10,6 @@ import com.crazylegend.subhub.dtos.LanguageItem
 
 class LanguageViewHolder(private val binding: ItemviewLanguageBinding) : RecyclerView.ViewHolder(binding.root) {
 
-
     fun bind(item: LanguageItem, showDivider: Boolean) {
         binding.languageName.setPrecomputedText(context.getString(R.string.language_placeholder, item.name))
         binding.languageCode.setPrecomputedText(itemView.context.getString(R.string.language_code_placeholder, item.code))

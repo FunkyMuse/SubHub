@@ -2,18 +2,32 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/languageName"
+        android:textSize="18sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp" />
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:padding="5dp" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/languageCode"
+        android:textSize="16sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="15dp" />
+        android:layout_marginStart="@dimen/margin_16"
+        android:layout_marginEnd="@dimen/margin_16"
+        android:layout_marginBottom="5dp"
+        android:padding="5dp" />
 
+    <com.crazylegend.customviews.DividerView
+        android:layout_width="match_parent"
+        app:color="@color/disabledColor"
+        android:id="@+id/divider"
+        app:dashGap="0dp"
+        android:layout_height="1dp" />
 </LinearLayout>

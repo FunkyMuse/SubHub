@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.crazylegend.subhub.ui.MainFragment"
-        android:label="">
+        android:label="@string/app_name">
         <action
             android:id="@+id/action_confirmation"
             app:destination="@id/confirmationDialog" />

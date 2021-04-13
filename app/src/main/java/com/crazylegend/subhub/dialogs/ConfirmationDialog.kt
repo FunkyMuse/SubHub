@@ -7,7 +7,6 @@ import androidx.fragment.app.setFragmentResult
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.crazylegend.kotlinextensions.tryOrIgnore
-import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.textString
 import com.crazylegend.kotlinextensions.views.visible
@@ -16,6 +15,7 @@ import com.crazylegend.subhub.consts.ON_UPDATE_KEY
 import com.crazylegend.subhub.consts.UPDATE_REQ_KEY
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.databinding.DialogConfirmationBinding
+import com.crazylegend.viewbinding.viewBinding
 
 /**
  * Created by crazy on 11/28/19 to long live and prosper !

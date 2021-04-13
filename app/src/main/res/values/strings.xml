@@ -22,6 +22,7 @@
     <string name="sub_rating">Sub rating</string>
     <string name="sub_language">Subtitle language: %1$s</string>
     <string name="movie_name">Movie name: %1$s</string>
+    <string name="encoding">Encoding: %1$s</string>
     <string name="obtaining_subtitle_file">Obtaining subtitle file</string>
     <string name="subtitles">Subtitles</string>
     <string name="succ_dl_sub">Download success !</string>
@@ -41,17 +42,12 @@
     <string name="search">Search</string>
     <string name="subtitles_search">Subtitles search…</string>
     <string name="video_source_folders">Folder sources</string>
-    <string name="movie_dl_app">Movie downloader app</string>
-    <string name="checkout_app">Use this app to download movies</string>
     <string name="customizations">Customizations</string>
-    <string name="rate_us">Rate us</string>
     <string name="content">Content</string>
     <string name="version">Version</string>
     <string name="remove">Remove</string>
-    <string name="privacy_policy">Privacy policy</string>
     <string name="my_other_apps">My other apps</string>
     <string name="no_videos_available_locally">No videos available on your storage.</string>
-    <string name="banner">ca-app-pub-3874068061332875/7265345768</string>
     <string name="no_browsers">Install a browser!</string>
     <string name="permission_expl">If you like the application to load all the videos on your storage allow it, by doing so you\'ll be able to load the video name and the language you\'ve chosen with just one tap on the video, by denying it you\'ll have to use the manual search to look for a subtitle!</string>
     <string name="permission_expl2">If you like the application to load all the videos on your storage click here to allow it, by doing so you\'ll be able to load the video name and the language you\'ve chosen with just one tap on the video, by denying it you\'ll have to use the manual search to look for a subtitle!</string>

@@ -22,22 +22,6 @@
 
         <Preference
             app:iconSpaceReserved="false"
-            app:key="settings_pref_dl_movie_app"
-            app:summary="@string/checkout_app"
-            app:title="@string/movie_dl_app" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="settings_pref_rate_us"
-            app:title="@string/rate_us" />
-
-        <Preference
-            app:iconSpaceReserved="false"
-            app:key="settings_pref_privacy_policy"
-            app:title="@string/privacy_policy" />
-
-        <Preference
-            app:iconSpaceReserved="false"
             app:key="settings_pref_other_apps"
             app:title="@string/my_other_apps" />
 
@@ -45,7 +29,6 @@
             app:iconSpaceReserved="false"
             app:key="settings_pref_version_code"
             app:title="@string/version" />
-
 
     </PreferenceCategory>
 

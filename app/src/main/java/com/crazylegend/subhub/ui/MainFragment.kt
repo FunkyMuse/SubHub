@@ -8,34 +8,51 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.setFragmentResultListener
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import com.crazylegend.coroutines.textChanges
+import com.crazylegend.kotlinextensions.collections.isNotNullOrEmpty
 import com.crazylegend.kotlinextensions.context.isPermissionGranted
-import com.crazylegend.kotlinextensions.recyclerview.clickListeners.forItemClickListenerDSL
-import com.crazylegend.kotlinextensions.recyclerview.isEmpty
-import com.crazylegend.kotlinextensions.rx.bindings.textChanges
+import com.crazylegend.kotlinextensions.lifeCycle.repeatingJobOnStarted
 import com.crazylegend.kotlinextensions.tryOrIgnore
-import com.crazylegend.kotlinextensions.viewBinding.viewBinding
-import com.crazylegend.kotlinextensions.views.asSearchView
-import com.crazylegend.kotlinextensions.views.gone
-import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
-import com.crazylegend.kotlinextensions.views.visible
+import com.crazylegend.kotlinextensions.views.*
+import com.crazylegend.recyclerview.clickListeners.forItemClickListener
+import com.crazylegend.recyclerview.isEmpty
+import com.crazylegend.recyclerview.registerDataObserver
 import com.crazylegend.subhub.R
 import com.crazylegend.subhub.consts.DEBOUNCE_TIME
 import com.crazylegend.subhub.consts.ON_UPDATE_KEY
 import com.crazylegend.subhub.consts.UPDATE_REQ_KEY
 import com.crazylegend.subhub.core.AbstractFragment
 import com.crazylegend.subhub.databinding.FragmentMainBinding
+import com.crazylegend.subhub.di.providers.AdaptersProvider
+import com.crazylegend.subhub.di.providers.PermissionsProvider
 import com.crazylegend.subhub.utils.isSnackbarFolderSourcesShown
 import com.crazylegend.subhub.utils.setSnackShown
 import com.crazylegend.subhub.vms.VideosVM
+import com.crazylegend.viewbinding.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 
 /**
  * Created by crazy on 5/23/20 to long live and prosper !
  */
+@AndroidEntryPoint
 class MainFragment : AbstractFragment(R.layout.fragment_main) {
-    override val binding by viewBinding(FragmentMainBinding::bind)
+    private var dataObserver: RecyclerView.AdapterDataObserver? = null
+
+    override val binding by viewBinding(FragmentMainBinding::bind) {
+        dataObserver?.let { adapter.unregisterAdapterDataObserver(it) }
+    }
+
+    @Inject
+    lateinit var adaptersProvider: AdaptersProvider
+
+    @Inject
+    lateinit var permissionsProvider: PermissionsProvider
 
     private val videosVM by viewModels<VideosVM>()
     private val adapter by lazy {
@@ -43,22 +60,20 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
     }
 
 
-    /*private val askForStoragePermission = registerForActivityResult(ActivityResultContracts.RequestPermission()) {
-        if (it) {
-            videosVM.loadVideos()
-        } else {
-            setupUIIfPermissionIsNotAllowed()
-        }
-    }*/
-
-
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main_fragment_menu, menu)
         val searchItem = menu.findItem(R.id.mam_search)
+        videosVM.videos.observe(viewLifecycleOwner) {
+            searchItem.isVisible = it.isNotNullOrEmpty
+        }
         searchItem.asSearchView()?.apply {
             queryHint = getString(R.string.search_by_name)
-            textChanges(DEBOUNCE_TIME, skipInitialValue = true, compositeDisposable = lifecycleProvider.compositeDisposable) {
-                videosVM.filterVideos(it)
+            getEditTextSearchView?.apply {
+                repeatingJobOnStarted {
+                    textChanges(true, DEBOUNCE_TIME).map { it.toString() }.collect {
+                        videosVM.filterVideos(it)
+                    }
+                }
             }
         }
         super.onCreateOptionsMenu(menu, inflater)
@@ -68,7 +83,7 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         super.onViewCreated(view, savedInstanceState)
         setHasOptionsMenu(true)
         binding.videos.adapter = adapter
-        lifecycleProvider.onDataChanged(adapter, emptyAction = {
+        onDataChanged(emptyAction = {
             showNoData()
             showNoVideos()
         }, notEmptyAction = ::hideNoData)
@@ -99,7 +114,7 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
             }
         }
 
-        adapter.forItemClickListener = forItemClickListenerDSL { _, item, _ ->
+        adapter.forItemClickListener = forItemClickListener { _, item, _ ->
             tryOrIgnore {
                 findNavController().navigate(MainFragmentDirections.actionManualSearch(item.displayName))
             }
@@ -120,13 +135,21 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
             }
         }
 
-        videosVM.loadingIndicator.observe(viewLifecycleOwner) {
-            binding.progress.isVisible = it
+        repeatingJobOnStarted {
+            videosVM.loadingIndicator.collect {
+                binding.progress.isVisible = it
+            }
         }
 
         videosVM.filteredVideos.observe(viewLifecycleOwner) {
             adapter.submitList(it)
         }
+
+        permissionsProvider.permissionListener(onDenied = {
+            setupUIIfPermissionIsNotAllowed()
+        }, onGranted = {
+            videosVM.loadVideos()
+        })
     }
 
     private fun setupUIIfPermissionIsNotAllowed() {
@@ -145,7 +168,17 @@ class MainFragment : AbstractFragment(R.layout.fragment_main) {
         }
     }
 
-    private fun getStoragePermissions() = permissionsProvider.askForAPermission(onDenied = { setupUIIfPermissionIsNotAllowed() }, onPermissionsGranted = { videosVM.loadVideos() }).launch(READ_EXTERNAL_STORAGE)
+    private inline fun onDataChanged(crossinline emptyAction: () -> Unit, crossinline notEmptyAction: () -> Unit) {
+        dataObserver = adapter.registerDataObserver {
+            if (adapter.isEmpty) {
+                emptyAction()
+            } else {
+                notEmptyAction()
+            }
+        }
+    }
+
+    private fun getStoragePermissions() = permissionsProvider.askForAPermission(READ_EXTERNAL_STORAGE)
 
 
     private fun showNoData() {

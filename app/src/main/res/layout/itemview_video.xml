@@ -26,7 +26,7 @@
         android:layout_marginEnd="@dimen/margin_16"
         android:padding="@dimen/margin_8" />
 
-    <com.crazylegend.kotlinextensions.basehelpers.DividerView
+    <com.crazylegend.customviews.DividerView
         android:layout_width="match_parent"
         app:color="@color/colorAccent"
         android:layout_below="@id/videoSize"

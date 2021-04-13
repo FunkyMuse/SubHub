@@ -17,10 +17,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
 
-            <com.google.android.material.textview.MaterialTextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/subFileName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -39,22 +39,28 @@
 
         </RelativeLayout>
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/subLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" />
 
-        <com.google.android.material.textview.MaterialTextView
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/encoding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movieName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp" />
 
         <LinearLayout
+            android:baselineAligned="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:baselineAligned="false"
             android:orientation="horizontal"
             android:padding="5dp"
             android:weightSum="1">
@@ -101,7 +107,10 @@
                     android:layout_gravity="center" />
             </LinearLayout>
 
+
         </LinearLayout>
+
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>

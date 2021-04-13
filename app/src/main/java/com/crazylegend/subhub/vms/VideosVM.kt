@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.crazylegend.kotlinextensions.cursor.getSafeColumn
+import com.crazylegend.kotlinextensions.safeOffer
 import com.crazylegend.subhub.core.AbstractAVM
 import com.crazylegend.subhub.dtos.LocalVideoItem
 import com.crazylegend.subhub.utils.registerObserver
@@ -47,7 +48,7 @@ internal class VideosVM(application: Application) : AbstractAVM(application) {
     }
 
     private suspend fun queryVideos(): List<LocalVideoItem> {
-        loadingIndicatorData.value = true
+        loadingIndicatorData.safeOffer(true)
         val video = mutableListOf<LocalVideoItem>()
 
         val sortOrder = "${MediaStore.Video.Media.DATE_ADDED} DESC"
@@ -77,7 +78,7 @@ internal class VideosVM(application: Application) : AbstractAVM(application) {
             }
         }
         canLoad = false
-        loadingIndicatorData.value = false
+        loadingIndicatorData.safeOffer(false)
         return video
     }
 

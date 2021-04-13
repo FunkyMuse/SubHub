@@ -1,8 +1,8 @@
 package com.crazylegend.subhub.utils
 
 import android.content.Context
-import com.crazylegend.kotlinextensions.sharedprefs.getObject
-import com.crazylegend.kotlinextensions.sharedprefs.putObject
+import com.crazylegend.gson.getObject
+import com.crazylegend.gson.putObject
 import com.crazylegend.subhub.dtos.LanguageItem
 
 

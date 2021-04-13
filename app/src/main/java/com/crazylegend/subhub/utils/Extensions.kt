@@ -4,6 +4,13 @@ import android.content.ContentResolver
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
+import androidx.recyclerview.widget.RecyclerView
+import com.crazylegend.kotlinextensions.views.gone
+import com.crazylegend.kotlinextensions.views.visible
+import com.crazylegend.recyclerview.getLastVisibleItemPosition
+import com.crazylegend.recyclerview.smoothScrollTo
+import com.crazylegend.subhub.consts.SCROLL_TO_TOP_VISIBILITY_THRESHOLD
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 
 /**
@@ -31,4 +38,30 @@ fun ContentResolver.registerObserver(
     }
     registerContentObserver(uri, true, contentObserver)
     return contentObserver
+}
+
+var isLoading = false
+inline fun RecyclerView.recyclerScrollBackToTop(backToTop: FloatingActionButton?, adapter: RecyclerView.Adapter<*>,
+                                                crossinline loadMore: () -> Unit = {}) {
+    addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            adapter.apply {
+                val lastPos = recyclerView.getLastVisibleItemPosition()
+
+                lastPos?.apply {
+                    if (this >= adapter.itemCount - 1 && !isLoading) {
+                        loadMore()
+                    }
+                    if (this > SCROLL_TO_TOP_VISIBILITY_THRESHOLD) {
+                        backToTop?.visible()
+                    } else {
+                        backToTop?.gone()
+                    }
+                }
+            }
+        }
+    })
+    backToTop?.setOnClickListener {
+        smoothScrollTo(0)
+    }
 }

@@ -12,7 +12,6 @@ import com.crazylegend.kotlinextensions.animations.playAnimation
 import com.crazylegend.kotlinextensions.context.isOnline
 import com.crazylegend.kotlinextensions.fragments.shortToast
 import com.crazylegend.kotlinextensions.tryOrIgnore
-import com.crazylegend.kotlinextensions.viewBinding.viewBinding
 import com.crazylegend.kotlinextensions.views.clearError
 import com.crazylegend.kotlinextensions.views.getString
 import com.crazylegend.kotlinextensions.views.setOnClickListenerCooldown
@@ -21,14 +20,19 @@ import com.crazylegend.subhub.R
 import com.crazylegend.subhub.consts.*
 import com.crazylegend.subhub.core.AbstractDialogFragment
 import com.crazylegend.subhub.databinding.DialogManualSubSearchBinding
+import com.crazylegend.subhub.di.providers.PermissionsProvider
 import com.crazylegend.subhub.dtos.LanguageItem
 import com.crazylegend.subhub.utils.getSelectedLanguage
 import com.crazylegend.subhub.utils.isNullStringOrEmpty
+import com.crazylegend.viewbinding.viewBinding
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 
 /**
  * Created by crazy on 11/26/19 to long live and prosper !
  */
+@AndroidEntryPoint
 class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual_sub_search) {
 
     private var chosenLanguage: LanguageItem? = null
@@ -38,6 +42,9 @@ class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual
 
     private val args by navArgs<ManualSubtitleSearchDialogArgs>()
     private val movieNameArg get() = args.movieName
+
+    @Inject
+    lateinit var permissionsProvider: PermissionsProvider
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -115,11 +122,21 @@ class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual
                 ))
             }
         }
+
+        permissionsProvider.documentTreeListener {
+            val treeUri = this
+            pickedDirModel = treeUri
+            if (treeUri != null) {
+                val name = DocumentFile.fromTreeUri(requireContext(), treeUri)?.name ?: ""
+                binding.downloadLocationInput.setTheText(name)
+                binding.downloadLocationInput.clearError()
+            } else {
+                binding.downloadLocationInput.setTheText("")
+                binding.downloadLocationInput.clearError()
+            }
+        }
     }
 
-    /*private val pickDir = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) {
-
-    }*/
 
     private fun pickALanguage() {
         tryOrIgnore { findNavController().navigate(ManualSubtitleSearchDialogDirections.actionChooseLanguage()) }
@@ -137,16 +154,7 @@ class ManualSubtitleSearchDialog : AbstractDialogFragment(R.layout.dialog_manual
     }
 
     private fun pickDownloadDirectory() {
-        permissionsProvider.openDocumentTree(onCalled = {
-            pickedDirModel = it
-        }, onPermissionsGranted = {
-            val name = DocumentFile.fromTreeUri(requireContext(), it)?.name ?: ""
-            binding.downloadLocationInput.setTheText(name)
-            binding.downloadLocationInput.clearError()
-        }, onDenied = {
-            binding.downloadLocationInput.setTheText("")
-            binding.downloadLocationInput.clearError()
-        }).launch(null)
+        permissionsProvider.openDocumentTree()
     }
 
 

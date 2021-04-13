@@ -2,7 +2,7 @@ package com.crazylegend.subhub.adapters
 
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.crazylegend.kotlinextensions.glide.loadImgNoCache
+import com.crazylegend.glide.loadImgNoCache
 import com.crazylegend.kotlinextensions.memory.toFileSizeString
 import com.crazylegend.kotlinextensions.views.setPrecomputedText
 import com.crazylegend.kotlinextensions.views.setPrecomputedTextOrHide

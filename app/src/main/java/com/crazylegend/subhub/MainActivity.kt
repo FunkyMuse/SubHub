@@ -2,20 +2,20 @@ package com.crazylegend.subhub
 
 import android.os.Bundle
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
-import com.crazylegend.kotlinextensions.viewBinding.viewBinding
-import com.crazylegend.kotlinextensions.views.AppRater
 import com.crazylegend.kotlinextensions.views.gone
 import com.crazylegend.kotlinextensions.views.visible
 import com.crazylegend.subhub.core.AbstractActivity
 import com.crazylegend.subhub.databinding.ActivityMainBinding
 import com.crazylegend.subhub.di.extensions.setupWithNavController
+import com.crazylegend.viewbinding.viewBinder
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AbstractActivity() {
 
-    override val binding by viewBinding(ActivityMainBinding::inflate)
+    override val binding by viewBinder(ActivityMainBinding::inflate)
     private var currentNavController: LiveData<NavController>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,10 +27,6 @@ class MainActivity : AbstractActivity() {
     }
 
     private fun setupBottomNavigationBar() {
-
-        AppRater.appLaunched(this, supportFragmentManager, 5, 0) {
-            appTitle = getString(R.string.app_name)
-        }
 
         val navGraphIds = listOf(
                 R.navigation.main,

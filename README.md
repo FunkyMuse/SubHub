@@ -12,6 +12,7 @@ Beware that all the content is provided by OpenSubtitles so in case you can’t 
 
 ## Download
 [![Get it on GitHub releases](https://i.ibb.co/q0mdc4Z/get-it-on-github.png)](https://github.com/FunkyMuse/SubHub/releases/latest)
+[![Get it on F-Droid](https://fdroid.gitlab.io/artwork/badge/get-it-on.png)](https://f-droid.org/en/packages/com.crazylegend.subhub/)
 
 ## Screenshots
 

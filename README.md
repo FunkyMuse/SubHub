@@ -1,5 +1,7 @@
 # SubHub
 
+### If my noble work has helped you, consider becoming a [![Sponsor me](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/FunkyMuse/).
+
 SubHub is a small lightweight subtitles app downloader that’ll provide you with a modern UI and easy to use interface.
 
 Download multi-language subtitles for all your favorite movies, shows and sitcoms. Automatically scans your device and presents available subtitle files for you to choose from.
